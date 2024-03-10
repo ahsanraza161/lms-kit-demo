@@ -1,5 +1,4 @@
-import { React, useState } from 'react';
-import '../../global.css';
+import { React, useContext, useEffect, useState } from 'react';
 import Topbar from '../common/navbar/navbar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -13,9 +12,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'; // Assuming you're using axios for API requests
+import AuthContext from '../../context/auth/authcontext';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 const SignIn = () => {
+  const navigate = useNavigate();
+  const { LoginHandler, isAuthenticated } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -29,25 +33,17 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const config = {
-      data: {
-        'Content-Type': 'application/json',
-      },
-    };
     setFormData((prevdata) => {
       return { email: '', password: '' };
     });
-    try {
-      const res = await axios.post(
-        'http://localhost:8080/api/auth',
-        formData,
-        config
-      );
-      console.log(res.data, 'login success');
-    } catch (err) {
-      console.log(err);
-    }
+    LoginHandler(formData);
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated]);
   return (
     <>
       <Topbar />

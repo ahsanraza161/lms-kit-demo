@@ -7,7 +7,7 @@ import {
   FaRegChartBar,
   FaCommentAlt,
 } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,17 +19,17 @@ const Sidebar = ({ children }) => {
       icon: <FaTh />,
     },
     {
-      path: '/students',
+      path: 'student',
       name: 'Students',
       icon: <FaUserAlt />,
     },
     {
-      path: '/teachers',
+      path: 'teacher',
       name: 'Teachers',
       icon: <FaRegChartBar />,
     },
     {
-      path: '/adduser',
+      path: 'adduser',
       name: 'Register',
       icon: <FaCommentAlt />,
     },
@@ -52,7 +52,7 @@ const Sidebar = ({ children }) => {
           </div>
         </div>
         {menuItem.map((item, index) => (
-          <NavLink to={item.path} key={index} className="link">
+          <Link to={item.path} key={index} className="link">
             <div className="icon">{item.icon}</div>
             <div
               style={{ display: isOpen ? 'block' : 'none' }}
@@ -61,7 +61,7 @@ const Sidebar = ({ children }) => {
             >
               {item.name}
             </div>
-          </NavLink>
+          </Link>
         ))}
       </div>
       <main>{children}</main>
