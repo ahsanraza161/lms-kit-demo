@@ -1,16 +1,15 @@
+import '../../../global.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import '../../../global.css';
 import { Link } from 'react-router-dom';
 function Topbar() {
   return (
     <>
       <Navbar
         className="navSmart container"
-        // className="topbarbg  "
         data-bs-theme="dark"
-        // bg="dark"
         expand="lg"
         fixed="top"
       >

@@ -1,3 +1,5 @@
+import './global.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/pages/about';
 import Home from './components/pages/home';
 import Registration from './components/pages/Registration';
