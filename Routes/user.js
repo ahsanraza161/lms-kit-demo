@@ -3,8 +3,11 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/users');
+const Student = require('../models/Student');
 
+// @route POST api/users
+// @describe Register a new User
+// @access public
 router.post('/', async (req, res) => {
   const {
     name,
@@ -21,9 +24,9 @@ router.post('/', async (req, res) => {
     password,
   } = req.body;
   try {
-    // Check for existing user with email
-    const user = await User.findOne({ email });
-    if (user) {
+    // Check for existing student with email
+    const student = await Student.findOne({ email });
+    if (student) {
       return res.status(400).send({ message: 'User already exist' });
     }
 
@@ -32,7 +35,7 @@ router.post('/', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Create and save new user
-    const newUser = new User({
+    const newStudent = new Student({
       name,
       fatherName,
       dateOfBirth,
@@ -45,27 +48,29 @@ router.post('/', async (req, res) => {
       universityCollege,
       email,
       password: hashedPassword,
+      status: 'pending',
     });
 
-    await newUser.save();
+    await newStudent.save();
 
-    const payload = {
-      user: {
-        id: newUser.id,
-      },
-    };
+    // const payload = {
+    //   student: {
+    //     id: newUser.id,
+    //   },
+    // };
 
-    jwt.sign(
-      payload,
-      process.env.jwtsecret,
-      {
-        expiresIn: 3600000,
-      },
-      (err, token) => {
-        if (err) throw err.message;
-        return res.json({ token });
-      }
-    );
+    // jwt.sign(
+    //   payload,
+    //   process.env.jwtsecret,
+    //   {
+    //     expiresIn: 3600000,
+    //   },
+    //   (err, token) => {
+    //     if (err) throw err.message;
+    //     return res.json({ token });
+    //   }
+    // );
+    return res.status(400).json({ msg: 'Your request has been send to admin' });
   } catch (err) {
     console.error('Error registering user:', err);
     res.status(500).send({ message: err });

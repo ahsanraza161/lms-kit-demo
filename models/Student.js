@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UsersSchema = new mongoose.Schema({
+const StudentSchema = new mongoose.Schema({
   name: String,
   fatherName: String,
   dateOfBirth: String,
@@ -13,7 +13,12 @@ const UsersSchema = new mongoose.Schema({
   universityCollege: String,
   email: String,
   password: String,
+  status: {
+    type: String,
+    enum: ['pending', 'approved'],
+    required: true,
+  },
 });
 
-const User = mongoose.model('userresgistry', UsersSchema);
+const User = mongoose.model('Students', StudentSchema);
 module.exports = User;

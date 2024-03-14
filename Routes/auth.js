@@ -4,16 +4,20 @@ require('dotenv').config();
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/users');
+const Student = require('../models/Student');
 
+// @route POST api/users
+// @describe Login User
+// @access public
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
   try {
-    let user = await User.findOne({ email });
-    if (!user) {
+    let student = await Student.findOne({ email });
+    if (!student) {
       res.status(400).json({ msg: 'User does not exist' });
+    } else if (student.status === 'pending') {
+      res.status(200).json({ msg: 'Your account has not been approved' });
     }
-
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -21,8 +25,8 @@ router.post('/', async (req, res) => {
     }
 
     const payload = {
-      user: {
-        id: user.id,
+      student: {
+        id: student.id,
       },
     };
 
