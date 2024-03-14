@@ -23,9 +23,10 @@ body {
 }
 .App-main-all {
   background-color: #fff;
+  width: 80%;
   border-radius: 30px;
   padding: 60px 0;
-  margin: 60px 0;
+  margin: 30px auto;
   color: #000;
 }
 
@@ -44,14 +45,23 @@ body {
   margin: 20px 0;
 }
 .mainpagebtn {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-text-color);
+  border-radius: 10px 0px;
   color: #000;
-  border: 1px solid;
   padding: 5px 10px;
+  transition: all ease 0.5s;
+}
+.mainpagebtn:hover {
+  border-radius: 10px 0px;
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  color: #ffffff;
 }
 .navSmart {
   background-color: #000;
   padding: 5px 20px !important;
-  margin: 10px auto !important;
+  margin: 50px auto !important;
   border-radius: 30px;
 }
 .navmain {
@@ -84,22 +94,14 @@ body {
   color: #000;
 }
 
-/* .registrationform {
-  background-color: var(--primary-text-color);
-  border-radius: 25px;
-  transition: all ease 0.5s;
-  padding: 20px;
-}
-.registrationform:hover {
-  border-radius: 50px;
-} */
 .about {
-  overflow: hidden;
-  height: 75%;
+  overflow: hidden !important;
+  height: fit-content;
+  width: 80%;
   background-color: #fff;
   border-radius: 30px;
   padding: 60px 0;
-  margin: 40px 0;
+  margin: 40px auto;
   text-align: center;
   color: #000;
 }
@@ -114,7 +116,7 @@ body {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  margin-top: 50px;
+  margin-top: 20px;
   width: 80%;
   margin: auto;
 }
@@ -125,7 +127,7 @@ body {
   transition: all ease-in-out 0.5s;
 }
 .boxabout:hover {
-  margin: 40px 20px;
+  margin: 20px 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 /* media queries */
@@ -147,6 +149,13 @@ body {
   }
   .aboutmainbox {
     flex-direction: column;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .navmain {
+    display: flex !important;
+    margin-left: 30% !important;
+    gap: 20px !important;
   }
 }
 @media only screen and (max-width: 1200px) {

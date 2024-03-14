@@ -1,6 +1,7 @@
 import React from 'react';
-import "../../global.css"
-// import Topbar from '../common/navbar/navbar';/
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../global.css';
+import Topbar from '../common/navbar/navbar';
 import Login from '../pages/login';
 import { Container, Row, Col } from 'react-bootstrap';
 import Link from '@mui/material/Link';
@@ -8,6 +9,7 @@ import Link from '@mui/material/Link';
 function home() {
   return (
     <div>
+      <Topbar />
       <main className="home container">
         <Container fluid>
           <Row>
