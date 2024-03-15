@@ -2,7 +2,8 @@ import { LOGIN_SUCCESS } from '../type';
 const Authreducer = (state, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload);
+      if (action.payload) {
+      }
       return {
         ...state,
         isLoading: false,

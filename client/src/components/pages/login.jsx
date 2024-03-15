@@ -11,9 +11,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios'; // Assuming you're using axios for API requests
 import AuthContext from '../../context/auth/authcontext';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const defaultTheme = createTheme();
 const SignIn = () => {
@@ -39,11 +39,11 @@ const SignIn = () => {
     LoginHandler(formData);
   };
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate('/dashboard');
+  //   }
+  // }, [isAuthenticated]);
   return (
     <>
       <Topbar />
@@ -122,6 +122,7 @@ const SignIn = () => {
           </ThemeProvider>
         </div>
       </div>
+      <Toaster />
     </>
   );
 };

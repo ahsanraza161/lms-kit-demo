@@ -3,8 +3,10 @@ import AuthContext from './authcontext';
 import Authreducer from './authreducer';
 import axios from 'axios';
 import { LOGIN_SUCCESS } from '../type';
+import toast from 'react-hot-toast';
 
 const Authstate = ({ children }) => {
+  const notify = (msg) => toast(msg);
   const initstate = {
     isAuthenticated: localStorage.getItem('token') ? true : false,
     isLoading: true,
@@ -25,10 +27,10 @@ const Authstate = ({ children }) => {
         formData,
         config
       );
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data.token,
-      });
+      if (res.data === 'Your account request has been sent to admin') {
+        notify(res.data);
+      } else if (1) {
+      }
     } catch (err) {
       console.log(err);
     }
