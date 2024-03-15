@@ -3,8 +3,9 @@ import Topbar from '../common/navbar/navbar';
 
 function about() {
   return (
-    <div className="about container">
+    <>
       <Topbar />
+    <div className="about container">
       <div className="container" xs={12} md={6}>
         <h3 className="aboutHeadings">About Us</h3>
         <h1 className="aboutMainline">
@@ -38,6 +39,7 @@ function about() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

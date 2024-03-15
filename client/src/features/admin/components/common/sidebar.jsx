@@ -33,6 +33,11 @@ const Sidebar = ({ children }) => {
       name: 'Register',
       icon: <FaCommentAlt />,
     },
+    {
+      path: 'usermanagment',
+      name: 'User Manangment',
+      icon: <FaCommentAlt />,
+    },
   ];
   return (
     <div className="container2">
