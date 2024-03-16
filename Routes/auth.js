@@ -14,13 +14,13 @@ router.post('/', async (req, res) => {
   try {
     let student = await Student.findOne({ email });
     if (!student) {
-      res.status(400).json({ msg: 'User does not exist' });
+      return res.status(400).json({ msg: 'User does not exist' });
     } else if (student.status === 'pending') {
-      res
+      return res
         .status(200)
         .json({ msg: 'Your account request has been sent to admin' });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, student.password);
 
     if (!isMatch) {
       return res.status(400).json({ msg: 'Password Incorrect' });
@@ -39,13 +39,16 @@ router.post('/', async (req, res) => {
         expiresIn: 3600000,
       },
       (err, token) => {
-        if (err) throw err.message;
-        return res.json({ token });
+        if (err) {
+          console.error(err.message);
+          return res.status(500).json({ msg: 'Server error' });
+        }
+        return res.status(200).json({ token });
       }
     );
   } catch (err) {
     console.error(err.message);
-    res.status({ msg: 'Server error' });
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

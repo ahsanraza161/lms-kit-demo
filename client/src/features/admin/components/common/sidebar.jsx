@@ -19,12 +19,12 @@ const Sidebar = ({ children }) => {
       icon: <FaTh />,
     },
     {
-      path: 'student',
+      path: 'students',
       name: 'Students',
       icon: <FaUserAlt />,
     },
     {
-      path: 'teacher',
+      path: 'teachers',
       name: 'Teachers',
       icon: <FaRegChartBar />,
     },
@@ -34,7 +34,7 @@ const Sidebar = ({ children }) => {
       icon: <FaCommentAlt />,
     },
     {
-      path: 'usermanagment',
+      path: 'usermanagement',
       name: 'User Manangment',
       icon: <FaCommentAlt />,
     },

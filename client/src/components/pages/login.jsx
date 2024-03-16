@@ -39,11 +39,11 @@ const SignIn = () => {
     LoginHandler(formData);
   };
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     navigate('/dashboard');
-  //   }
-  // }, [isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated]);
   return (
     <>
       <Topbar />

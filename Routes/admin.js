@@ -1,7 +1,7 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+require('dotenv').config();
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+const sendMail = require('../utils/sendmail');
 
 const Student = require('../models/Student');
 
@@ -29,13 +29,21 @@ router.put('/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const student = await Student.findById(id).select('-password');
+    // Update the status
     student.status = 'approved';
 
-    student.save;
+    // Save the updated student
+    await student.save();
 
-    return res
-      .status(200)
-      .json({ msg: 'Student status changed from pending to approved' });
+    // Send email to users email
+    await sendMail(
+      'Please Login your account',
+      '<p>Your account has been approved plz login in your account</p>',
+      student.email
+    );
+
+    // Return response
+    return res.status(200).json({ msg: 'Email has been sent to student' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);

@@ -6,26 +6,31 @@ import Registration from './components/pages/Registration';
 import Login from './components/pages/login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Authstate from './context/auth/authstate';
+import Adminstate from './context/admin/adminstate';
 import Admindashboard from './features/admin';
 import Student from './features/admin/components/pages/students';
-import Teacher from './features/admin/components/pages/teachers';
+import Usermanagement from './features/admin/components/pages/pending-registration';
+import Adduser from './features/admin/components/pages/adduser';
 
 function App() {
   return (
     <Authstate>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Admindashboard />}>
-            <Route path="student" element={<Student />}></Route>
-            <Route path="teacher" element={<Student />}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Adminstate>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registration" element={<Registration />} />
+            <Route path="/dashboard" element={<Admindashboard />}>
+              <Route path="students" element={<Student />} />
+              <Route path="teachers" element={<Student />} />
+              <Route path="usermanagement" element={<Usermanagement />} />
+              <Route path="adduser" element={<Adduser />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Adminstate>
     </Authstate>
   );
 }
