@@ -12,13 +12,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AuthContext from '../../context/auth/authcontext';
-import { useNavigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import toast,{ Toaster } from 'react-hot-toast';
 
 const defaultTheme = createTheme();
 const SignIn = () => {
-  const navigate = useNavigate();
-  const { LoginHandler, isAuthenticated } = useContext(AuthContext);
+  const { LoginHandler, error } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -40,10 +38,10 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
+    if (error !== null && error !== undefined) {
+      toast.error(error);
     }
-  }, [isAuthenticated]);
+  }, [error]);
   return (
     <>
       <Topbar />

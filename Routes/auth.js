@@ -17,8 +17,8 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ msg: 'User does not exist' });
     } else if (student.status === 'pending') {
       return res
-        .status(200)
-        .json({ msg: 'Your account request has been sent to admin' });
+        .status(400)
+        .json({ msg: 'Your account request has been sent to admin,You can not login now' });
     }
     const isMatch = await bcrypt.compare(password, student.password);
 
