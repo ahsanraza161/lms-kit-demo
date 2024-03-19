@@ -10,6 +10,7 @@ const Student = require('../models/Student');
 // @access public
 router.post('/', async (req, res) => {
   const {
+    usertype,
     name,
     fatherName,
     dateOfBirth,
@@ -36,6 +37,7 @@ router.post('/', async (req, res) => {
 
     // Create and save new user
     const newStudent = new Student({
+      usertype,
       name,
       fatherName,
       dateOfBirth,
@@ -53,23 +55,6 @@ router.post('/', async (req, res) => {
 
     await newStudent.save();
 
-    // const payload = {
-    //   student: {
-    //     id: newUser.id,
-    //   },
-    // };
-
-    // jwt.sign(
-    //   payload,
-    //   process.env.jwtsecret,
-    //   {
-    //     expiresIn: 3600000,
-    //   },
-    //   (err, token) => {
-    //     if (err) throw err.message;
-    //     return res.json({ token });
-    //   }
-    // );
     return res.status(200).json({ msg: 'Your request has been send to admin' });
   } catch (err) {
     console.error('Error registering user:', err);

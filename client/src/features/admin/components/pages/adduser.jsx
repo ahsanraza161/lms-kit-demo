@@ -29,6 +29,7 @@ import {
 
 const defaultTheme = createTheme();
 const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
+const usertype = ['Student', 'Faculty'];
 
 const subjects = [
   'Computer Science',
@@ -62,6 +63,7 @@ const addUser = () => {
   };
 
   const [formData, setFormData] = useState({
+    usertype: '',
     name: '',
     fatherName: '',
     dateOfBirth: '',
@@ -87,6 +89,7 @@ const addUser = () => {
     event.preventDefault();
     RegisterHandler(formData);
     setFormData({
+      usertype: '',
       name: '',
       fatherName: '',
       dateOfBirth: '',
@@ -125,7 +128,7 @@ const addUser = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Registration Form
+              Add user
             </Typography>
             <Box
               component="form"
@@ -134,6 +137,25 @@ const addUser = () => {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
+              <Grid item xs={12} sm={12}>
+                  <FormControl required style={{ width: '100%' }}>
+                    <InputLabel id="usertype-label">
+                      Register as a
+                    </InputLabel>
+                    <Select
+                      labelId="usertype-label"
+                      name="usertype"
+                      value={formData.usertype}
+                      onChange={handleChange}
+                    >
+                      {usertype.map((usertype) => (
+                        <MenuItem key={usertype} value={usertype}>
+                          {usertype}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
                     style={{ width: '100%' }}
