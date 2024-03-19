@@ -1,9 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Table, Row, Col, Modal, Button } from 'react-bootstrap';
-import "../../mainadmin.css";
+import '../../mainadmin.css';
 import AdminContext from '../../../../context/admin/admincontext';
 
-const Pending_student = ({ name, id, email }) => {
+const Pending_student = ({
+  name,
+  id,
+  email,
+  fatherName,
+  dateOfBirth,
+  qualification,
+  gender,
+}) => {
   const { approveHandler, getUserData } = useContext(AdminContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -51,7 +59,11 @@ const Pending_student = ({ name, id, email }) => {
               <td>{id}</td>
               <td>
                 <button onClick={onApproveHandler}>Approve</button>
-                <button variant="primary" size="sm" onClick={handleShowUserDataModal}>
+                <button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleShowUserDataModal}
+                >
                   Show User Data
                 </button>
               </td>
@@ -61,27 +73,18 @@ const Pending_student = ({ name, id, email }) => {
       </Col>
 
       <Modal show={showUserDataModal} onHide={handleCloseUserDataModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>User Details for: {id}</Modal.Title>
+        <Modal.Header>
+          <Modal.Title>User Details for: {name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {userData ? (
-            <>
-              <p>Name: {userData.name}</p>
-              <p>Email: {userData.email}</p>
-              <p>Father's Name: {userData.fatherName}</p>
-              <p>Date of Birth: {userData.dateOfBirth}</p>
-              <p>Gender: {userData.gender}</p>
-              <p>CNIC: {userData.cnic}</p>
-              <p>Address: {userData.address}</p>
-              <p>Qualification: {userData.qualification}</p>
-              <p>Subject: {userData.subject}</p>
-              <p>Completion Year: {userData.completionYear}</p>
-              <p>University/College: {userData.universityCollege}</p>
-            </>
-          ) : (
-            <p>Loading user data...</p>
-          )}
+          <>
+            <p>Name: {name}</p>
+            <p>Email: {email}</p>
+            <p>Father's Name: {fatherName}</p>
+            <p>Date of Birth: {dateOfBirth}</p>
+            <p>Gender: {gender}</p>
+            <p>Qualification: {qualification}</p>
+          </>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseUserDataModal}>

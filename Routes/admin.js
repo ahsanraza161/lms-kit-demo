@@ -5,10 +5,10 @@ const sendMail = require('../utils/sendmail');
 
 const Student = require('../models/Student');
 
-// @route POST api/users
+// @route GET api/admin
 // @describe Get all Students with status pending
 // @access private
-router.get('/', async (req, res) => {
+router.get('/pending', async (req, res) => {
   try {
     const students = await Student.find({ status: 'pending' })
       .sort({
@@ -22,7 +22,24 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route POST api/users
+// @route GET api/admin
+// @describe Get all Students with status approved
+// @access private
+router.get('/approved', async (req, res) => {
+  try {
+    const students = await Student.find({ status: 'approved' })
+      .sort({
+        created_at: -1,
+      })
+      .select('-password');
+    res.json(students);
+  } catch (err) {
+    console.error('Error registering user:', err);
+    res.status(500).send({ message: err });
+  }
+});
+
+// @route PUT api/admin
 // @describe Change the Student status from pending to approved
 // @access private
 router.put('/:id', async (req, res) => {
@@ -44,6 +61,22 @@ router.put('/:id', async (req, res) => {
 
     // Return response
     return res.status(200).json({ msg: 'Email has been sent to student' });
+  } catch (err) {
+    res.status(500).json({ err });
+    console.error(err);
+  }
+});
+
+// @route DELETE api/admin
+// @describe delete the students
+// @access private
+router.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Student.findByIdAndDelete(id);
+
+    return res.status(200).json({ msg: 'Contact deleted successfully' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);

@@ -17,6 +17,10 @@ const PendingRegistrations = () => {
           name={item.name}
           email={item.email}
           id={item._id}
+          fatherName={item.fatherName}
+          dateOfBirth={item.dateOfBirth}
+          qualification={item.qualification}
+          gender={item.gender}
         />
       ))}
     </div>

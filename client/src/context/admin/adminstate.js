@@ -6,9 +6,10 @@ import axios from 'axios';
 const Adminstate = ({ children }) => {
   const initstate = {
     pendingStudents: [],
+    approvedStudents: [],
   };
 
-  // get pending students
+  // Get pending students
   const getPendingStudents = async () => {
     try {
       const config = {
@@ -17,11 +18,32 @@ const Adminstate = ({ children }) => {
         },
       };
       const response = await axios.get(
-        'http://localhost:8080/api/admin',
+        'http://localhost:8080/api/admin/pending',
         config
       );
       dispatch({
-        type: 'setpendingstudents',
+        type: 'getpendingstudents',
+        payload: response.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Get approved students
+  const getApprovedStudents = async () => {
+    try {
+      const config = {
+        data: {
+          'Content-type': 'application-json',
+        },
+      };
+      const response = await axios.get(
+        'http://localhost:8080/api/admin/approved',
+        config
+      );
+      dispatch({
+        type: 'getapprovedstudents',
         payload: response.data,
       });
     } catch (err) {
@@ -41,7 +63,23 @@ const Adminstate = ({ children }) => {
         `http://localhost:8080/api/admin/${id}`,
         config
       );
-      console.log(res.data);
+      dispatch({
+        type: 'approvestudent',
+        payload: id,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Delete Student
+  const deleteStudent = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:8080/api/admin/${id}`);
+      dispatch({
+        type: 'deletestudent',
+        payload: id,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -70,9 +108,12 @@ const Adminstate = ({ children }) => {
     <AdminContext.Provider
       value={{
         pendingStudents: state.pendingStudents,
+        approvedStudents: state.approvedStudents,
         getPendingStudents,
         approveHandler,
-        getUserData, // Include getUserData in the context value
+        getUserData,
+        getApprovedStudents,
+        deleteStudent,
       }}
     >
       {children}

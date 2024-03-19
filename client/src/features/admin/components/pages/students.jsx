@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import AdminContext from '../../../../context/admin/admincontext';
+import Approved_Student from './approved_student';
 
 const AdminStudentsTable = () => {
-  const [students, setStudents] = useState([]);
+  const { getApprovedStudents, approvedStudents } = useContext(AdminContext);
 
-  // Fetch approved students from Node.js backend (replace with your actual API endpoint)
+  // Call API
   useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await fetch('/api/students/approved');
-        const data = await response.json();
-        setStudents(data);
-      } catch (error) {
-        console.error('Error fetching students:', error);
-      }
-    };
-
-    fetchStudents();
+    getApprovedStudents();
   }, []);
 
   return (
@@ -38,26 +30,8 @@ const AdminStudentsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {students.map((student) => (
-          <tr key={student._id}>
-            <td>{student.name}</td>
-            <td>{student.fatherName}</td>
-            <td>{new Date(student.dateOfBirth).toLocaleDateString()}</td>{' '}
-            {/* Format date */}
-            <td>{student.gender}</td>
-            <td>{student.cnic}</td>
-            <td>{student.address}</td>
-            <td>{student.qualification}</td>
-            <td>{student.subject}</td>
-            <td>{student.completionYear}</td>
-            <td>{student.universityCollege}</td>
-            <td>{student.email}</td>
-            <td>
-              <Button variant="danger" size="sm">
-                Delete {/* Replace with actual delete functionality */}
-              </Button>
-            </td>
-          </tr>
+        {approvedStudents.map((item) => (
+          <Approved_Student item={item} key={item._id} />
         ))}
       </tbody>
     </Table>
