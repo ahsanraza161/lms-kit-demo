@@ -59,11 +59,7 @@ const Pending_student = ({
               <td>{id}</td>
               <td>
                 <button onClick={onApproveHandler}>Approve</button>
-                <button
-                  variant="primary"
-                  size="sm"
-                  onClick={handleShowUserDataModal}
-                >
+                <button variant="primary" size="sm" onClick={handleShowUserDataModal}>
                   Show User Data
                 </button>
               </td>
