@@ -13,9 +13,6 @@
 body {
   background-image: url('../public/assets/bgforlms.jpg');
   background-repeat: no-repeat;
-  /* background-position: center center; */
-  /* background-size: cover; */
-  padding-top: 5%;
 }
 .home {
   background-color: #fff;

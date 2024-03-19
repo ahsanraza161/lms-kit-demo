@@ -14,7 +14,7 @@ function home() {
         <Container fluid>
           <Row>
             <Col className="login" xs={12} md={6}>
-              <Link href="/registration">
+              <Link href="/login">
                 <Login className="text-decoration-none" />
               </Link>
             </Col>

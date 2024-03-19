@@ -10,7 +10,7 @@ import Adminstate from './context/admin/adminstate';
 import Admindashboard from './features/admin';
 import Student from './features/admin/components/pages/students';
 import Usermanagement from './features/admin/components/pages/pending-registration';
-import Adduser from './features/admin/components/pages/adduser';
+import AddUser from './features/admin/components/pages/adduser';
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
               <Route path="students" element={<Student />} />
               <Route path="teachers" element={<Student />} />
               <Route path="usermanagement" element={<Usermanagement />} />
-              <Route path="adduser" element={<Adduser />} />
+              <Route path="adduser" element={<AddUser />} />
             </Route>
           </Routes>
         </BrowserRouter>

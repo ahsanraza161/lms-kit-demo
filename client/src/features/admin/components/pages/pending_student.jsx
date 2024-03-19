@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import "../../mainadmin.css"
 import AdminContext from '../../../../context/admin/admincontext';
 
 const Pending_student = ({ name, id, email }) => {
@@ -7,8 +8,8 @@ const Pending_student = ({ name, id, email }) => {
     approveHandler(id);
   };
   return (
-    <div style={{ background: '#fff' }}>
-      <h1>{name}</h1>
+    <div className='pendingStudent'>
+      <h1 className='psName'>{name}</h1>
       <p>{email}</p>
       <p>{id}</p>
       <button onClick={onApproveHandler}>Approve</button>

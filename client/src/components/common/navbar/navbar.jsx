@@ -18,7 +18,7 @@ function Topbar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className=" navmain align-items-center">
-              <Link className="active navitem" to="/">
+              <Link className="navitem" to="/">
                 Home
               </Link>
               <Link className="navitem" to="/about">
