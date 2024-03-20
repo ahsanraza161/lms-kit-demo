@@ -309,7 +309,7 @@ const RegistrationForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
+                  <FormControl sx={{ width: '100%' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                       Password
                     </InputLabel>
@@ -345,8 +345,8 @@ const RegistrationForm = () => {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="/" variant="body2">
-                    {'Already have an account? Login'}
+                  <Link to="/login" variant="body2">
+                    Already have an account? Login
                   </Link>
                 </Grid>
               </Grid>

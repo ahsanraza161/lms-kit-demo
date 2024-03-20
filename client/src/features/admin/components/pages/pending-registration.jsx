@@ -10,7 +10,7 @@ const PendingRegistrations = () => {
 
   return (
     <div>
-      <h1>Pending Registrations</h1>
+      <h1 className="text-center m-3 ">Pending Registrations</h1>
       {pendingStudents.map((item) => (
         <Pending_student
           key={item._id}

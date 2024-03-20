@@ -113,7 +113,7 @@ const addUser = () => {
 
   return (
     <>
-      <main className="App-main-all container">
+      <main className="m-5 container">
         <ThemeProvider theme={defaultTheme}>
           <CssBaseline />
           <Box
@@ -137,11 +137,9 @@ const addUser = () => {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
+                <Grid item xs={12} sm={12}>
                   <FormControl required style={{ width: '100%' }}>
-                    <InputLabel id="usertype-label">
-                      Register as a
-                    </InputLabel>
+                    <InputLabel id="usertype-label">Register as a</InputLabel>
                     <Select
                       labelId="usertype-label"
                       name="usertype"
@@ -307,7 +305,7 @@ const addUser = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
+                  <FormControl sx={{ width: '100%' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                       Password
                     </InputLabel>
@@ -344,8 +342,8 @@ const addUser = () => {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="/" variant="body2">
-                    {'Already have an account? Login'}
+                  <Link href="/login" variant="body2">
+                    Already have an account? Login
                   </Link>
                 </Grid>
               </Grid>
