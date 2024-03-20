@@ -56,6 +56,7 @@ router.post('/', async (req, res) => {
     await newStudent.save();
 
     return res.status(200).json({ msg: 'Your request has been send to admin' });
+    
   } catch (err) {
     console.error('Error registering user:', err);
     res.status(500).send({ message: err });

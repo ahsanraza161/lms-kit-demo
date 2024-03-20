@@ -12,12 +12,20 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AuthContext from '../../context/auth/authcontext';
-import toast,{ Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 const SignIn = () => {
-  const { LoginHandler, error } = useContext(AuthContext);
+  const {
+    LoginHandler,
+    error,
+    isStudentAuthenticated,
+    isTeacherAuthenticated,
+    isAdminAuthenticated,
+  } = useContext(AuthContext);
 
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -41,7 +49,22 @@ const SignIn = () => {
     if (error !== null && error !== undefined) {
       toast.error(error);
     }
-  }, [error]);
+
+    if (isAdminAuthenticated) {
+      navigate('/dashboard');
+    }
+    if (isStudentAuthenticated) {
+      navigate('/studentdashboard');
+    }
+    if (isTeacherAuthenticated) {
+      navigate('/teacherdashboard');
+    }
+  }, [
+    error,
+    isStudentAuthenticated,
+    isTeacherAuthenticated,
+    isAdminAuthenticated,
+  ]);
   return (
     <>
       <Topbar />

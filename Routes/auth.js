@@ -18,7 +18,9 @@ router.post('/', async (req, res) => {
     } else if (student.status === 'pending') {
       return res
         .status(400)
-        .json({ msg: 'Your account request has been sent to admin,You can not login now' });
+        .json({
+          msg: 'Your account request has been sent to admin, You cannot login now',
+        });
     }
     const isMatch = await bcrypt.compare(password, student.password);
 
@@ -43,7 +45,8 @@ router.post('/', async (req, res) => {
           console.error(err.message);
           return res.status(500).json({ msg: 'Server error' });
         }
-        return res.status(200).json({ token });
+        // If no error, token is generated successfully
+        return res.status(200).json({ token, usertype: student.usertype });
       }
     );
   } catch (err) {

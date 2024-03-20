@@ -41,7 +41,7 @@ const Sidebar = ({ children }) => {
     },
   ];
   return (
-    <div className="container2">
+        <div className="container2">
       <div className={isOpen ? 'sidebar2' : 'sidebar'}>
         <div className="top_section">
           <h1

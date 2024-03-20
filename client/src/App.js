@@ -28,6 +28,22 @@ function App() {
               <Route path="usermanagement" element={<Usermanagement />} />
               <Route path="adduser" element={<AddUser />} />
             </Route>
+            <Route
+              path="studentdashboard"
+              element={
+                <div style={{ backgroundColor: 'white' }}>
+                  Student Dashboard
+                </div>
+              }
+            />
+            <Route
+              path="teacherdashboard"
+              element={
+                <div style={{ backgroundColor: 'white' }}>
+                  Teacher Dashboard
+                </div>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </Adminstate>

@@ -2,12 +2,19 @@ import { LOGIN_FAIL, LOGIN_SUCCESS, REGISTER_SUCCESS } from '../type';
 const Authreducer = (state, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      if (action.payload) {
+      // Assuming the payload contains userType
+      const { usertype } = action.payload;
+      let isAuthenticated = '';
+      if (usertype === 'Student') {
+        isAuthenticated = 'isStudentAuthenticated';
+      } else if (usertype === 'Faculty') {
+        isAuthenticated = 'isTeacherAuthenticated';
+      } else if (usertype === 'admin') {
+        isAuthenticated = 'isAdminAuthenticated';
       }
       return {
         ...state,
-        isLoading: false,
-        isAuthenticated: true,
+        [isAuthenticated]: true,
       };
     case REGISTER_SUCCESS:
       return {

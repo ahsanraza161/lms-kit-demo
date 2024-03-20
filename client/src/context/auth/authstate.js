@@ -2,11 +2,13 @@ import React, { useReducer } from 'react';
 import AuthContext from './authcontext';
 import Authreducer from './authreducer';
 import axios from 'axios';
-import { LOGIN_FAIL, REGISTER_SUCCESS } from '../type';
+import { LOGIN_FAIL, REGISTER_SUCCESS, LOGIN_SUCCESS } from '../type';
 
 const Authstate = ({ children }) => {
   const initstate = {
-    isAuthenticated: localStorage.getItem('token') ? true : false,
+    isAdminAuthenticated: '',
+    isStudentAuthenticated: '',
+    isTeacherAuthenticated: '',
     isLoading: true,
     error: null,
     data: '',
@@ -26,6 +28,10 @@ const Authstate = ({ children }) => {
         formData,
         config
       );
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
@@ -52,7 +58,9 @@ const Authstate = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: state.isAuthenticated,
+        isAdminAuthenticated: state.isAdminAuthenticated,
+        isStudentAuthenticated: state.isStudentAuthenticated,
+        isTeacherAuthenticated: state.isTeacherAuthenticated,
         token: state.token,
         isLoading: state.isLoading,
         error: state.error,
