@@ -6,10 +6,11 @@ import { Outlet } from 'react-router-dom';
 
 function Admin() {
   return (
-    <div className='admin'>
+    <div className="admin">
       <Sidebar>
         <Topbar />
-        <Outlet />  
+        {/* <Dashboard /> */}
+        <Outlet />
       </Sidebar>
     </div>
   );
