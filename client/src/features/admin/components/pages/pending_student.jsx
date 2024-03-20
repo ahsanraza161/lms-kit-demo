@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Table, Row, Col, Modal, Button } from 'react-bootstrap';
-import "../../mainadmin.css";
+import '../../mainadmin.css';
 import AdminContext from '../../../../context/admin/admincontext';
 
 const Pending_student = ({ name, id, email }) => {
@@ -50,10 +50,16 @@ const Pending_student = ({ name, id, email }) => {
               <td>{email}</td>
               <td>{id}</td>
               <td>
-                <button onClick={onApproveHandler} refresh="true">Approve</button>
-                <button variant="primary" size="sm" onClick={handleShowUserDataModal}>
+                <Button variant="success" size="sm" onClick={onApproveHandler}>
+                  Approve
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleShowUserDataModal}
+                >
                   Show User Data
-                </button>
+                </Button>
               </td>
             </tr>
           </tbody>
