@@ -8,6 +8,7 @@ import {
   FaUsersCog,
 } from 'react-icons/fa';
 import { PiStudent } from 'react-icons/pi';
+import { HiClipboardList } from "react-icons/hi";
 import { Link } from 'react-router-dom';
 
 const Sidebar = ({ children }) => {
@@ -27,7 +28,7 @@ const Sidebar = ({ children }) => {
     {
       path: 'teachers',
       name: 'Teachers',
-      icon: <FaChalkboardTeacher  />,
+      icon: <FaChalkboardTeacher />,
     },
     {
       path: 'adduser',
@@ -39,9 +40,14 @@ const Sidebar = ({ children }) => {
       name: 'User Manangment',
       icon: <FaUsersCog />,
     },
+    {
+      path: 'courses',
+      name: 'Courses',
+      icon: <HiClipboardList />,
+    },
   ];
   return (
-        <div className="container2">
+    <div className="container2">
       <div className={isOpen ? 'sidebar2' : 'sidebar'}>
         <div className="top_section">
           <h1

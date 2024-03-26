@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 import Approved_Student from './approved_student';
+import './students.css'
 
 const AdminStudentsTable = () => {
   const { getApprovedStudents, approvedStudents } = useContext(AdminContext);
@@ -12,9 +13,9 @@ const AdminStudentsTable = () => {
   }, []);
 
   return (
-    <Table striped bordered hover responsive className="mt-5 p-3">
+    <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
       <thead>
-        <tr>
+        <tr className='sHeading' >
           <th>Name</th>
           <th>Father's Name</th>
           <th>Date of Birth</th>

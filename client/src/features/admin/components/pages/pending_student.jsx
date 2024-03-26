@@ -58,8 +58,10 @@ const Pending_student = ({
               <td>{email}</td>
               <td>{id}</td>
               <td>
-                <Button onClick={onApproveHandler}>Approve</Button>
-                <Button variant="primary" size="sm" onClick={handleShowUserDataModal}>
+                <Button variant="success" onClick={onApproveHandler}>
+                  Approve
+                </Button>
+                <Button variant="primary" onClick={handleShowUserDataModal}>
                   Show User Data
                 </Button>
               </td>
