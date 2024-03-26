@@ -43,7 +43,7 @@ const Sidebar = ({ children }) => {
     {
       path: 'courses',
       name: 'Courses',
-      icon: <HiClipboardList />,
+      icon: <HiClipboardListz />,
     },
   ];
   return (
