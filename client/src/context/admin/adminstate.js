@@ -7,6 +7,7 @@ const Adminstate = ({ children }) => {
   const initstate = {
     pendingStudents: [],
     approvedStudents: [],
+    courses: [],
   };
 
   // Get pending students
@@ -102,6 +103,51 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // get all courses
+  const getAllCourses = async () => {
+    try {
+      const config = {
+        data: {
+          'Content-type': 'application-json',
+        },
+      };
+      const res = await axios.get('http://localhost:8080/api/courses', config);
+      dispatch({
+        type: 'getcourses',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Delete Course
+  const deleteCourse = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:8080/api/courses/${id}`);
+      console.log(res.data);
+      dispatch({
+        type: 'deletecourse',
+        payload: id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Add Course
+  const addCourse = async () => {
+    try {
+      const res = await axios.post(`http://localhost:8080/api/courses`);
+      console.log(res.data);
+      dispatch({
+        type: 'addcourse',
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const [state, dispatch] = useReducer(AdminReducer, initstate);
 
   return (
@@ -114,6 +160,10 @@ const Adminstate = ({ children }) => {
         getUserData,
         getApprovedStudents,
         deleteStudent,
+        getAllCourses,
+        deleteCourse,
+        addCourse,
+        courses: state.courses,
       }}
     >
       {children}

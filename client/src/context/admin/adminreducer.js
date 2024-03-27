@@ -23,8 +23,18 @@ const AdminReducer = (state, action) => {
         pendingStudents: state.pendingStudents.filter(
           (student) => student._id !== action.payload
         ),
-      }
-      default:
+      };
+    case 'getcourses':
+      return {
+        ...state,
+        courses: action.payload,
+      };
+    case 'deletecourse':
+      return {
+        ...state,
+        courses:state.courses.filter((course) => course._id !== action.payload)
+      };
+    default:
       return state;
   }
 };

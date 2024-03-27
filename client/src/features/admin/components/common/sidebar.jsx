@@ -8,7 +8,7 @@ import {
   FaUsersCog,
 } from 'react-icons/fa';
 import { PiStudent } from 'react-icons/pi';
-import { HiClipboardList } from "react-icons/hi";
+import { HiClipboardList } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
 const Sidebar = ({ children }) => {
@@ -43,7 +43,7 @@ const Sidebar = ({ children }) => {
     {
       path: 'courses',
       name: 'Courses',
-      icon: <HiClipboardListz />,
+      icon: <HiClipboardList />,
     },
   ];
   return (

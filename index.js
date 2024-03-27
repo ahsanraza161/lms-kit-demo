@@ -9,9 +9,13 @@ app.use(cors());
 
 connectdb();
 
+
+// Api routes
 app.use('/api/users', require('./Routes/user'));
 app.use('/api/auth', require('./Routes/auth'));
 app.use('/api/admin', require('./Routes/admin'));
+app.use('/api/courses', require('./Routes/course'));
+
 
 app.get('/', (req, res) => res.send('<h1>Hello</h1>'));
 
