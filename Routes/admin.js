@@ -61,7 +61,6 @@ router.put('/:id', async (req, res) => {
     // Send email to users email
     await sendMail(
       'Please Login your account',
-      '<p>Your account has been approved plz login in your account</p>',
       student.email
     );
 
