@@ -34,7 +34,12 @@ const AdminReducer = (state, action) => {
         ...state,
         courses:state.courses.filter((course) => course._id !== action.payload)
       };
-    default:
+    case "addcourse":
+      return {
+        ...state,
+        courses: [action.payload,...state.courses]
+      }
+      default:
       return state;
   }
 };

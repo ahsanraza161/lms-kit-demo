@@ -5,16 +5,8 @@ import '../../mainadmin.css';
 import Course from './course';
 import AdminContext from '../../../../context/admin/admincontext';
 function Courses() {
-  const [showUserDataModal, setShowUserDataModal] = useState(false);
   const [showAddCourse, setShowAddCourse] = useState(false);
   const { getAllCourses, courses, addCourse } = useContext(AdminContext);
-
-  //   Student data
-  const handleShowUserDataModal = () => {
-    setShowUserDataModal(true);
-  };
-  const handleCloseUserDataModal = () => setShowUserDataModal(false);
-
   //   add course btn
 
   const handleAddNewCourse = () => {
@@ -45,13 +37,15 @@ function Courses() {
 
   const onSumitCourseHandler = (e) => {
     e.preventDefault();
-    setCourse({
-      course_name: '',
-      teacher: '',
-      start_date: '',
-      classes_date: '',
-    });
-    addCourse(course);
+
+    const formattedCourse = {
+      ...course,
+      start_date: course.start_date.replace(/-/g, '/'),
+      classes_date: course.classes_date.replace(/-/g, '/'),
+    };
+    // Now, you can send the request with the updated course object
+    console.log(formattedCourse);
+    addCourse(formattedCourse);
   };
   return (
     <div className="container">
@@ -89,46 +83,7 @@ function Courses() {
           </Table>
         </Col>
 
-        {/* <Modal show={showUserDataModal} onHide={handleCloseUserDataModal}>
-          <Modal.Header>
-            <Modal.Title>Students Of : Web development</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <>
-              <Table responsive striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Father's Name</th>
-                    <th>Date of Birth</th>
-                    <th>Gender</th>
-                    <th>Qualification</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Ahsan raza</td>
-                    <td>ahsan@gmail.com</td>
-                    <td>sarwar</td>
-                    <td>22/august/2111</td>
-                    <td>male</td>
-                    <td>Intermediate</td>
-                    <td>
-                      <Button variant="danger">remove</Button>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseUserDataModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal> */}
+        
 
         <Modal show={showAddCourse} onHide={handleCloseAddCourse}>
           <Modal.Header>
@@ -137,7 +92,7 @@ function Courses() {
           <Modal.Body>
             <Form.Floating className="mb-3">
               <Form.Control
-                id="Course_name"
+                id="course_name"
                 type="text"
                 placeholder="Course_name"
                 name="course_name"

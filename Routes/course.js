@@ -21,25 +21,13 @@ router.get('/', async (req, res) => {
 // @access private
 router.post('/', async (req, res) => {
   try {
-    const { course_name, start_date, teacher, classes_date } = req.body;
-
-    // Parse the input date string into Date objects
-    const startDateObj = new Date(start_date);
-    const classesDateObj = new Date(classes_date);
-
-    // Format the date objects to the desired format
-    const formattedStartDate = `${startDateObj.getFullYear()}/${
-      startDateObj.getMonth() + 1
-    }/${startDateObj.getDate()}`;
-    const formattedClassesDate = `${classesDateObj.getFullYear()}/${
-      classesDateObj.getMonth() + 1
-    }/${classesDateObj.getDate()}`;
+    const { course_name, teacher, start_date, classes_date } = req.body;
 
     let course = new Course({
-      name: course_name,
-      start_date: formattedStartDate,
-      classes_date: formattedClassesDate,
+      name:course_name,
       teacher,
+      start_date,
+      classes_date,
     });
 
     course = await course.save();

@@ -136,15 +136,15 @@ const Adminstate = ({ children }) => {
   };
 
   // Add Course
-  const addCourse = async () => {
+  const addCourse = async (data) => {
     try {
-      const res = await axios.post(`http://localhost:8080/api/courses`);
-      console.log(res.data);
+      const res = await axios.post('http://localhost:8080/api/courses', data);
       dispatch({
         type: 'addcourse',
+        payload: res.data,
       });
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
     }
   };
 
