@@ -12,6 +12,7 @@ import Student from './features/admin/components/pages/students';
 import Usermanagement from './features/admin/components/pages/pending-registration';
 import AddUser from './features/admin/components/pages/adduser';
 import Courses from './features/admin/components/pages/courses';
+import UserProfile from './features/student';
 
 function App() {
   return (
@@ -31,11 +32,10 @@ function App() {
               <Route path="courses" element={<Courses />} />
             </Route>
             <Route
-              path="studentdashboard"
+              path="/user/:activepage"
               element={
-                <div style={{ backgroundColor: 'white' }}>
-                  Student Dashboard
-                </div>
+                // <div>hello </div>
+                <UserProfile/>
               }
             />
             <Route

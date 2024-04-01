@@ -8,6 +8,9 @@
   --primary-color: #2e00c6;
   --secondary-color: #2f0027;
   --primary-text-color: #fff;
+  --col1: #2f0027;
+  --col2: gray;
+  --col3: #cecece;
 }
 
 body {
@@ -128,7 +131,44 @@ body {
   margin: 20px 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+.stylenone {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mainhead1 {
+  color: var(--col1);
+  font-size: 30px;
+  font-weight: 300;
+  padding: 5px 10px;
+  margin-top: 10px;
+}
+
+.mainbutton1 {
+  background: none;
+  border: 1px solid var(--col1);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin: 1rem;
+  cursor: pointer;
+  color: var(--col1);
+  transition: all 0.5s ease;
+}
+
+.mainbutton1:hover {
+  background-color: var(--col1);
+  color: white;
+}
+
 /* media queries */
+@media screen and (max-width: 768px) {
+  .mainhead1 {
+    font-size: 20px;
+  }
+}
 @media only screen and (max-width: 600px) {
   .App {
     height: 100%;
