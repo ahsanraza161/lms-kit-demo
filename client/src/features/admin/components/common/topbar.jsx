@@ -25,7 +25,7 @@ function Topbar() {
   };
   const LogoutHandler = () => {
     LogoutUser();
-    navigate('/');
+    navigate('/home');
   };
 
 
@@ -43,7 +43,7 @@ function Topbar() {
           aria-haspopup="true"
           onClick={handleClick}
           startIcon={<KeyboardArrowDownIcon />}
-          sx={{  // Using the 'sx' prop for styling
+          sx={{  
             '& .MuiAvatar-root': {
               width: 50,
               height: 50,
