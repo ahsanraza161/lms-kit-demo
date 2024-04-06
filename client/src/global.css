@@ -3,6 +3,7 @@
   padding: 0%;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
+  scrollbar-width:  none !important;
 }
 :root {
   --primary-color: #2e00c6;
@@ -20,7 +21,7 @@ body {
 .home {
   background-color: #fff;
   border-radius: 30px;
-  margin: 7% auto;
+  margin: 6% auto;
 }
 .App-main-all {
   background-color: #fff;
@@ -58,6 +59,9 @@ body {
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   color: #ffffff;
+}
+.containerNav{
+  width: 82%;
 }
 .navSmart {
   background-color: #000;

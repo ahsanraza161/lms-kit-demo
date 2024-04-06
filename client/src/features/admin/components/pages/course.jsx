@@ -49,21 +49,12 @@ const Course = ({ name, teacher, start_date, id }) => {
               <tr>
                 <th>Name</th>
                 <th>Email</th>
-                {/* <th>Father's Name</th>
-                <th>Date of Birth</th>
-                <th>Gender</th>
-                <th>Qualification</th>
-                <th>Action</th> */}
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Ahsan raza</td>
                 <td>ahsan@gmail.com</td>
-                {/* <td>sarwar</td>
-                <td>22/august/2111</td>
-                <td>male</td>
-                <td>Intermediate</td> */}
                 <td>
                   <Button variant="danger">remove</Button>
                 </td>
@@ -81,4 +72,4 @@ const Course = ({ name, teacher, start_date, id }) => {
   );
 };
 
-export default Course;
+export default Course;

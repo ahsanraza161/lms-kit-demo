@@ -92,10 +92,10 @@ main {
   padding: 5px 20px !important;
   border-radius: 30px;
   text-align: center;
-  margin: 0px auto !important;
+  margin: 20px auto !important;
   color: #fff;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
