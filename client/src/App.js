@@ -29,6 +29,7 @@ function App() {
             <Route path="/forgetpassword" element={<ForgetPassword />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/dashboard" element={<Admindashboard />}>
+              <Route index element={<div>Hello</div>}></Route>
               <Route path="students" element={<Student />} />
               <Route path="teachers" element={<Student />} />
               <Route path="usermanagement" element={<Usermanagement />} />

@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router();
 const sendMail = require('../utils/sendmail');
+const { requestAcceptedEmail } = require('../utils/email');
 
 const Student = require('../models/Student');
 
@@ -48,7 +49,7 @@ router.get('/approved', async (req, res) => {
 // @route PUT api/admin
 // @describe Change the Student status from pending to approved
 // @access private
-router.put('/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const student = await Student.findById(id).select('-password');
@@ -61,7 +62,8 @@ router.put('/:id', async (req, res) => {
     // Send email to users email
     await sendMail(
       'Please Login your account',
-      student.email
+      student.email,
+      requestAcceptedEmail(student.name)
     );
 
     // Return response
