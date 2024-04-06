@@ -1,22 +1,22 @@
 const nodemailer = require('nodemailer');
-const email = require('./email');
 require('dotenv').config;
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
+var transporter = nodemailer.createTransport({
+  host: 'sandbox.smtp.mailtrap.io',
+  port: 2525,
   auth: {
-    user: process.env.sender,
-    pass: process.env.apppass,
+    user: 'a91b76f2148575',
+    pass: 'e7daa8a525e41a',
   },
 });
-async function sendMail(subject, to) {
+async function sendMail(subject, to, email) {
   if (!subject) {
     console.error('Subject is required to send an email');
     return; // Do not proceed if subject or text is missing
   }
 
   var mailOptions = {
-    from: process.env.sender,
+    from: 'mhuzaif523@gmail.com',
     //! Change
     to: to || 'neweraprovider@gmail.com',
     subject: subject,
