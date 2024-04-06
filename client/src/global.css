@@ -167,6 +167,45 @@ body {
   color: white;
 }
 
+.ForgetPass{
+  background-color: #fff;
+  width: 30%;
+  border-radius: 30px;
+  height: 70vh;
+  margin: 90px auto;
+}
+
+.ForgetPass .one{
+  padding-top: 50px ;
+  width: 90%;
+  margin: 0px auto;
+  text-align: center;
+
+}
+.one .icon{
+    font-size: 30px !important;
+    /* background-color: var(--col1); */
+    color: var(--col3);
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    margin: 20px;
+    border-radius: 50px;
+}
+.headingReset{
+  margin: 20px;
+}
+.notereset{
+  font-size: 15px;
+}
+.resetBtn{
+  width: 100%;
+  margin-top: 10px;
+}
+.resetLink{
+  display: flex;
+  justify-content: space-between;
+}
 /* media queries */
 @media screen and (max-width: 768px) {
   .mainhead1 {

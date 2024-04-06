@@ -80,7 +80,7 @@ const SignIn = () => {
                 alignItems: 'center',
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <Avatar sx={{ m: 1, alignItems: 'center', bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
@@ -126,12 +126,12 @@ const SignIn = () => {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link href="/forgetpassword" variant="body2">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link to="/registration" variant="body2">
+                    <Link href="/registration" variant="body2">
                       Don't have an account? Sign Up
                     </Link>
                   </Grid>

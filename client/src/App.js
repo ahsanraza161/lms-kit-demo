@@ -2,6 +2,7 @@ import './global.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/pages/about';
 import Home from './components/pages/home';
+import ForgetPassword from './components/pages/forgetpassword';
 import Registration from './components/pages/Registration';
 import Login from './components/pages/login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forgetpassword" element={<ForgetPassword />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/dashboard" element={<Admindashboard />}>
               <Route path="students" element={<Student />} />
