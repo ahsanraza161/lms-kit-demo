@@ -7,11 +7,11 @@ import UserSidebar from './student/common/sidebar';
 import AccountSettings from './student/pages/AccountSettings.jsx';
 import './student.css';
 import ChangePassword from './student/pages/ChangePassword.jsx';
-// import YourOrders from './student/pages/UserOrders';
+import YourCourses from './student/pages/YourCourses';
 import UserAddress from './student/pages/UserAddress';
 import LegalNotice from './student/pages/LegalNotice';
 
-const UserProfile = () => {
+const StudentPanel = () => {
   const { activepage } = useParams();
 
   // alert(activepage);
@@ -25,7 +25,7 @@ const UserProfile = () => {
         <div className="right">
           {activepage === 'accountsettings' && <AccountSettings />}
           {activepage === 'changepassword' && <ChangePassword />}
-          {activepage === 'yourorders' && <YourOrders />}
+          {activepage === 'yourcourses' && <YourCourses />}
           {activepage === 'address' && <UserAddress />}
           {activepage === 'legalnotice' && <LegalNotice />}
         </div>
@@ -34,4 +34,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default StudentPanel;

@@ -12,7 +12,9 @@ import Student from './features/admin/components/pages/students';
 import Usermanagement from './features/admin/components/pages/pending-registration';
 import AddUser from './features/admin/components/pages/adduser';
 import Courses from './features/admin/components/pages/courses';
-import UserProfile from './features/student';
+import CourseCard from './features/admin/components/pages/course';
+import StudentPanel from './features/student';
+import TeacherPanel from './features/teacher';
 
 function App() {
   return (
@@ -35,18 +37,16 @@ function App() {
             <Route
               path="/user/:activepage"
               element={
-                // <div>hello </div>
-                <UserProfile />
+                <StudentPanel/>
               }
             />
             <Route
-              path="teacherdashboard"
+              path="/teacher/:activepage"
               element={
-                <div style={{ backgroundColor: 'white' }}>
-                  Teacher Dashboard
-                </div>
+                <TeacherPanel/>
               }
             />
+            
           </Routes>
         </BrowserRouter>
       </Adminstate>

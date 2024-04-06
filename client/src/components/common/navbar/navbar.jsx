@@ -8,7 +8,7 @@ function Topbar() {
   return (
     <>
       <Navbar
-        className="navSmart container"
+        className="navSmart containerNav"
         data-bs-theme="dark"
         expand="lg"
         fixed="top"
