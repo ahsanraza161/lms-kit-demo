@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../global.css';
 import Topbar from './student/common/topbar.jsx';
 import { useParams } from 'react-router-dom';
@@ -10,14 +10,17 @@ import ChangePassword from './student/pages/ChangePassword.jsx';
 import YourCourses from './student/pages/YourCourses';
 import UserAddress from './student/pages/UserAddress';
 import LegalNotice from './student/pages/LegalNotice';
+import AuthContext from '../context/auth/authcontext';
 
 const StudentPanel = () => {
   const { activepage } = useParams();
+  const { GetUserData } = useContext(AuthContext);
+  
 
   // alert(activepage);
   return (
     <div className="userprofile">
-      <Topbar/>
+      <Topbar />
       <div className="userprofilein">
         <div className="left">
           <UserSidebar activepage={activepage} />

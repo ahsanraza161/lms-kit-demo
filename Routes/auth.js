@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const auth = require('../Middlewares/auth');
 
 const Student = require('../models/Student');
 
@@ -16,11 +17,9 @@ router.post('/', async (req, res) => {
     if (!student) {
       return res.status(400).json({ msg: 'User does not exist' });
     } else if (student.status === 'pending') {
-      return res
-        .status(400)
-        .json({
-          msg: 'Your account request has been sent to admin, You cannot login now',
-        });
+      return res.status(400).json({
+        msg: 'Your account request has been sent to admin, You cannot login now',
+      });
     }
     const isMatch = await bcrypt.compare(password, student.password);
 
@@ -52,6 +51,71 @@ router.post('/', async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route GET api/users
+// @describe Get User data
+// @access public
+router.get('/', auth, async (req, res) => {
+  const id = req.user.id;
+  try {
+    const user = await Student.findById(id).select('-password');
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err });
+  }
+});
+
+// @route GET api/users
+// @describe Get User data
+// @access public
+router.put('/', auth, async (req, res) => {
+  const id = req.user.id;
+  const {
+    name,
+    fatherName,
+    dateOfBirth,
+    gender,
+    cnic,
+    address,
+    qualification,
+    subject,
+    completionYear,
+    universityCollege,
+    email,
+  } = req.body;
+  try {
+    const userFields = {
+      name,
+      fatherName,
+      dateOfBirth,
+      gender,
+      cnic,
+      address,
+      qualification,
+      subject,
+      completionYear,
+      universityCollege,
+      email,
+    };
+
+    let user = await Student.findById(id).select('-password'); // Excluding password field
+
+    if (!user) {
+      return res.status(400).json({ msg: 'User not found' });
+    }
+    user = await Student.findByIdAndUpdate(
+      id,
+      { $set: userFields },
+      { new: true }
+    ).select('-password'); // Excluding password field
+
+    return res.json({ msg: 'User updated', user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err });
   }
 });
 

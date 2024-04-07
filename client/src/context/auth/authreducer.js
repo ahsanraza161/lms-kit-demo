@@ -3,7 +3,9 @@ const Authreducer = (state, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       // Assuming the payload contains userType
-      const { usertype } = action.payload;
+      const { usertype, token } = action.payload;
+      console.log(token);
+      localStorage.setItem('token', token);
       let isAuthenticated = '';
       if (usertype === 'Student') {
         isAuthenticated = 'isStudentAuthenticated';
@@ -15,6 +17,7 @@ const Authreducer = (state, action) => {
       return {
         ...state,
         [isAuthenticated]: true,
+        token,
       };
     case REGISTER_SUCCESS:
       return {
@@ -25,6 +28,16 @@ const Authreducer = (state, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case 'getuserdata':
+      return {
+        ...state,
+        data: action.payload,
+      };
+    case 'getuserdata':
+      return {
+        ...state,
+        data: action.payload,
       };
     default:
       return { state };

@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import AuthContext from './authcontext';
 import Authreducer from './authreducer';
 import axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
 import { LOGIN_FAIL, REGISTER_SUCCESS, LOGIN_SUCCESS } from '../type';
 
 const Authstate = ({ children }) => {
@@ -53,6 +54,35 @@ const Authstate = ({ children }) => {
       console.log(err.response);
     }
   };
+  const GetUserData = async () => {
+    try {
+      setAuthToken(state.token);
+      const res = await axios.get('http://localhost:8080/api/auth');
+      dispatch({
+        type: 'getuserdata',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+  const UpdateUser = async (data) => {
+    try {
+      const config = {
+        data: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const res = axios.put('http://localhost:8080/api/auth', data, config);
+      console.log(res.data);
+      dispatch({
+        type: 'updateuser',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const [state, dispatch] = useReducer(Authreducer, initstate);
   return (
@@ -68,6 +98,8 @@ const Authstate = ({ children }) => {
         message: state.message,
         LoginHandler,
         RegisterHandler,
+        GetUserData,
+        UpdateUser,
       }}
     >
       {children}

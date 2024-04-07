@@ -12,7 +12,6 @@ import Student from './features/admin/components/pages/students';
 import Usermanagement from './features/admin/components/pages/pending-registration';
 import AddUser from './features/admin/components/pages/adduser';
 import Courses from './features/admin/components/pages/courses';
-import CourseCard from './features/admin/components/pages/course';
 import StudentPanel from './features/student';
 import TeacherPanel from './features/teacher';
 
@@ -34,19 +33,8 @@ function App() {
               <Route path="adduser" element={<AddUser />} />
               <Route path="courses" element={<Courses />} />
             </Route>
-            <Route
-              path="/user/:activepage"
-              element={
-                <StudentPanel/>
-              }
-            />
-            <Route
-              path="/teacher/:activepage"
-              element={
-                <TeacherPanel/>
-              }
-            />
-            
+            <Route path="/user/:activepage" element={<StudentPanel />} />
+            <Route path="/teacher/:activepage" element={<TeacherPanel />} />
           </Routes>
         </BrowserRouter>
       </Adminstate>

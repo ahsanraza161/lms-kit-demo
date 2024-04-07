@@ -114,7 +114,7 @@ router.get('/', async (req, res) => {
 });
 
 // @route POST api/users
-// @describe Forgot Password
+// @describe Reset Password
 // @access public
 router.put('/:passwordResetToken', async (req, res) => {
   const { passwordResetToken } = req.params;
