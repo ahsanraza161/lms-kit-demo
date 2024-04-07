@@ -39,6 +39,14 @@ const Authreducer = (state, action) => {
         ...state,
         data: action.payload,
       };
+    case 'logout':
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        isStudentAuthenticated: false,
+        data: null,
+        token: null,
+      };
     default:
       return { state };
   }

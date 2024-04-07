@@ -83,6 +83,11 @@ const Authstate = ({ children }) => {
       console.error(err);
     }
   };
+  const LogoutUser = () => {
+    dispatch({
+      type: 'logout',
+    });
+  };
 
   const [state, dispatch] = useReducer(Authreducer, initstate);
   return (
@@ -100,6 +105,7 @@ const Authstate = ({ children }) => {
         RegisterHandler,
         GetUserData,
         UpdateUser,
+        LogoutUser,
       }}
     >
       {children}
