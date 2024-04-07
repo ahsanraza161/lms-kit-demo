@@ -54,7 +54,7 @@ const SignIn = () => {
       navigate('/dashboard');
     }
     if (isStudentAuthenticated) {
-      navigate('/user/accountsettings');
+      navigate('/user/yourcourses');
     }
     if (isTeacherAuthenticated) {
       navigate('/teacher/accountsettings');
@@ -80,7 +80,9 @@ const SignIn = () => {
                 alignItems: 'center',
               }}
             >
-              <Avatar sx={{ m: 1, alignItems: 'center', bgcolor: 'secondary.main' }}>
+              <Avatar
+                sx={{ m: 1, alignItems: 'center', bgcolor: 'secondary.main' }}
+              >
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">

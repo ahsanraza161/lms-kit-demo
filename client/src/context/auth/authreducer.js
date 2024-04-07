@@ -34,7 +34,7 @@ const Authreducer = (state, action) => {
         ...state,
         data: action.payload,
       };
-    case 'getuserdata':
+    case 'updateuser':
       return {
         ...state,
         data: action.payload,

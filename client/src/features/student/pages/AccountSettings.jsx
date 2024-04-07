@@ -2,7 +2,7 @@
 import './AccountSettings.css';
 // import '../../../global.css';
 // import { Button } from '@coreui/coreui';
-import { useContext, useState ,useEffect} from 'react';
+import { useContext, useState, useEffect } from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -59,8 +59,23 @@ const AccountSettings = () => {
   const { data, UpdateUser, GetUserData } = useContext(AuthContext);
   useEffect(() => {
     GetUserData();
+    setFormData((prevdata) => {
+      return {
+        name: data.name,
+        fatherName: data.fatherName,
+        dateOfBirth: data.dateOfBirth,
+        gender: data.gender,
+        cnic: data.cnic,
+        address: data.address,
+        qualification: data.qualification,
+        subject: data.subject,
+        completionYear: data.completionYear,
+        universityCollege: data.universityCollege,
+        email: data.email,
+      };
+    });
+    console.log(data)
   }, []);
-  console.log(data);
   const [formData, setFormData] = useState({
     name: data.name,
     fatherName: data.fatherName,
