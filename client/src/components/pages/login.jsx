@@ -57,7 +57,7 @@ const SignIn = () => {
       navigate('/user/yourcourses');
     }
     if (isTeacherAuthenticated) {
-      navigate('/teacher/accountsettings');
+      navigate('/teacher/yourcourses');
     }
   }, [
     error,
