@@ -2,13 +2,14 @@ const nodemailer = require('nodemailer');
 require('dotenv').config;
 
 var transporter = nodemailer.createTransport({
-  host: 'sandbox.smtp.mailtrap.io',
+  host: "sandbox.smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: 'a91b76f2148575',
-    pass: 'e7daa8a525e41a',
-  },
+    user: "a91b76f2148575",
+    pass: "********e41a"
+  }
 });
+
 async function sendMail(subject, to, email) {
   if (!subject) {
     console.error('Subject is required to send an email');
@@ -16,7 +17,7 @@ async function sendMail(subject, to, email) {
   }
 
   var mailOptions = {
-    from: 'mhuzaif523@gmail.com',
+    from: process.env.sender,
     //! Change
     to: to || 'neweraprovider@gmail.com',
     subject: subject,

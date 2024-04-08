@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const sendMail = require('../utils/sendmail');
 
 const Student = require('../models/Student');
-const { forgotPasswordEmail } = require('../utils/email');
+// const { forgotPasswordEmail } = require('../utils/email');
 
 // @route POST api/users
 // @describe Register a new User

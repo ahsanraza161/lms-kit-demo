@@ -4,7 +4,6 @@ const Authreducer = (state, action) => {
     case LOGIN_SUCCESS:
       // Assuming the payload contains userType
       const { usertype, token } = action.payload;
-      console.log(token);
       localStorage.setItem('token', token);
       let isAuthenticated = '';
       if (usertype === 'Student') {

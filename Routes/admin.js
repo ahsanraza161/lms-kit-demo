@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router();
 const sendMail = require('../utils/sendmail');
-const { requestAcceptedEmail } = require('../utils/email');
+const { requestAcceptedEmail } = require('../utils/emails');
 
 const Student = require('../models/Student');
 
@@ -58,16 +58,15 @@ router.patch('/:id', async (req, res) => {
 
     // Save the updated student
     await student.save();
-
+    try {
+      await sendMail(
+        'Request Accepted',
+        student.email,
+        requestAcceptedEmail(student.name)
+      );
+    } catch (err) {}
     // Send email to users email
-    await sendMail(
-      'Please Login your account',
-      student.email,
-      requestAcceptedEmail(student.name)
-    );
-
-    // Return response
-    return res.status(200).json({ msg: 'Email has been sent to student' });
+    return res.status(200).json({ msg: 'Email Successfully Sent' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);

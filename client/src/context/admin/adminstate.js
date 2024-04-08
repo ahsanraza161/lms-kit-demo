@@ -60,7 +60,7 @@ const Adminstate = ({ children }) => {
           'Content-type': 'application-json',
         },
       };
-      const res = await axios.put(
+      const res = await axios.patch(
         `http://localhost:8080/api/admin/${id}`,
         config
       );
@@ -69,7 +69,7 @@ const Adminstate = ({ children }) => {
         payload: id,
       });
     } catch (err) {
-      console.error(err);
+      console.error(err.response.data.message);
     }
   };
 
