@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Authstate from './context/auth/authstate';
 import Adminstate from './context/admin/adminstate';
 import Admindashboard from './features/admin';
+import Dashboard from './features/admin/components/pages/dashboard';
 import Student from './features/admin/components/pages/students';
 import Usermanagement from './features/admin/components/pages/pending-registration';
 import AddUser from './features/admin/components/pages/adduser';
@@ -23,12 +24,13 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgetpassword" element={<ForgetPassword />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/dashboard" element={<Admindashboard />}>
-              <Route index element={<div>Hello</div>}></Route>
+              <Route index element={<Dashboard/>}></Route>
               <Route path="students" element={<Student />} />
               <Route path="teachers" element={<Student />} />
               <Route path="usermanagement" element={<Usermanagement />} />

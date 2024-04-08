@@ -1,20 +1,20 @@
 import '../../mainadmin.css';
 import * as React from 'react';
+import { CgProfile } from 'react-icons/cg';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
-import Avatar from '@mui/material/Avatar';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import AuthContext from '../../../../context/auth/authcontext';
+import {useNavigate} from 'react-router-dom'
 
-const user = {
-  avatar:
-    'https://i.pinimg.com/originals/17/f3/9c/17f39c6f7a4a5457f39dba2368f0d077.jpg',
-  name: 'Ahsan Raza',
-};
+
 function Topbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const {LogoutUser} = React.useContext(AuthContext);
+  const navigate = useNavigate()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,6 +23,11 @@ function Topbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const LogoutHandler = () => {
+    LogoutUser();
+    navigate('/home');
+  };
+
 
   return (
     <div className="topBar">
@@ -38,7 +43,7 @@ function Topbar() {
           aria-haspopup="true"
           onClick={handleClick}
           startIcon={<KeyboardArrowDownIcon />}
-          sx={{  // Using the 'sx' prop for styling
+          sx={{  
             '& .MuiAvatar-root': {
               width: 50,
               height: 50,
@@ -46,8 +51,8 @@ function Topbar() {
             },
           }}
         >
-          {user.name}
-          <Avatar src={user.avatar} />
+          <CgProfile className="avatar" />
+
         </Button>
       </div>
 
@@ -59,9 +64,7 @@ function Topbar() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+         <MenuItem onClick={LogoutHandler}>Logout</MenuItem>
       </Menu>
     </div>
   );

@@ -3,6 +3,7 @@ require('dotenv').config;
 
 var transporter = nodemailer.createTransport({
   host: "sandbox.smtp.mailtrap.io",
+  host: "sandbox.smtp.mailtrap.io",
   port: 2525,
   auth: {
     user: "a91b76f2148575",
