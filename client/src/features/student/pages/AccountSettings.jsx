@@ -56,39 +56,39 @@ const genders = [
   { value: 'other', label: 'Other' },
 ];
 const AccountSettings = () => {
-  const { data, UpdateUser, GetUserData } = useContext(AuthContext);
-  useEffect(() => {
-    GetUserData();
-    setFormData((prevdata) => {
-      return {
-        name: data.name,
-        fatherName: data.fatherName,
-        dateOfBirth: data.dateOfBirth,
-        gender: data.gender,
-        cnic: data.cnic,
-        address: data.address,
-        qualification: data.qualification,
-        subject: data.subject,
-        completionYear: data.completionYear,
-        universityCollege: data.universityCollege,
-        email: data.email,
-      };
-    });
-    console.log(data)
-  }, []);
   const [formData, setFormData] = useState({
-    name: data.name,
-    fatherName: data.fatherName,
-    dateOfBirth: data.dateOfBirth,
-    gender: data.gender,
-    cnic: data.cnic,
-    address: data.address,
-    qualification: data.qualification,
-    subject: data.subject,
-    completionYear: data.completionYear,
-    universityCollege: data.universityCollege,
-    email: data.email,
+    name: '',
+    fatherName: '',
+    dateOfBirth: '',
+    gender: '',
+    cnic: '',
+    address: '',
+    qualification: '',
+    subject: '',
+    completionYear: '',
+    universityCollege: '',
+    email: '',
   });
+  const { GetUserData, data, UpdateUser } = useContext(AuthContext);
+  useEffect(() => {
+    GetUserData().then(() => {
+      if (data) {
+        setFormData({
+          name: data.name,
+          fatherName: data.fatherName,
+          dateOfBirth: data.dateOfBirth,
+          gender: data.gender,
+          cnic: data.cnic,
+          address: data.address,
+          qualification: data.qualification,
+          subject: data.subject,
+          completionYear: data.completionYear,
+          universityCollege: data.universityCollege,
+          email: data.email,
+        });
+      }
+    });
+  }, []);
 
   const handleChange = (event) => {
     setFormData({
@@ -100,6 +100,7 @@ const AccountSettings = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
+    UpdateUser(formData);
   };
   return (
     <div className="accountSettings">

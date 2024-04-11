@@ -19,13 +19,18 @@ const StudentSchema = new mongoose.Schema({
     enum: ['pending', 'approved'],
     required: true,
   },
-  passwordResetToken:{
-    type:String
+  passwordResetToken: {
+    type: String,
   },
-  passwordResetTokenExpiry:{
-    type:Date
-  }
-
+  passwordResetTokenExpiry: {
+    type: Date,
+  },
+  courses: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Array of ObjectIDs
+      ref: 'Course', // Reference to the Course model
+    },
+  ],
 });
 
 const User = mongoose.model('Students', StudentSchema);

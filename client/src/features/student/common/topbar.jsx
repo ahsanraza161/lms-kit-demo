@@ -25,13 +25,13 @@ function Topbar() {
   };
 
   const LogoutHandler = () => {
-    LogoutUser();
+    LogoutUser('isStudentAuthenticated');
     navigate('/');
   };
 
   return (
     <div className="topBar">
-      <h3>Learning Managment System</h3>
+      <h3>Learning Management System</h3>
       <div
         sx={{
           display: 'flex',
@@ -52,8 +52,7 @@ function Topbar() {
             },
           }}
         >
-          {data.name}
-          {/* <Avatar src={user.avatar} />   */}
+          {data && data.name ? data.name : ''}
           <CgProfile className="avatar" />
         </Button>
       </div>

@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
+import AuthContext from '../../../../context/auth/authcontext';
 
 const Course = ({ name, teacher, start_date, id }) => {
   const { deleteCourse } = useContext(AdminContext);
+  const { GetStudentsOfCourses } = useContext(AuthContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
   const [showAddStudentModel, setShowAddStudentModel] = useState(false);
@@ -119,4 +121,4 @@ const Course = ({ name, teacher, start_date, id }) => {
   );
 };
 
-export default Course;
+export default Course;

@@ -18,6 +18,13 @@ const CourseSchema = new mongoose.Schema({
     required: true,
     type: Date,
   },
+  students: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Array of ObjectIDs
+      ref: 'Student', // Reference to the Student model
+    },
+  ],
 });
+
 const Course = mongoose.model('Courses', CourseSchema);
 module.exports = Course;

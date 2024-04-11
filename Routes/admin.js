@@ -64,7 +64,10 @@ router.patch('/:id', async (req, res) => {
         student.email,
         requestAcceptedEmail(student.name)
       );
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: 'Server error' });
+    }
     // Send email to users email
     return res.status(200).json({ msg: 'Email Successfully Sent' });
   } catch (err) {

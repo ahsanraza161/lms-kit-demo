@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import '../global.css';
+import { useLocation } from 'react-router-dom';
 import Topbar from './student/common/topbar.jsx';
 import { useParams } from 'react-router-dom';
-// import Navbar from '../../COMPONENTS/Navbar/Navbar'
 import UserSidebar from './student/common/sidebar';
 import AccountSettings from './student/pages/AccountSettings.jsx';
 import './student.css';
@@ -14,8 +14,11 @@ import AuthContext from '../context/auth/authcontext';
 
 const StudentPanel = () => {
   const { activepage } = useParams();
-  const { GetUserData } = useContext(AuthContext);
-  
+  const { GetUserData, GetCoursesOfStudent } = useContext(AuthContext);
+  useEffect(() => {
+    GetUserData();
+    GetCoursesOfStudent();
+  }, []);
 
   // alert(activepage);
   return (
