@@ -1,15 +1,42 @@
-import "./students.css"
-// import Datatable from "../../components/datatable/Datatable"
-const List = () => {
+import React, { useEffect, useContext } from 'react';
+import { Table, Button } from 'react-bootstrap';
+import AdminContext from '../../../../context/admin/admincontext';
+import Approved_Student from './approved_student';
+import './students.css'
+
+const AdminStudentsTable = () => {
+  const { getApprovedStudents, approvedStudents } = useContext(AdminContext);
+
+  // Call API
+  useEffect(() => {
+    getApprovedStudents();
+  }, []);
+
   return (
-    <div className="list container">
-      <div className="listContainer">
-        {/* <Datatable/> */}
-        
-      </div>
+    <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
+      <thead>
+        <tr className='sHeading' >
+          <th>Name</th>
+          <th>Father's Name</th>
+          <th>Date of Birth</th>
+          <th>Gender</th>
+          <th>CNIC</th>
+          <th>Address</th>
+          <th>Qualification</th>
+          <th>Subject</th>
+          <th>Completion Year</th>
+          <th>University/College</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {approvedStudents.map((item) => (
+          <Approved_Student item={item} key={item._id} />
+        ))}
+      </tbody>
+    </Table>
+  );
+};
 
-    </div>
-  )
-}
-
-export default List;
+export default AdminStudentsTable;

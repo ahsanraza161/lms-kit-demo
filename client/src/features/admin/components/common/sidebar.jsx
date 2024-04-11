@@ -45,6 +45,11 @@ const Sidebar = ({ children }) => {
       name: 'Courses',
       icon: <HiClipboardList />,
     },
+    {
+      path: 'shedulecalender',
+      name: 'Calender',
+      icon: <HiClipboardList />,
+    },
   ];
   return (
     <div className="container2">

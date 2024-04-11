@@ -12,6 +12,7 @@
 .admin {
   background-color: var(--primary-text-color);
   overflow: scroll;
+  height: 100vh;
 }
 a {
   color: var(--primary-text-color);
