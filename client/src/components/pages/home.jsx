@@ -4,7 +4,6 @@ import '../../global.css';
 import Topbar from '../common/navbar/navbar';
 import Login from '../pages/login';
 import { Container, Row, Col } from 'react-bootstrap';
-import Link from '@mui/material/Link';
 
 function home() {
   return (
@@ -14,9 +13,7 @@ function home() {
         <Container fluid>
           <Row>
             <Col className="login" xs={12} md={6}>
-              <Link href="/login">
                 <Login className="text-decoration-none" />
-              </Link>
             </Col>
             <Col xs={12} md={6}>
               <div className="App-main-all mainpagecontent">
