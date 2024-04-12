@@ -5,7 +5,7 @@ import RequireAuth from './RequireAuth';
 import defaultRoutes from './routes';
 import Admindashboard from '../features/admin';
 import Dashboard from '../features/admin/components/pages/dashboard';
-import Student from '../features/admin/components/pages/approved_student';
+import Student from '../features/admin/components/pages/students';
 import Usermanagement from '../features/admin/components/pages/pending-registration';
 import AddUser from '../features/admin/components/pages/adduser';
 import Courses from '../features/admin/components/pages/courses';

@@ -3,10 +3,14 @@ import { Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 
 const Approved_Student = ({ item }) => {
+  if (!item) {
+    // Render null or a placeholder if item is undefined
+    return null;
+  }
 
-    const {deleteStudent} = useContext(AdminContext)
+  const { deleteStudent } = useContext(AdminContext);
   const deleteStudentHandler = () => {
-    deleteStudent(item._id)
+    deleteStudent(item._id);
   };
 
   return (
