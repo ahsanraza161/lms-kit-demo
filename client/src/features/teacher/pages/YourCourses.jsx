@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Col, Row, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 import './UserOrders.css';
 import '../../../global.css';
@@ -7,8 +7,7 @@ import '../../../global.css';
 function YourCourses () {
   return(
   <div className='container mt-3'>
-  <Row>
-    <Col xs={12}>
+  
       <Table responsive striped bordered hover>
         <thead>
           <tr>
@@ -31,10 +30,8 @@ function YourCourses () {
           </tr>
         </tbody>
       </Table>
-    </Col>
-  </Row>
+   
   </div>
-  // <h1>hello</h1>
 )
 };
 

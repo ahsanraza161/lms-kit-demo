@@ -3,7 +3,7 @@
   padding: 0%;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
-  /* scrollbar-width:  none; */
+  scrollbar-width:  none;
 }
 :root {
   --primary-color: #2e00c6;
