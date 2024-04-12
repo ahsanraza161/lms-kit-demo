@@ -25,6 +25,18 @@ router.get('/pending', async (req, res) => {
     res.status(500).send({ message: err });
   }
 });
+// @route GET api/admin
+// @describe Get all teacher with status approve
+// @access private
+router.get('/getteacher', async (req, res) => {
+  try {
+    const teacher = await  Student.find({usertype:'teacher',status:"approved"})
+    return res.status(200).json(teacher);
+  } catch (err) {
+    console.error('Error registering user:', err);
+    res.status(500).send({ message: err });
+  }
+});
 
 // @route GET api/admin
 // @describe Get all Students with status approved

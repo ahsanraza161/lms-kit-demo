@@ -1,14 +1,14 @@
 import React from 'react';
-import '../global.css';
-import Topbar from './teacher/common/topbar.jsx';
+import '../../global.css';
+import Topbar from './common/topbar.jsx';
 import { useParams } from 'react-router-dom';
-import UserSidebar from './teacher/common/sidebar';
-import AccountSettings from './teacher/pages/AccountSettings.jsx';
-import './student.css';
-import ChangePassword from './teacher/pages/ChangePassword.jsx';
-import YourCourses from './teacher/pages/YourCourses.jsx';
-import UserAddress from './teacher/pages/UserAddress';
-import LegalNotice from './teacher/pages/LegalNotice';
+import UserSidebar from './common/sidebar.jsx';
+import AccountSettings from './pages/AccountSettings.jsx';
+import '../student/student.css';
+import ChangePassword from './pages/ChangePassword.jsx';
+import YourCourses from './pages/YourCourses.jsx';
+import UserAddress from './pages/UserAddress.jsx';
+import LegalNotice from './pages/LegalNotice.jsx';
 
 const TeacherPanel = () => {
   const { activepage } = useParams();
@@ -16,7 +16,7 @@ const TeacherPanel = () => {
   // alert(activepage);
   return (
     <div className="userprofile">
-      <Topbar/>
+      <Topbar />
       <div className="userprofilein">
         <div className="left">
           <UserSidebar activepage={activepage} />
@@ -33,4 +33,4 @@ const TeacherPanel = () => {
   );
 };
 
-export default TeacherPanel
+export default TeacherPanel;

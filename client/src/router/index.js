@@ -1,10 +1,10 @@
 import React from 'react';
-import '../global.css'
+import '../global.css';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
 import RequireAuth from './RequireAuth';
 import defaultRoutes from './routes';
-import Admindashboard from '../features/admin';
+import Admindashboard from '../features/admin/index';
 import Dashboard from '../features/admin/components/pages/dashboard';
 import Student from '../features/admin/components/pages/students';
 import Teacher from '../features/admin/components/pages/students';
@@ -30,7 +30,7 @@ const AppRouter = () => {
 
         <Route element={<RequireAuth />}>
           <Route path="/dashboard" element={<Admindashboard />}>
-            <Route index element={<Dashboard />}/>
+            <Route index element={<Dashboard />} />
             <Route path="students" element={<Student />} />
             <Route path="teachers" element={<Teacher />} />
             <Route path="usermanagement" element={<Usermanagement />} />
@@ -42,7 +42,7 @@ const AppRouter = () => {
           <Route path="/user/:activepage" element={<StudentPanel />} />
           <Route path="/teacher/:activepage" element={<TeacherPanel />} />
         </Route>
-        <Route path="*" element={<h1 className='notfound'>Not found</h1>} />
+        <Route path="*" element={<h1 className="notfound">Not found</h1>} />
       </Route>
     </Routes>
   );
