@@ -4,7 +4,7 @@ import AdminContext from '../../../../context/admin/admincontext';
 import Approved_Student from './approved_student';
 import './students.css'
 
-const AdminStudentsTable = () => {
+const AdminTeacherTable = () => {
   const { getApprovedStudents, approvedStudents } = useContext(AdminContext);
 
   // Call API
@@ -39,4 +39,4 @@ const AdminStudentsTable = () => {
   );
 };
 
-export default AdminStudentsTable;
+export default AdminTeacherTable;

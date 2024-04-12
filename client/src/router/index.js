@@ -6,9 +6,11 @@ import RequireAuth from './RequireAuth';
 import defaultRoutes from './routes';
 import Admindashboard from '../features/admin';
 import Dashboard from '../features/admin/components/pages/dashboard';
-import Student from '../features/admin/components/pages/approved_student';
+import Student from '../features/admin/components/pages/students';
+import Teacher from '../features/admin/components/pages/students';
 import Usermanagement from '../features/admin/components/pages/pending-registration';
 import AddUser from '../features/admin/components/pages/adduser';
+import Attendence from '../features/admin/components/pages/Attendence';
 import Calender from '../features/admin/components/pages/CalenderShedule';
 import Courses from '../features/admin/components/pages/courses';
 import StudentPanel from '../features/student';
@@ -28,12 +30,13 @@ const AppRouter = () => {
 
         <Route element={<RequireAuth />}>
           <Route path="/dashboard" element={<Admindashboard />}>
-            <Route index element={<Dashboard />}></Route>
+            <Route index element={<Dashboard />}/>
             <Route path="students" element={<Student />} />
-            <Route path="teachers" element={<Student />} />
+            <Route path="teachers" element={<Teacher />} />
             <Route path="usermanagement" element={<Usermanagement />} />
             <Route path="adduser" element={<AddUser />} />
             <Route path="courses" element={<Courses />} />
+            <Route path="attendence" element={<Attendence />} />
             <Route path="shedulecalender" element={<Calender />} />
           </Route>
           <Route path="/user/:activepage" element={<StudentPanel />} />

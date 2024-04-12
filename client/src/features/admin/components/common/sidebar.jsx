@@ -50,6 +50,11 @@ const Sidebar = ({ children }) => {
       name: 'Calender',
       icon: <HiClipboardList />,
     },
+    {
+      path: 'attendence',
+      name: 'Attendence',
+      icon: <HiClipboardList />,
+    },
   ];
   return (
     <div className="container2">
