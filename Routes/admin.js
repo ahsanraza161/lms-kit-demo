@@ -13,7 +13,6 @@ router.get('/pending', async (req, res) => {
   try {
     const students = await Student.find({
       status: 'pending',
-      usertype: 'Student', // Assuming you have a field called userType
     })
       .sort({
         created_at: -1,
