@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Grid, Card, CardContent, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import {Button, Grid, Card, CardContent, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-// import axios from 'axios'; // Uncomment for backend integration
+import AddNoteModal from './AddNoteModal'; // Import the modal component
 
 const dummyData = {
   studentCount: 120,
@@ -29,31 +29,16 @@ function DashboardCard({ title, count, path }) {
 }
 
 function Dashboard() {
-  // const [data, setData] = React.useState(null); // Uncomment for backend integration
-  // const [error, setError] = React.useState(null); // Uncomment for backend integration
+  const [notes, setNotes] = useState([]); // State to store notes
+  const [open, setOpen] = useState(false); // State for modal visibility
 
-  // useEffect hook for fetching data (uncomment for backend integration)
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const responseData = await getDashboardData(); // Replace for your API calls
-  //       setData(responseData);
-  //     } catch (error) {
-  //       setError(error);
-  //     }
-  //   };
+  const handleOpenModal = () => setOpen(true);
+  const handleCloseModal = () => setOpen(false);
 
-  //   fetchData();
-  // }, []);
-
-  // return statements for loading and error states (uncomment for backend integration)
-  // if (error) {
-  //   return <div>Error fetching data: {error.message}</div>;
-  // }
-
-  // if (!data) {
-  //   return <div>Loading data...</div>;
-  // }
+  const handleCreateNote = (newNote) => {
+    setNotes([...notes, newNote]); // Add new note to the state
+    setOpen(false); // Close modal after creation
+  };
 
   return (
     <Grid container spacing={5}>
@@ -61,8 +46,7 @@ function Dashboard() {
         title="Students"
         count={dummyData.studentCount}
         path="/dashboard/students"
-      />{' '}
-      {/* Specify paths */}
+      />
       <DashboardCard
         title="Teachers"
         count={dummyData.teacherCount}
@@ -73,6 +57,31 @@ function Dashboard() {
         count={dummyData.courseCount}
         path="/dashboard/courses"
       />
+
+      {/* Add Button to trigger modal */}
+      <Button variant="contained" color="primary" onClick={handleOpenModal}>
+        Add Note
+      </Button>
+
+      {/* Display existing notes */}
+      {notes.length > 0 && (
+        <div>
+          <h2>Notes</h2>
+          {notes.map((note) => (
+            <Card key={note.id} sx={{ margin: '10px' }}>
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {note.createdAt ? new Date(note.createdAt).toLocaleString() : ''}
+                </Typography>
+                <Typography variant="body1">{note.content}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {/* AddNoteModal component */}
+      <AddNoteModal open={open} onClose={handleCloseModal} onCreateNote={handleCreateNote} />
     </Grid>
   );
 }
