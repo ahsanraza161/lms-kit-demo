@@ -15,6 +15,7 @@ const Authstate = ({ children }) => {
     data: '',
     token: localStorage.getItem('token'),
     message: null,
+    studentcourses: [],
   };
 
   const LoginHandler = async (formData) => {
@@ -29,6 +30,7 @@ const Authstate = ({ children }) => {
         formData,
         config
       );
+      console.log(res.data);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -83,10 +85,35 @@ const Authstate = ({ children }) => {
       console.error(err);
     }
   };
-  const LogoutUser = () => {
+  const LogoutUser = (role) => {
     dispatch({
       type: 'logout',
+      payload: role,
     });
+  };
+  const GetCoursesOfStudent = async () => {
+    try {
+      setAuthToken(state.token);
+      const res = await axios.get(`http://localhost:8080/api/students`);
+      dispatch({
+        type: 'getcoursesofstudents',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const GetStudentsOfCourses = async (id) => {
+    try {
+      console.log(id);
+      const res = await axios.get(
+        'http://localhost:8080/api/courses/getstudents',
+        { id }
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const [state, dispatch] = useReducer(Authreducer, initstate);
@@ -101,11 +128,14 @@ const Authstate = ({ children }) => {
         error: state.error,
         data: state.data,
         message: state.message,
+        studentcourses: state.studentcourses,
         LoginHandler,
         RegisterHandler,
         GetUserData,
         UpdateUser,
         LogoutUser,
+        GetCoursesOfStudent,
+        GetStudentsOfCourses,
       }}
     >
       {children}

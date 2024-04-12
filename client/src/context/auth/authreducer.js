@@ -40,11 +40,18 @@ const Authreducer = (state, action) => {
       };
     case 'logout':
       localStorage.removeItem('token');
+      const isAuthenticated1 = action.payload;
       return {
         ...state,
-        isStudentAuthenticated: false,
         data: null,
         token: null,
+        studentcourses: [],
+        [isAuthenticated1]: false,
+      };
+    case 'getcoursesofstudents':
+      return {
+        ...state,
+        studentcourses: action.payload,
       };
     default:
       return { state };

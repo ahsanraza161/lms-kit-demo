@@ -7,14 +7,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AuthContext from '../../../../context/auth/authcontext';
-import {useNavigate} from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
 
 function Topbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const {LogoutUser} = React.useContext(AuthContext);
-  const navigate = useNavigate()
+  const { LogoutUser } = React.useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,11 +22,10 @@ function Topbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const LogoutHandler = () => {
-    LogoutUser();
-    navigate('/home');
-  };
-
+    const LogoutHandler = () => {
+      LogoutUser('isAdminAuthenticated');
+      navigate('/');
+    };
 
   return (
     <div className="topBar">
@@ -43,7 +41,7 @@ function Topbar() {
           aria-haspopup="true"
           onClick={handleClick}
           startIcon={<KeyboardArrowDownIcon />}
-          sx={{  
+          sx={{
             '& .MuiAvatar-root': {
               width: 50,
               height: 50,
@@ -52,7 +50,6 @@ function Topbar() {
           }}
         >
           <CgProfile className="avatar" />
-
         </Button>
       </div>
 
@@ -64,7 +61,7 @@ function Topbar() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-         <MenuItem onClick={LogoutHandler}>Logout</MenuItem>
+        <MenuItem onClick={LogoutHandler}>Logout</MenuItem>
       </Menu>
     </div>
   );

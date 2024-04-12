@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
+import AuthContext from '../../../../context/auth/authcontext';
 
 const Course = ({ name, teacher, start_date, id }) => {
   const { deleteCourse } = useContext(AdminContext);
+  const { GetStudentsOfCourses } = useContext(AuthContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
   const inputDate = start_date;
@@ -23,6 +25,7 @@ const Course = ({ name, teacher, start_date, id }) => {
   const handleShowUserDataModal = () => {
     setShowUserDataModal(true);
   };
+
   return (
     <>
       <tr>
@@ -41,7 +44,7 @@ const Course = ({ name, teacher, start_date, id }) => {
       </tr>
       <Modal show={showUserDataModal} onHide={handleCloseUserDataModal}>
         <Modal.Header>
-          <Modal.Title>Students Of : Web development</Modal.Title>
+          <Modal.Title>Students Of : {name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Table responsive striped bordered hover>
@@ -72,4 +75,4 @@ const Course = ({ name, teacher, start_date, id }) => {
   );
 };
 
-export default Course;
+export default Course;

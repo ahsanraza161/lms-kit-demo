@@ -16,6 +16,7 @@ import AddUser from './features/admin/components/pages/adduser';
 import Courses from './features/admin/components/pages/courses';
 import StudentPanel from './features/student';
 import TeacherPanel from './features/teacher';
+import AppRouter from './router';
 
 function App() {
   return (
@@ -24,13 +25,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgetpassword" element={<ForgetPassword />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/dashboard" element={<Admindashboard />}>
-              <Route index element={<Dashboard/>}></Route>
+              <Route index element={<Dashboard />}></Route>
               <Route path="students" element={<Student />} />
               <Route path="teachers" element={<Student />} />
               <Route path="usermanagement" element={<Usermanagement />} />
@@ -40,6 +40,7 @@ function App() {
             <Route path="/user/:activepage" element={<StudentPanel />} />
             <Route path="/teacher/:activepage" element={<TeacherPanel />} />
           </Routes>
+          {/* <AppRouter /> */}
         </BrowserRouter>
       </Adminstate>
     </Authstate>
