@@ -7,7 +7,7 @@ import defaultRoutes from './routes';
 import Admindashboard from '../features/admin/index';
 import Dashboard from '../features/admin/components/pages/dashboard';
 import Student from '../features/admin/components/pages/students';
-import Teacher from '../features/admin/components/pages/students';
+import Teacher from '../features/admin/components/pages/teachers';
 import Usermanagement from '../features/admin/components/pages/pending-registration';
 import AddUser from '../features/admin/components/pages/adduser';
 import Attendence from '../features/admin/components/pages/Attendence';

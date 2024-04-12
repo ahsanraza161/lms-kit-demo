@@ -29,7 +29,7 @@ router.get('/pending', async (req, res) => {
 // @access private
 router.get('/getteacher', async (req, res) => {
   try {
-    const teacher = await  Student.find({usertype:'teacher',status:"approved"})
+    const teacher = await  Student.find({usertype:'Faculty',status:"approved"})
     return res.status(200).json(teacher);
   } catch (err) {
     console.error('Error registering user:', err);
