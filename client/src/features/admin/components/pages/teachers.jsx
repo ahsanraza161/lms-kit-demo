@@ -30,9 +30,9 @@ const AdminTeacherTable = () => {
         </tr>
       </thead>
       <tbody>
-      {faculties && faculties.map((item) => {
-    return <div>{item.name}</div>;
-  })}
+        {faculties.map((faculty) => {
+          return <div>{faculty.name}</div>;
+        })}
       </tbody>
     </Table>
   );
