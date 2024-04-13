@@ -57,6 +57,16 @@ router.get('/approved', async (req, res) => {
   }
 });
 
+router.get('/getCardData', async (req, res) => {
+  try {
+    const students = await Student.find({usertpe:"Student"})
+    return  res.status(200).json(students.length)
+  } catch (err) {
+    console.error('Error registering user:', err);
+    res.status(500).send({ message: err });
+  }
+});
+
 // @route PUT api/admin
 // @describe Change the Student status from pending to approved
 // @access private
