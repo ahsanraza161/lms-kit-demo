@@ -1,21 +1,20 @@
 import React, { useEffect, useContext } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
-import Approved_Student from './approved_student';
-import './students.css'
+import './students.css';
 
-const AdminStudentsTable = () => {
-  const { getApprovedStudents, approvedStudents } = useContext(AdminContext);
+const AdminTeacherTable = () => {
+  const { faculties, getAllFaculty } = useContext(AdminContext);
 
   // Call API
   useEffect(() => {
-    getApprovedStudents();
+    getAllFaculty();
   }, []);
 
   return (
     <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
       <thead>
-        <tr className='sHeading' >
+        <tr className="sHeading">
           <th>Name</th>
           <th>Father's Name</th>
           <th>Date of Birth</th>
@@ -31,12 +30,12 @@ const AdminStudentsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {approvedStudents.map((item) => (
-          <Approved_Student item={item} key={item._id} />
-        ))}
+      {faculties && faculties.map((item) => {
+    return <div>{item.name}</div>;
+  })}
       </tbody>
     </Table>
   );
 };
 
-export default AdminStudentsTable;
+export default AdminTeacherTable;

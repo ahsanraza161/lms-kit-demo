@@ -16,16 +16,16 @@ const AdminStudentsTable = () => {
     <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
       <thead>
         <tr className='sHeading' >
-          <th>Name</th>
+          <th className='sHeading' >Name</th>
           <th>Father's Name</th>
-          <th>Date of Birth</th>
+          <th>DOB</th>
           <th>Gender</th>
           <th>CNIC</th>
           <th>Address</th>
-          <th>Qualification</th>
+          <th>Highest Qualification</th>
           <th>Subject</th>
           <th>Completion Year</th>
-          <th>University/College</th>
+          <th>University / College</th>
           <th>Email</th>
           <th>Action</th>
         </tr>

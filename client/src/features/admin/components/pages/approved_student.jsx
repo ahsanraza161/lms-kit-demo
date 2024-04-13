@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import './students.css'
 import { Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 
@@ -32,6 +33,7 @@ const Approved_Student = ({ item }) => {
           <Button variant="danger" size="sm" onClick={deleteStudentHandler}>
             Delete {/* Replace with actual delete functionality */}
           </Button>
+         
         </td>
       </tr>
     </>

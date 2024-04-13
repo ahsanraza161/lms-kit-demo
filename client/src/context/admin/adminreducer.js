@@ -39,6 +39,10 @@ const AdminReducer = (state, action) => {
         ...state,
         courses: [action.payload,...state.courses]
       }
+      case 'getFaculty':
+        return{
+          ...state, faculties : action.payload 
+        }
       default:
       return state;
   }

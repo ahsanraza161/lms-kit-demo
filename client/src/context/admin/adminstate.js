@@ -7,6 +7,7 @@ const Adminstate = ({ children }) => {
   const initstate = {
     pendingStudents: [],
     approvedStudents: [],
+    faculties:[] ,
     courses: [],
   };
 
@@ -103,6 +104,23 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // get all faculty
+  const getAllFaculty = async () => {
+    try {
+      const config = {
+        data: {
+          'Content-type': 'application-json',
+        },
+      };
+      const res = await axios.get('http://localhost:8080/api/admin/getteacher', config);
+      dispatch({
+        type: 'getFaculty',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // get all courses
   const getAllCourses = async () => {
     try {
@@ -163,6 +181,7 @@ const Adminstate = ({ children }) => {
         getAllCourses,
         deleteCourse,
         addCourse,
+        getAllFaculty,
         courses: state.courses,
       }}
     >

@@ -1,3 +1,22 @@
+*{
+  box-sizing: border-box !important;
+}
+th{
+  /* font-size: 13px !important; */
+  color: #fff !important;
+  background-color: #3c0030 !important;
+  align-content: center !important;
+  border: none !important;
+}
+td{
+  background-color: #f7eded !important;
+  text-align: center !important;
+  align-content: center !important;
+  /* font-size: 15px;   */
+  border: none !important;
+
+}
+
 .list {
   display: flex;
   padding-right: 5%;
