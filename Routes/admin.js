@@ -50,16 +50,20 @@ router.get('/approved', async (req, res) => {
       status: 'approved',
       usertype: 'Student', // Assuming you have a field called userType
     })
-      .sort({
-        created_at: -1,
+      .populate({
+        path:"courses",
+        model:"Courses"
       })
+      .sort({ created_at: -1 })
       .select('-password');
-    res.json(students);
+
+    return res.status(200).json(students);
   } catch (err) {
     console.error('Error registering user:', err);
     res.status(500).send({ message: err });
   }
 });
+
 // @route GET api/admin
 // @describe Get all Numbers
 // @access private
