@@ -90,16 +90,11 @@ function Dashboard() {
 
   return (
     <div>
-      <Grid container spacing={5}>
-        <DashboardCard
-          title="Students"
-          count={dummyData.studentCount}
-          path="/dashboard/students"
-        />
+      <Grid container justifyContent={'spaceEvenly'} spacing={5} margin={'7px'}>
         <DashboardCard
           title="Teachers"
           count={dummyData.teacherCount}
-          path="/dashboard/teachers"
+          path="/user/teachers"
         />
         <DashboardCard
           title="Courses"

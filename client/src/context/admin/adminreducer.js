@@ -43,6 +43,10 @@ const AdminReducer = (state, action) => {
         return{
           ...state, faculties : action.payload 
         }
+      case 'PostNotes':
+        return{
+          ...state, notes : action.payload 
+        }
       default:
       return state;
   }

@@ -1,15 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import '../../global.css';
-import { useLocation } from 'react-router-dom';
 import Topbar from './common/topbar.jsx';
 import { useParams } from 'react-router-dom';
 import UserSidebar from './common/sidebar';
 import AccountSettings from './pages/AccountSettings.jsx';
 import './student.css';
-import ChangePassword from './pages/ChangePassword.jsx';
+import Noteboard from './pages/noteboard.jsx';
 import YourCourses from './pages/YourCourses';
-import UserAddress from './pages/UserAddress';
-import LegalNotice from './pages/LegalNotice';
+import Dashboard from './pages/dashboard';
 import AuthContext from '../../context/auth/authcontext';
 
 const StudentPanel = () => {
@@ -29,11 +27,10 @@ const StudentPanel = () => {
           <UserSidebar activepage={activepage} />
         </div>
         <div className="right">
-          {activepage === 'accountsettings' && <AccountSettings />}
-          {activepage === 'changepassword' && <ChangePassword />}
+          {activepage === 'yourdashboard' && <Dashboard />}
+          {activepage === 'noteboard' && <Noteboard />}
           {activepage === 'yourcourses' && <YourCourses />}
-          {activepage === 'address' && <UserAddress />}
-          {activepage === 'legalnotice' && <LegalNotice />}
+          {activepage === 'accountsettings' && <AccountSettings />}
         </div>
       </div>
     </div>

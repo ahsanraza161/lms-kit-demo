@@ -5,7 +5,22 @@ const sendMail = require('../utils/sendmail');
 const { requestAcceptedEmail } = require('../utils/emails');
 
 const Student = require('../models/Student');
+const Note = require('../models/Notes');
 
+router.post('/notes', async (req, res) => {
+  try {
+    const { content } = req.body; 
+    const newNote = new Note({
+      content,
+    });
+    const savedNote = await newNote.save();
+
+    return res.status(200).json(savedNote); // Created status code with the saved note data
+  } catch (err) {
+    console.error('Error creating note:', err);
+    return res.status(400).json({ msg: 'Error creating note' }); // Informative error message
+  }
+});
 // @route GET api/admin
 // @describe Get all Students with status pending
 // @access private

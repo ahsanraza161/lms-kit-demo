@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, Button, TextField } from '@mui/material';
+import AdminContext from '../../../../context/admin/admincontext';
 
 function AddNoteModal({ open, onClose, onCreateNote }) {
   const [content, setContent] = useState('');
+  const { notes } = useContext(AdminContext); // Access the createNote action
 
   const handleClose = () => {
     setContent(''); // Clear content on close
@@ -12,25 +14,23 @@ function AddNoteModal({ open, onClose, onCreateNote }) {
   const handleSubmit = async () => {
     if (!content) return; // Handle empty content
 
-    const response = await fetch('/api/notes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content }),
-    });
-
-    const newNote = await response.json();
-
-    if (response.ok) {
-      onCreateNote(newNote); // Pass the created note back to parent
-      setContent('');
-    } else {
-      // Handle API errors
+    try {
+      const response = await notes(content); // Utilize the createNote action
+      if (response.status === 200 || response.status === 201) { // Check for success
+        const newNote = response.data;
+        onCreateNote(newNote); // Pass the created note back to parent (optional)
+        setContent('');
+      } else {
+        console.error('Error creating note:', response); // Handle errors
+      }
+    } catch (error) {
+      console.error('Error creating note:', error); // Handle network or other errors
     }
   };
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: "white", boxShadow: 24, p: 4 }}>
         <TextField fullWidth label="Note Content" multiline rows={4} value={content} onChange={(e) => setContent(e.target.value)} />
         <br />
         <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!content}>

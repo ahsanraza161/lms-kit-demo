@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 
-import './UserOrders.css';
 import '../../../global.css';
 import AuthContext from '../../../context/auth/authcontext';
 
