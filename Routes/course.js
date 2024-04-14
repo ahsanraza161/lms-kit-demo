@@ -10,38 +10,14 @@ const auth = require('../Middlewares/auth');
 // @access private
 router.get('/', async (req, res) => {
   try {
-    const courses = await Course.find();
+    const courses = await Course.find().populate({
+      path: 'students',
+      model: 'Students', // Assuming 'Student' is the name of your student model
+    });
     return res.status(200).json(courses);
   } catch (err) {
     console.error(err);
     return res.status(400).json({ msg: 'Server error' });
-  }
-});
-
-// @route GET api/courses
-// @Describe Get students with course id
-// @access private
-router.get('/getstudents', async (req, res) => {
-  const { id } = req.body;
-  try {
-    const course = await Course.findById(id);
-    if (!course) {
-      return res.status(400).json({ msg: 'Course not found' });
-    }
-    // Get the course IDs associated with the student
-    if (!course.students) {
-      course.students = [];
-    }
-    const studentIds = course.students;
-
-    // Find all students with the retrieved IDs
-    const students = await Student.find({ _id: { $in: studentIds } });
-
-    // Return the students associated with the course
-    return res.status(200).json(students);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ msg: 'Server error' });
   }
 });
 

@@ -1,4 +1,4 @@
-    const express = require('express');
+const express = require('express');
 const cors = require('cors');
 const connectdb = require('./db/db');
 
@@ -9,13 +9,13 @@ app.use(cors());
 
 connectdb();
 
-
 // Api routes
 app.use('/api/users', require('./Routes/user'));
 app.use('/api/auth', require('./Routes/auth'));
 app.use('/api/admin', require('./Routes/admin'));
 app.use('/api/courses', require('./Routes/course'));
 app.use('/api/students', require('./Routes/student'));
+app.use('/api/attendance', require('./Routes/attendance'));
 
 app.get('/', (req, res) => res.send('<h1>Hello</h1>'));
 

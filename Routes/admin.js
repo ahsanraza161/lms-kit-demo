@@ -5,24 +5,10 @@ const sendMail = require('../utils/sendmail');
 const { requestAcceptedEmail } = require('../utils/emails');
 
 const Student = require('../models/Student');
-const Note = require('../models/Notes');
+const Course = require('../models/Course');
 
-router.post('/notes', async (req, res) => {
-  try {
-    const { content } = req.body; 
-    const newNote = new Note({
-      content,
-    });
-    const savedNote = await newNote.save();
-
-    return res.status(200).json(savedNote); // Created status code with the saved note data
-  } catch (err) {
-    console.error('Error creating note:', err);
-    return res.status(400).json({ msg: 'Error creating note' }); // Informative error message
-  }
-});
 // @route GET api/admin
-// @describe Get all Students with status pending
+// @describe Get all Users with status pending
 // @access private
 router.get('/pending', async (req, res) => {
   try {
@@ -40,11 +26,14 @@ router.get('/pending', async (req, res) => {
   }
 });
 // @route GET api/admin
-// @describe Get all teacher with status approve
+// @describe Get all teacher with status approved
 // @access private
 router.get('/getteacher', async (req, res) => {
   try {
-    const teacher = await  Student.find({usertype:'Faculty',status:"approved"})
+    const teacher = await Student.find({
+      usertype: 'Faculty',
+      status: 'approved',
+    });
     return res.status(200).json(teacher);
   } catch (err) {
     console.error('Error registering user:', err);
@@ -61,21 +50,39 @@ router.get('/approved', async (req, res) => {
       status: 'approved',
       usertype: 'Student', // Assuming you have a field called userType
     })
-      .sort({
-        created_at: -1,
+      .populate({
+        path:"courses",
+        model:"Courses"
       })
+      .sort({ created_at: -1 })
       .select('-password');
-    res.json(students);
+
+    return res.status(200).json(students);
   } catch (err) {
     console.error('Error registering user:', err);
     res.status(500).send({ message: err });
   }
 });
 
-router.get('/getCardData', async (req, res) => {
+// @route GET api/admin
+// @describe Get all Numbers
+// @access private
+router.get('/getNumbers', async (req, res) => {
   try {
-    const students = await Student.find({usertpe:"Student"})
-    return  res.status(200).json(students.length)
+    const students = await Student.find({
+      usertype: 'Student',
+      status: 'approved',
+    });
+    const teachers = await Student.find({
+      usertype: 'Faculty',
+      status: 'approved',
+    });
+    const courses = await Course.find();
+    return res.status(200).json({
+      students: students.length,
+      teachers: teachers.length,
+      courses: courses.length,
+    });
   } catch (err) {
     console.error('Error registering user:', err);
     res.status(500).send({ message: err });

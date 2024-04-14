@@ -26,5 +26,5 @@ const CourseSchema = new mongoose.Schema({
   ],
 });
 
-const Course = mongoose.model('Courses', CourseSchema);
-module.exports = Course;
+const Courses = mongoose.model('Courses', CourseSchema); // Use "Courses" as the model name
+module.exports = Courses;

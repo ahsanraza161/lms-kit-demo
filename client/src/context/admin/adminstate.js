@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import AdminContext from './admincontext';
 import AdminReducer from './adminreducer';
 import axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
 
 const Adminstate = ({ children }) => {
   const initstate = {
@@ -9,6 +10,7 @@ const Adminstate = ({ children }) => {
     approvedStudents: [],
     faculties: [],
     courses: [],
+    cardData: {},
   };
 
   // Get pending students
@@ -181,6 +183,34 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // Get Numbers
+  const getNumbers = async () => {
+    try {
+      const res = await axios.get('http://localhost:8080/api/admin/getNumbers');
+      console.log(res.data);
+      dispatch({
+        type: 'getCardData',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Mark attenddance
+  const markAttendance = async (data) => {
+    setAuthToken(localStorage.token);
+    try {
+      const res = await axios.post(
+        'http://localhost:8080/api/attendance',
+        data
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const [state, dispatch] = useReducer(AdminReducer, initstate);
 
   return (
@@ -189,6 +219,7 @@ const Adminstate = ({ children }) => {
         pendingStudents: state.pendingStudents,
         approvedStudents: state.approvedStudents,
         getPendingStudents,
+        getNumbers,
         approveHandler,
         getUserData,
         getApprovedStudents,
@@ -197,8 +228,10 @@ const Adminstate = ({ children }) => {
         deleteCourse,
         addCourse,
         getAllFaculty,
+        markAttendance,
         courses: state.courses,
         faculties: state.faculties,
+        cardData: state.cardData,
       }}
     >
       {children}
