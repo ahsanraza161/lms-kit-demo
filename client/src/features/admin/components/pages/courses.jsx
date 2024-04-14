@@ -1,13 +1,30 @@
 import { React, useContext, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Table, Row, Col, Modal, Button } from 'react-bootstrap';
+import { FormSelect, Table, Row, Col, Modal, Button } from 'react-bootstrap';
 import '../../mainadmin.css';
 import Course from './course';
 import AdminContext from '../../../../context/admin/admincontext';
 function Courses() {
   const [showAddCourse, setShowAddCourse] = useState(false);
-  const { getAllCourses, courses, addCourse } = useContext(AdminContext);
-  //   add course btn
+  const { getAllCourses, courses, addCourse, faculties } = useContext(AdminContext);
+
+  // State to store faculties data (assuming faculties endpoint returns teacher data)
+  const [facultiesData, setFacultiesData] = useState([]);
+
+  // ... rest of the code (handleAddNewCourse, handleCloseAddCourse, useEffect for getAllCourses, course state, onChangeHandler, onSumitCourseHandler)
+
+  useEffect(() => {
+    const fetchFaculties = async () => {
+      try {
+        const response = await faculties();
+        setFacultiesData(response.data); // Assuming data contains teacher information
+      } catch (error) {
+        console.error('Error fetching faculties:', error);
+      }
+    };
+
+    fetchFaculties(); // Fetch faculties on component mount
+  }, [faculties]);
 
   const handleAddNewCourse = () => {
     setShowAddCourse(true);
@@ -103,16 +120,22 @@ function Courses() {
               <label htmlFor="floatingInputCustom">Course Name</label>
             </Form.Floating>
             <Form.Floating>
-              <Form.Control
-                id="Teacher"
-                type="text"
-                placeholder="Teacher's name"
-                name="teacher"
-                value={course.teacher}
-                onChange={onChangeHandler}
-              />
-              <label htmlFor="floatingTeacherCustom">Teacher</label>
-            </Form.Floating>
+          <FormSelect
+            id="teacher"
+            name="teacher"
+            value={course.teacher}
+            onChange={onChangeHandler} // Assuming you have an onChange handler for selecting teacher
+          >
+            <option value="">Select Teacher</option>
+            {facultiesData.map((faculty) => ( // Assuming faculty object has teacher information
+              <option key={faculty.id} value={faculty.id}>
+                {faculty.name} {/* Assuming name property holds the teacher's name */}
+              </option>
+            ))}
+          </FormSelect>
+          <label htmlFor="floatingTeacherCustom">Teacher</label>
+        </Form.Floating>
+
             <Form.Floating className="mt-3">
               <Form.Control
                 id="start_date"

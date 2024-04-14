@@ -4,7 +4,7 @@ import AdminContext from '../../../../context/admin/admincontext';
 import AuthContext from '../../../../context/auth/authcontext';
 
 const Course = ({ name, teacher, start_date, id, students }) => {
-  const { deleteCourse } = useContext(AdminContext);
+  const { deleteCourse, faculties } = useContext(AdminContext);
   const { GetStudentsOfCourses } = useContext(AuthContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
