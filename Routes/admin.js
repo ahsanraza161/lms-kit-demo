@@ -134,5 +134,20 @@ router.delete('/:id', async (req, res) => {
     console.error(err);
   }
 });
+// @route DELETE api/admin
+// @describe delete the faculty
+// @access private
+router.delete('/teacher/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Student.findByIdAndDelete(id);
+
+    return res.status(200).json({ msg: 'faculty deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ err });
+    console.error(err);
+  }
+});
 
 module.exports = router;
