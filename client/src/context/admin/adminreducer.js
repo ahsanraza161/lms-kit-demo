@@ -32,18 +32,26 @@ const AdminReducer = (state, action) => {
     case 'deletecourse':
       return {
         ...state,
-        courses:state.courses.filter((course) => course._id !== action.payload)
+        courses: state.courses.filter(
+          (course) => course._id !== action.payload
+        ),
       };
-    case "addcourse":
+    case 'addcourse':
       return {
         ...state,
-        courses: [action.payload,...state.courses]
-      }
-      case 'getFaculty':
-        return{
-          ...state, faculties : action.payload 
-        }
-      default:
+        courses: [action.payload, ...state.courses],
+      };
+    case 'getFaculty':
+      return {
+        ...state,
+        faculties: action.payload,
+      };
+    case 'getCardData':
+      return {
+        ...state,
+        cardData: action.payload,
+      };
+    default:
       return state;
   }
 };

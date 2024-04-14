@@ -69,7 +69,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route GET api/users
-// @describe Get User data
+// @describe Update User data
 // @access public
 router.put('/', auth, async (req, res) => {
   const id = req.user.id;

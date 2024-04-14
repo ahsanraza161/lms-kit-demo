@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import {Button, Grid, Card, CardContent, Typography } from '@mui/material';
+import React, { useState, useContext, useEffect } from 'react';
+import { Button, Grid, Card, CardContent, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddNoteModal from './AddNoteModal'; // Import the modal component
-
-const dummyData = {
-  studentCount: 120,
-  courseCount: 35,
-  teacherCount: 18,
-};
+import AdminContext from '../../../../context/admin/admincontext';
 
 function DashboardCard({ title, count, path }) {
   return (
     <Grid item xs={4}>
       <Link to={path} style={{ textDecoration: 'none' }}>
-        <Card sx={{ background: 'linear-gradient(to right bottom, #430089, #2f0027)', padding: '16px', color: '#fff' }}>
+        <Card
+          sx={{
+            background: 'linear-gradient(to right bottom, #430089, #2f0027)',
+            padding: '16px',
+            color: '#fff',
+          }}
+        >
           <CardContent>
             <Typography variant="h6" component="div">
               {title}
@@ -40,21 +41,27 @@ function Dashboard() {
     setOpen(false); // Close modal after creation
   };
 
+  const { getNumbers, cardData } = useContext(AdminContext);
+
+  useEffect(() => {
+    getNumbers();
+  }, []);
+
   return (
     <Grid container spacing={5}>
       <DashboardCard
         title="Students"
-        count={dummyData.studentCount}
+        count={cardData?.students}
         path="/dashboard/students"
       />
       <DashboardCard
         title="Teachers"
-        count={dummyData.teacherCount}
+        count={cardData?.teachers}
         path="/dashboard/teachers"
       />
       <DashboardCard
         title="Courses"
-        count={dummyData.courseCount}
+        count={cardData?.courses}
         path="/dashboard/courses"
       />
 
@@ -71,7 +78,9 @@ function Dashboard() {
             <Card key={note.id} sx={{ margin: '10px' }}>
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                  {note.createdAt ? new Date(note.createdAt).toLocaleString() : ''}
+                  {note.createdAt
+                    ? new Date(note.createdAt).toLocaleString()
+                    : ''}
                 </Typography>
                 <Typography variant="body1">{note.content}</Typography>
               </CardContent>
@@ -81,7 +90,11 @@ function Dashboard() {
       )}
 
       {/* AddNoteModal component */}
-      <AddNoteModal open={open} onClose={handleCloseModal} onCreateNote={handleCreateNote} />
+      <AddNoteModal
+        open={open}
+        onClose={handleCloseModal}
+        onCreateNote={handleCreateNote}
+      />
     </Grid>
   );
 }

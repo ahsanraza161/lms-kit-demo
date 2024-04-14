@@ -9,6 +9,7 @@ const Adminstate = ({ children }) => {
     approvedStudents: [],
     faculties: [],
     courses: [],
+    cardData: {},
   };
 
   // Get pending students
@@ -181,6 +182,20 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // Get Numbers
+  const getNumbers = async () => {
+    try {
+      const res = await axios.get('http://localhost:8080/api/admin/getNumbers');
+      console.log(res.data);
+      dispatch({
+        type: 'getCardData',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const [state, dispatch] = useReducer(AdminReducer, initstate);
 
   return (
@@ -189,6 +204,7 @@ const Adminstate = ({ children }) => {
         pendingStudents: state.pendingStudents,
         approvedStudents: state.approvedStudents,
         getPendingStudents,
+        getNumbers,
         approveHandler,
         getUserData,
         getApprovedStudents,
@@ -199,6 +215,7 @@ const Adminstate = ({ children }) => {
         getAllFaculty,
         courses: state.courses,
         faculties: state.faculties,
+        cardData: state.cardData,
       }}
     >
       {children}

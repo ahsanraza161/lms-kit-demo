@@ -75,6 +75,7 @@ function Courses() {
                     name={item.name}
                     teacher={item.teacher}
                     start_date={item.start_date}
+                    students={item.students}
                     end_date={item.end_date}
                   />
                 );

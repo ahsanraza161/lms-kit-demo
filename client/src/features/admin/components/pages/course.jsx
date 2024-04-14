@@ -3,7 +3,7 @@ import { Button, Modal, Table } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 import AuthContext from '../../../../context/auth/authcontext';
 
-const Course = ({ name, teacher, start_date, id }) => {
+const Course = ({ name, teacher, start_date, id, students }) => {
   const { deleteCourse } = useContext(AdminContext);
   const { GetStudentsOfCourses } = useContext(AuthContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
@@ -22,8 +22,6 @@ const Course = ({ name, teacher, start_date, id }) => {
   const deleteHandler = () => {
     deleteCourse(id);
   };
-
-  
 
   //   Student data
   const handleShowUserDataModal = () => {
@@ -61,28 +59,32 @@ const Course = ({ name, teacher, start_date, id }) => {
           <Table responsive striped bordered hover>
             <thead>
               <tr>
-              <th>Name</th>
+                <th>Name</th>
                 <th>Father Name</th>
                 <th>Email</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Ahsan raza</td>
-                <td>Muhammad Sarwar</td>
-                <td>ahsan@gmail.com</td>
-                <td>
-                  <Button variant="danger">remove</Button>
-                </td>
-              </tr>
-            </tbody>
+
+            {students.map((student) => {
+              return (
+                <tbody>
+                  <tr>
+                    <td>{student?.name}</td>
+                    <td>{student?.fatherName}</td>
+                    <td>{student.email}</td>
+                    <td>
+                      <Button variant="danger">remove</Button>
+                    </td>
+                  </tr>
+                </tbody>
+              );
+            })}
           </Table>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseUserDataModal}>
             Close
           </Button>
-          
         </Modal.Footer>
       </Modal>
       <Modal show={showAddStudentModel} onHide={handleCloseAddStudentModel}>
@@ -114,7 +116,6 @@ const Course = ({ name, teacher, start_date, id }) => {
           <Button variant="secondary" onClick={handleCloseAddStudentModel}>
             Close
           </Button>
-          
         </Modal.Footer>
       </Modal>
     </>
