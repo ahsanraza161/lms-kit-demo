@@ -13,6 +13,7 @@ import AddUser from '../features/admin/components/pages/adduser';
 import Attendence from '../features/admin/components/pages/Attendence';
 import Calender from '../features/admin/components/pages/CalenderShedule';
 import Courses from '../features/admin/components/pages/courses';
+import AllNotes from '../features/admin/components/pages/allNotes';
 import StudentPanel from '../features/student';
 import TeacherPanel from '../features/teacher';
 
@@ -38,6 +39,7 @@ const AppRouter = () => {
             <Route path="courses" element={<Courses />} />
             <Route path="attendence" element={<Attendence />} />
             <Route path="shedulecalender" element={<Calender />} />
+            <Route path="allNotes" element={<AllNotes />} />
           </Route>
           <Route path="/user/:activepage" element={<StudentPanel />} />
           <Route path="/teacher/:activepage" element={<TeacherPanel />} />

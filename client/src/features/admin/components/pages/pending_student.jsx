@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Table, Row, Col, Modal, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import '../../mainadmin.css';
 import AdminContext from '../../../../context/admin/admincontext';
 
 const Pending_student = ({
   name,
+  usertype,
   id,
   email,
   fatherName,
@@ -41,23 +42,13 @@ const Pending_student = ({
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
 
   return (
-    <Row>
-      <Col xs={12}>
-        <Table responsive striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>ID</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
+    <>
             <tr>
               <td>{name}</td>
               <td>{email}</td>
+              <td>{usertype}</td>
               <td>{id}</td>
-              <td>
+              <td className='btnTD'>
                 <Button variant="success" onClick={onApproveHandler}>
                   Approve
                 </Button>
@@ -66,10 +57,6 @@ const Pending_student = ({
                 </Button>
               </td>
             </tr>
-          </tbody>
-        </Table>
-      </Col>
-
       <Modal show={showUserDataModal} onHide={handleCloseUserDataModal}>
         <Modal.Header>
           <Modal.Title>User Details for: {name}</Modal.Title>
@@ -78,6 +65,7 @@ const Pending_student = ({
           <>
             <p>Name: {name}</p>
             <p>Email: {email}</p>
+            <p>Usertype: {usertype}</p>
             <p>Father's Name: {fatherName}</p>
             <p>Date of Birth: {dateOfBirth}</p>
             <p>Gender: {gender}</p>
@@ -90,7 +78,7 @@ const Pending_student = ({
           </Button>
         </Modal.Footer>
       </Modal>
-    </Row>
+      </>
   );
 };
 

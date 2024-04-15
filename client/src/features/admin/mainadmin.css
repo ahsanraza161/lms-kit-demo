@@ -27,13 +27,44 @@ a {
 .container2 {
   display: flex;
 }
+.noteItem{
+  font-size: 25px !important;
+  /* padding: 20; */
+  height: 10vh;
+  text-align: center;
+  align-content: center;
+}
+.importingNoteToDash{
+  height: 55vh !important;
+  border-bottom: 5px solid black;
+  overflow: scroll;
+}
 .noteDash{
   text-align: center;
+  overflow: scroll;
   border: 1px solid black !important;
   padding: 20px;
-  height: 50vh;
-  width: 80% !important;
+  margin-top: 35px !important;
+  height: 80vh;
+  width: 100% !important;
+  border-radius: 20px;
   margin: 0px auto;
+}
+.contentNoteDash{
+background-color: #00000021 !important;  
+/* color: #fff !important; */
+display: flex;
+justify-content: space-around;
+padding: 10px;
+/* font: 900; */
+font-size: 35px;
+/* height: 10vh; */
+}
+.btnForViewNote{
+  display: block ;
+  top: -70px;
+  margin-right: 50px !important;
+  float: right;
 }
 main {
   width: 100%;
@@ -134,6 +165,10 @@ main {
 .actionBtnStudent {
   justify-content: space-around;
   display: flex;
+}
+.btnTD{
+  display: flex;
+  justify-content: space-evenly
 }
 @media only screen and (max-width: 2560px) {
   .sidebar {
