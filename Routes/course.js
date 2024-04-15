@@ -26,13 +26,14 @@ router.get('/', async (req, res) => {
 // @access private
 router.post('/', async (req, res) => {
   try {
-    const { course_name, teacher, start_date, classes_date } = req.body;
+    const { name, teacher, start_date, classes_days, total_days } = req.body;
 
     let course = new Course({
-      name: course_name,
+      name,
       teacher,
       start_date,
-      classes_date,
+      classes_days,
+      total_days,
     });
 
     course = await course.save();

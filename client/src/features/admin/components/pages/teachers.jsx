@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
-import getTeachers from "./getTeachers.jsx"
+import GetTeachers from "./getTeachers.jsx"
 import './students.css';
 
 const AdminTeacherTable = () => {
@@ -33,7 +33,7 @@ const AdminTeacherTable = () => {
 </thead>
 <tbody>
 {faculties.map((faculty) => (
-          <getTeachers item={faculty} key={faculty._id} />
+          <GetTeachers item={faculty} key={faculty._id} />
         ))}
 </tbody>
 

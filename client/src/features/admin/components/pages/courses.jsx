@@ -6,25 +6,8 @@ import Course from './course';
 import AdminContext from '../../../../context/admin/admincontext';
 function Courses() {
   const [showAddCourse, setShowAddCourse] = useState(false);
-  const { getAllCourses, courses, addCourse, faculties } = useContext(AdminContext);
-
-  // State to store faculties data (assuming faculties endpoint returns teacher data)
-  const [facultiesData, setFacultiesData] = useState([]);
-
-  // ... rest of the code (handleAddNewCourse, handleCloseAddCourse, useEffect for getAllCourses, course state, onChangeHandler, onSumitCourseHandler)
-
-  useEffect(() => {
-    const fetchFaculties = async () => {
-      try {
-        const response = await faculties();
-        setFacultiesData(response.data); // Assuming data contains teacher information
-      } catch (error) {
-        console.error('Error fetching faculties:', error);
-      }
-    };
-
-    fetchFaculties(); // Fetch faculties on component mount
-  }, [faculties]);
+  const { getAllCourses, courses, addCourse, faculties, getAllFaculty } =
+    useContext(AdminContext);
 
   const handleAddNewCourse = () => {
     setShowAddCourse(true);
@@ -33,14 +16,16 @@ function Courses() {
 
   useEffect(() => {
     getAllCourses();
+    getAllFaculty();
   }, []);
 
   // add course get data
   const [course, setCourse] = useState({
-    course_name: '',
+    name: '',
     teacher: '',
     start_date: '',
-    classes_date: '',
+    classes_days: '',
+    total_days: '',
   });
 
   const onChangeHandler = (e) => {
@@ -58,10 +43,16 @@ function Courses() {
     const formattedCourse = {
       ...course,
       start_date: course.start_date.replace(/-/g, '/'),
-      classes_date: course.classes_date.replace(/-/g, '/'),
     };
     // Now, you can send the request with the updated course object
     console.log(formattedCourse);
+    setCourse({
+      name: '',
+      teacher: '',
+      start_date: '',
+      classes_days: '',
+      total_days: '',
+    });
     addCourse(formattedCourse);
   };
   return (
@@ -74,12 +65,13 @@ function Courses() {
       <Row>
         <Col xs={12}>
           <Table responsive striped bordered hover>
-            <thead>
+            <thead style={{ textAlign: 'center' }}>
               <tr>
                 <th>Course Name</th>
                 <th>Teacher</th>
                 <th>Start Date</th>
                 <th>Clases date</th>
+                <th>Total Days</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -92,16 +84,15 @@ function Courses() {
                     name={item.name}
                     teacher={item.teacher}
                     start_date={item.start_date}
+                    total_days={item.total_days}
                     students={item.students}
-                    end_date={item.end_date}
+                    classes_days={item.classes_days}
                   />
                 );
               })}
             </tbody>
           </Table>
         </Col>
-
-        
 
         <Modal show={showAddCourse} onHide={handleCloseAddCourse}>
           <Modal.Header>
@@ -113,28 +104,28 @@ function Courses() {
                 id="course_name"
                 type="text"
                 placeholder="Course_name"
-                name="course_name"
-                value={course.course_name}
+                name="name"
+                value={course.name}
                 onChange={onChangeHandler}
               />
               <label htmlFor="floatingInputCustom">Course Name</label>
             </Form.Floating>
             <Form.Floating>
-          <FormSelect
-            id="teacher"
-            name="teacher"
-            value={course.teacher}
-            onChange={onChangeHandler} // Assuming you have an onChange handler for selecting teacher
-          >
-            <option value="">Select Teacher</option>
-            {facultiesData.map((faculty) => ( // Assuming faculty object has teacher information
-              <option key={faculty.id} value={faculty.id}>
-                {faculty.name} {/* Assuming name property holds the teacher's name */}
-              </option>
-            ))}
-          </FormSelect>
-          <label htmlFor="floatingTeacherCustom">Teacher</label>
-        </Form.Floating>
+              <FormSelect
+                id="teacher"
+                name="teacher"
+                value={course.teacher}
+                onChange={onChangeHandler}
+              >
+                <option value="">Select Teacher</option>
+                {faculties.map((faculty) => (
+                  <option key={faculty.id} value={faculty.id}>
+                    {faculty.name}
+                  </option>
+                ))}
+              </FormSelect>
+              <label htmlFor="floatingTeacherCustom">Teacher</label>
+            </Form.Floating>
 
             <Form.Floating className="mt-3">
               <Form.Control
@@ -149,14 +140,25 @@ function Courses() {
             </Form.Floating>
             <Form.Floating className="mt-3">
               <Form.Control
-                id="classes_date"
-                type="date"
-                placeholder="classes_date"
-                name="classes_date"
-                value={course.classes_date}
+                id="classes_days"
+                type="text"
+                placeholder="days"
+                name="classes_days"
+                value={course.classes_days}
                 onChange={onChangeHandler}
               />
-              <label htmlFor="floatingClassDateCustom">Clases date</label>
+              <label htmlFor="floatingClassDateCustom">Clases days</label>
+            </Form.Floating>
+            <Form.Floating className="mt-3">
+              <Form.Control
+                id="total_days"
+                type="number"
+                placeholder="total_days"
+                name="total_days"
+                value={course.total_days}
+                onChange={onChangeHandler}
+              />
+              <label htmlFor="floatingClassDateCustom">Total days</label>
             </Form.Floating>
             <div className="addCoursebtn">
               <Button variant="primary" onClick={onSumitCourseHandler}>
