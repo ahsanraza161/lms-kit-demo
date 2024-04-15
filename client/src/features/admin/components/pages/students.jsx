@@ -31,9 +31,9 @@ const AdminStudentsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {approvedStudents.map((item) => (
-          <Approved_Student item={item} key={item._id} />
-        ))}
+          {approvedStudents.map((item) => (
+            <Approved_Student item={item} key={item._id} />
+          ))}
       </tbody>
     </Table>
   );

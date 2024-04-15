@@ -8,6 +8,7 @@ const Adminstate = ({ children }) => {
   const initstate = {
     pendingStudents: [],
     approvedStudents: [],
+    deleteFacultys: [],
     faculties: [],
     courses: [],
     cardData: {},
@@ -84,6 +85,17 @@ const Adminstate = ({ children }) => {
       );
       dispatch({
         type: 'deletestudent',
+        payload: id,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const deleteFaculty = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:8080/api/admin/teacher/${id}`); // Replace with your actual API endpoint
+      dispatch({
+        type: 'deletefaculty',
         payload: id,
       });
     } catch (err) {
@@ -218,6 +230,7 @@ const Adminstate = ({ children }) => {
       value={{
         pendingStudents: state.pendingStudents,
         approvedStudents: state.approvedStudents,
+        faculties: state.faculties,
         getPendingStudents,
         getNumbers,
         approveHandler,
@@ -229,9 +242,11 @@ const Adminstate = ({ children }) => {
         addCourse,
         getAllFaculty,
         markAttendance,
+        deleteFaculty,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,
+        
       }}
     >
       {children}

@@ -17,6 +17,13 @@ const AdminReducer = (state, action) => {
           (student) => student._id !== action.payload
         ),
       };
+    case 'deletefaculty':
+      return {
+        ...state,
+        faculties: state.faculties.filter(
+          (faculty) => faculty._id !== action.payload
+        ),
+      };
     case 'approvestudent':
       return {
         ...state,
