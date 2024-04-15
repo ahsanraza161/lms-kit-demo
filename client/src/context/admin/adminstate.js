@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import AdminContext from './admincontext';
 import AdminReducer from './adminreducer';
 import axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
 
 const Adminstate = ({ children }) => {
   const initstate = {
@@ -196,6 +197,20 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // Mark attenddance
+  const markAttendance = async (data) => {
+    setAuthToken(localStorage.token);
+    try {
+      const res = await axios.post(
+        'http://localhost:8080/api/attendance',
+        data
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const [state, dispatch] = useReducer(AdminReducer, initstate);
 
   return (
@@ -213,6 +228,7 @@ const Adminstate = ({ children }) => {
         deleteCourse,
         addCourse,
         getAllFaculty,
+        markAttendance,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,
