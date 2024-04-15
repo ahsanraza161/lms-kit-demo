@@ -16,6 +16,7 @@ app.use('/api/admin', require('./Routes/admin'));
 app.use('/api/courses', require('./Routes/course'));
 app.use('/api/students', require('./Routes/student'));
 app.use('/api/attendance', require('./Routes/attendance'));
+app.use('/api/note', require('./Routes/note'));
 
 app.get('/', (req, res) => res.send('<h1>Hello</h1>'));
 

@@ -9,15 +9,15 @@ const NoteSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  courseId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Course', // Assuming you have a Course model
-  },
+  // createdBy: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true,
+  // },
+  // courseId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Course', // Assuming you have a Course model
+  // },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -25,11 +25,11 @@ const NoteSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
   },
-  accessLevel: {
-    type: String,
-    enum: ['public', 'course', 'private'], // Different visibility levels
-    default: 'private',
-  },
+  // accessLevel: {
+  //   type: String,
+  //   enum: ['public', 'course', 'private'], // Different visibility levels
+  //   default: 'private',
+  // },
 });
 
 module.exports = mongoose.model('Note', NoteSchema);

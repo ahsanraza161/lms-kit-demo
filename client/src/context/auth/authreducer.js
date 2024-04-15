@@ -1,4 +1,10 @@
-import { LOGIN_FAIL, LOGIN_SUCCESS, REGISTER_SUCCESS } from '../type';
+import {
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  REGISTER_SUCCESS,
+  CLEAR_ERROR,
+  CLEAR_MSG,
+} from '../type';
 const Authreducer = (state, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
@@ -27,6 +33,16 @@ const Authreducer = (state, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+    case CLEAR_MSG:
+      return {
+        ...state,
+        message: null,
       };
     case 'getuserdata':
       return {

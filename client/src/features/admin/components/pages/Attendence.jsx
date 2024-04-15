@@ -19,10 +19,10 @@ const AttendanceForm = () => {
     course: courses[0]?.name,
     student: '',
     date: '',
-    student: courses[0]?.students[0].name,
+    student: courses[0]?.students[0]?.name,
     students: [],
     courseId: courses[0]?._id,
-    studentId: courses[0]?.students[0]._id,
+    studentId: courses[0]?.students[0]?._id,
   });
 
   // Submit attendance data (replace with your actual API call)
@@ -30,7 +30,7 @@ const AttendanceForm = () => {
     event.preventDefault();
     console.log({
       courseId: data.courseId,
-      studentId: data.studentId,
+      studentId: data?.studentId,
       date: data.date,
     });
     markAttendance({
@@ -80,17 +80,19 @@ const AttendanceForm = () => {
         });
       }
     });
+    if (data.students.length > 0) {
+      data.students.forEach((student) => {
+        if (student.name === data.student) {
+          setData((prevdata) => {
+            return {
+              ...prevdata,
+              studentId: student._id,
+            };
+          });
+        }
+      });
+    }
 
-    data.students.forEach((student) => {
-      if (student.name === data.student) {
-        setData((prevdata) => {
-          return {
-            ...prevdata,
-            studentId: student._id,
-          };
-        });
-      }
-    });
     console.log(data);
   }, [data.course, data.student]);
 
@@ -101,17 +103,18 @@ const AttendanceForm = () => {
         <FormGroup className="mb-3">
           <FormLabel htmlFor="course">Course</FormLabel>
           <FormSelect id="course" onChange={onChangeHandler} name="course">
-            {courses.map((course) => {
-              return (
-                <option
-                  value={course.name}
-                  key={course._id}
-                  couurseId={course._id}
-                >
-                  {course.name}
-                </option>
-              );
-            })}
+            {courses.length > 0 &&
+              courses.map((course) => {
+                return (
+                  <option
+                    value={course?.name}
+                    key={course?._id}
+                    couurseId={course?._id}
+                  >
+                    {course?.name}
+                  </option>
+                );
+              })}
           </FormSelect>
         </FormGroup>
         <FormGroup className="mb-3">
@@ -122,14 +125,15 @@ const AttendanceForm = () => {
             name="student"
             disabled=""
           >
-            {data.students.length > 0 &&
-              data.students.map((student) => {
-                return (
-                  <option value={student.name} key={student._id}>
-                    {student.name}
-                  </option>
-                );
-              })}
+            {data.students.length > 0
+              ? data.students.map((student) => {
+                  return (
+                    <option value={student?.name} key={student?._id}>
+                      {student?.name}
+                    </option>
+                  );
+                })
+              : 'No student enrooled in course'}
           </FormSelect>
         </FormGroup>
         <FormGroup className="mb-3">

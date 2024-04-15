@@ -3,7 +3,13 @@ import AuthContext from './authcontext';
 import Authreducer from './authreducer';
 import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
-import { LOGIN_FAIL, REGISTER_SUCCESS, LOGIN_SUCCESS } from '../type';
+import {
+  LOGIN_FAIL,
+  REGISTER_SUCCESS,
+  LOGIN_SUCCESS,
+  CLEAR_ERROR,
+  CLEAR_MSG,
+} from '../type';
 
 const Authstate = ({ children }) => {
   const initstate = {
@@ -39,6 +45,11 @@ const Authstate = ({ children }) => {
         type: LOGIN_FAIL,
         payload: err.response.data.msg,
       });
+      setTimeout(() => {
+        dispatch({
+          type: CLEAR_ERROR,
+        });
+      }, 1000);
     }
   };
   const RegisterHandler = async (formData) => {
@@ -51,6 +62,11 @@ const Authstate = ({ children }) => {
         type: REGISTER_SUCCESS,
         payload: response.data.msg,
       });
+      setTimeout(() => {
+        dispatch({
+          type: CLEAR_MSG,
+        });
+      }, 1000);
     } catch (err) {
       console.log(err.response);
     }
@@ -74,7 +90,11 @@ const Authstate = ({ children }) => {
           'Content-Type': 'application/json',
         },
       };
-      const res = axios.put('https://lms2-two.vercel.app/api/auth', data, config);
+      const res = axios.put(
+        'https://lms2-two.vercel.app/api/auth',
+        data,
+        config
+      );
       console.log(res.data);
       dispatch({
         type: 'updateuser',
