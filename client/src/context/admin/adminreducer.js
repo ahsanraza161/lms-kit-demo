@@ -2,12 +2,17 @@ const AdminReducer = (state, action) => {
   switch (action.type) {
     // Handle note actions (GET_NOTES, ADD_NOTE, EDIT_NOTE, DELETE_NOTE)
 
-    case 'GET_NOTES':
-      return action.payload; // Replace notes in state with fetched data
+    case 'getnotes':
+      return {
+        ...state,
+        notes: action.payload,
+      };
     case 'ADD_NOTE':
-      return [...state, action.payload]; // Add new note to existing notes
+      return { ...state, notes: [...state.notes, action.payload] }; 
     case 'EDIT_NOTE':
-      const updatedNotes = state.map((note) => (note._id === action.payload.id ? action.payload.updatedNote : note)); // Update specific note based on ID
+      const updatedNotes = state.map((note) =>
+        note._id === action.payload.id ? action.payload.updatedNote : note
+      ); // Update specific note based on ID
       return updatedNotes;
     case 'DELETE_NOTE':
       return state.filter((note) => note._id !== action.payload); // Remove note by ID
@@ -34,7 +39,9 @@ const AdminReducer = (state, action) => {
     case 'deletefaculty':
       return {
         ...state,
-        faculties: state.faculties.filter((faculty) => faculty._id !== action.payload),
+        faculties: state.faculties.filter(
+          (faculty) => faculty._id !== action.payload
+        ),
       };
     case 'approvestudent':
       return {
@@ -54,7 +61,9 @@ const AdminReducer = (state, action) => {
     case 'deletecourse':
       return {
         ...state,
-        courses: state.courses.filter((course) => course._id !== action.payload),
+        courses: state.courses.filter(
+          (course) => course._id !== action.payload
+        ),
       };
     case 'addcourse':
       return {

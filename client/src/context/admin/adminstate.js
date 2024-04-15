@@ -14,22 +14,26 @@ const Adminstate = ({ children }) => {
     courses: [],
     cardData: {},
     error: null,
+    
   };
-  const getNotes = async (setNotes) => {
+  const getNotes = async () => {
     try {
       // Replace with the actual endpoint for your notes API
       const response = await axios.get('http:localhost:8080/api/notes'); // Adjust the URL based on your backend
-
-      setNotes(response.data); // Update state directly using the setter function
+      dispatch({
+        type:"getnotes",
+        payload:response.data
+      })
+      
     } catch (error) {
       console.error(error);
       // Handle errors appropriately (e.g., display an error message)
     }
   };
-  const addNote = async (note, dispatch) => {
+  const addNote = async (data) => {
     try {
       // Replace with the actual endpoint for creating notes
-      const response = await axios.post('/api/notes', note); // Adjust the URL based on your backend
+      const response = await axios.post('http:localhost:8080/api/notes', data); // Adjust the URL based on your backend
   
       dispatch({
         type: 'ADD_NOTE',
