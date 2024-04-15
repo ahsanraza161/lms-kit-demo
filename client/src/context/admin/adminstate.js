@@ -6,13 +6,71 @@ import setAuthToken from '../../utils/setAuthToken';
 
 const Adminstate = ({ children }) => {
   const initstate = {
+    notes: [],
     pendingStudents: [],
     approvedStudents: [],
     deleteFacultys: [],
     faculties: [],
     courses: [],
     cardData: {},
+    error: null,
   };
+  const getNotes = async (setNotes) => {
+    try {
+      // Replace with the actual endpoint for your notes API
+      const response = await axios.get('/api/notes'); // Adjust the URL based on your backend
+
+      setNotes(response.data); // Update state directly using the setter function
+    } catch (error) {
+      console.error(error);
+      // Handle errors appropriately (e.g., display an error message)
+    }
+  };
+  const addNote = async (note, dispatch) => {
+    try {
+      // Replace with the actual endpoint for creating notes
+      const response = await axios.post('/api/notes', note); // Adjust the URL based on your backend
+  
+      dispatch({
+        type: 'ADD_NOTE',
+        payload: response.data, // Assuming the response contains the created note
+      });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
+  };
+  
+  const editNote = async (id, updatedNote, dispatch) => {
+    try {
+      // Replace with the actual endpoint for editing notes
+      const response = await axios.put(`/api/notes/${id}`, updatedNote); // Adjust the URL based on your backend
+  
+      dispatch({
+        type: 'EDIT_NOTE',
+        payload: { id, updatedNote }, // Return both id and updated note
+      });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
+  };
+  
+  const deleteNote = async (id, dispatch) => {
+    try {
+      // Replace with the actual endpoint for deleting notes
+      await axios.delete(`/api/notes/${id}`); // Adjust the URL based on your backend
+  
+      dispatch({ type: 'DELETE_NOTE', payload: id }); // Dispatch the deleted note's id
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
+  };
+  
+
+
+
+
+
+
 
   // Get pending students
   const getPendingStudents = async () => {
@@ -231,6 +289,10 @@ const Adminstate = ({ children }) => {
         pendingStudents: state.pendingStudents,
         approvedStudents: state.approvedStudents,
         faculties: state.faculties,
+        getNotes,
+        addNote,
+        editNote,
+        deleteNote,
         getPendingStudents,
         getNumbers,
         approveHandler,
