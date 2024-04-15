@@ -14,17 +14,15 @@ const Adminstate = ({ children }) => {
     courses: [],
     cardData: {},
     error: null,
-    
   };
   const getNotes = async () => {
     try {
       // Replace with the actual endpoint for your notes API
-      const response = await axios.get('http:localhost:8080/api/notes'); // Adjust the URL based on your backend
+      const response = await axios.get('http://localhost:8080/api/note'); // Adjust the URL based on your backend
       dispatch({
-        type:"getnotes",
-        payload:response.data
-      })
-      
+        type: 'getnotes',
+        payload: response.data,
+      });
     } catch (error) {
       console.error(error);
       // Handle errors appropriately (e.g., display an error message)
@@ -32,23 +30,23 @@ const Adminstate = ({ children }) => {
   };
   const addNote = async (data) => {
     try {
-      // Replace with the actual endpoint for creating notes
-      const response = await axios.post('http:localhost:8080/api/notes', data); // Adjust the URL based on your backend
-  
+      const response = await axios.post('http://localhost:8080/api/note', data);
+
       dispatch({
         type: 'ADD_NOTE',
-        payload: response.data, // Assuming the response contains the created note
+        payload: response.data,
       });
+      console.log(response.data);
     } catch (error) {
       dispatch({ type: 'SET_ERROR', payload: error.message });
     }
   };
-  
-  const editNote = async (id, updatedNote, dispatch) => {
+
+  const editNote = async (id, updatedNote) => {
     try {
       // Replace with the actual endpoint for editing notes
       const response = await axios.put(`/api/notes/${id}`, updatedNote); // Adjust the URL based on your backend
-  
+
       dispatch({
         type: 'EDIT_NOTE',
         payload: { id, updatedNote }, // Return both id and updated note
@@ -57,24 +55,16 @@ const Adminstate = ({ children }) => {
       dispatch({ type: 'SET_ERROR', payload: error.message });
     }
   };
-  
-  const deleteNote = async (id, dispatch) => {
+
+  const deleteNote = async (id) => {
     try {
-      // Replace with the actual endpoint for deleting notes
-      await axios.delete(`/api/notes/${id}`); // Adjust the URL based on your backend
-  
-      dispatch({ type: 'DELETE_NOTE', payload: id }); // Dispatch the deleted note's id
+      const res = await axios.delete(`http://localhost:8080/api/note/${id}`);
+
+      dispatch({ type: 'DELETE_NOTE', payload: id });
     } catch (error) {
       dispatch({ type: 'SET_ERROR', payload: error.message });
     }
   };
-  
-
-
-
-
-
-
 
   // Get pending students
   const getPendingStudents = async () => {
@@ -142,9 +132,7 @@ const Adminstate = ({ children }) => {
   // Delete Student
   const deleteStudent = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:8080/api/admin/${id}`
-      );
+      const res = await axios.delete(`http://localhost:8080/api/admin/${id}`);
       dispatch({
         type: 'deletestudent',
         payload: id,
@@ -155,7 +143,9 @@ const Adminstate = ({ children }) => {
   };
   const deleteFaculty = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/api/admin/teacher/${id}`); // Replace with your actual API endpoint
+      const response = await axios.delete(
+        `http://localhost:8080/api/admin/teacher/${id}`
+      ); // Replace with your actual API endpoint
       dispatch({
         type: 'deletefaculty',
         payload: id,
@@ -168,9 +158,7 @@ const Adminstate = ({ children }) => {
   // Add the getUserData function
   const getUserData = async (id) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/user/${id}`
-      );
+      const response = await axios.get(`http://localhost:8080/api/user/${id}`);
 
       if (response.status === 200) {
         return response.data;
@@ -212,10 +200,7 @@ const Adminstate = ({ children }) => {
           'Content-type': 'application-json',
         },
       };
-      const res = await axios.get(
-        'http://localhost:8080/api/courses',
-        config
-      );
+      const res = await axios.get('http://localhost:8080/api/courses', config);
       dispatch({
         type: 'getcourses',
         payload: res.data,
@@ -228,9 +213,7 @@ const Adminstate = ({ children }) => {
   // Delete Course
   const deleteCourse = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:8080/api/courses/${id}`
-      );
+      const res = await axios.delete(`http://localhost:8080/api/courses/${id}`);
       console.log(res.data);
       dispatch({
         type: 'deletecourse',
@@ -244,10 +227,7 @@ const Adminstate = ({ children }) => {
   // Add Course
   const addCourse = async (data) => {
     try {
-      const res = await axios.post(
-        'http://localhost:8080/api/courses',
-        data
-      );
+      const res = await axios.post('http://localhost:8080/api/courses', data);
       dispatch({
         type: 'addcourse',
         payload: res.data,
@@ -312,7 +292,7 @@ const Adminstate = ({ children }) => {
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,
-        
+        notes: state.notes,
       }}
     >
       {children}

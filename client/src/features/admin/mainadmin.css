@@ -54,11 +54,20 @@ a {
 background-color: #00000021 !important;  
 /* color: #fff !important; */
 display: flex;
-justify-content: space-around;
+justify-content: space-between;
+text-align: left;
 padding: 10px;
 /* font: 900; */
 font-size: 35px;
 /* height: 10vh; */
+}
+.contentNoteDash .noteTitle {
+  text-transform: uppercase;
+  font-weight: 700;       
+  margin: 10px 0;
+}
+.contentNoteDash .noteContent{
+  font-size: medium;
 }
 .btnForViewNote{
   display: block ;

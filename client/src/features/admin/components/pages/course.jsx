@@ -14,7 +14,8 @@ const Course = ({
 }) => {
   const { deleteCourse, approvedStudents } = useContext(AdminContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
-  const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] = useState([]);
+  const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] =
+    useState([]);
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
   const [showAddStudentModel, setShowAddStudentModel] = useState(false);
   const handleCloseAddStudentModel = () => setShowAddStudentModel(false);
@@ -40,16 +41,16 @@ const Course = ({
   const handleAddStudnets = () => {
     setShowAddStudentModel(true);
   };
+  // const showstudents = () => {
+  //   const studentsNotEnrolled = approvedStudents.filter((student) => {
+  //     // Check if the student's id is not present in the enrolledStudents array
+  //     return !students.some(
+  //       (enrolledStudent) => enrolledStudent.id === student.id
+  //     );
+  //   });
+  //   console.log(studentsNotEnrolled);
+  // };
 
-
-  useEffect(() => {
-    studensThatCanBeAddToCourse = []
-    approvedStudents.forEach((student) => {
-
-    })
-  },[])
-  } 
-   
   return (
     <>
       <tr>
@@ -70,7 +71,8 @@ const Course = ({
           </Button>
         </td>
       </tr>
-      
+      {/* <button onClick={showstudents}>show</button> */}
+
       <Modal
         show={showUserDataModal}
         className="modal-lg"

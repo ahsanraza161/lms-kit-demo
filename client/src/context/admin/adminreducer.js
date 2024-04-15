@@ -8,14 +8,17 @@ const AdminReducer = (state, action) => {
         notes: action.payload,
       };
     case 'ADD_NOTE':
-      return { ...state, notes: [...state.notes, action.payload] }; 
+      return { ...state, notes: [action.payload, ...state.notes] };
     case 'EDIT_NOTE':
       const updatedNotes = state.map((note) =>
         note._id === action.payload.id ? action.payload.updatedNote : note
       ); // Update specific note based on ID
       return updatedNotes;
     case 'DELETE_NOTE':
-      return state.filter((note) => note._id !== action.payload); // Remove note by ID
+      return {
+        ...state,
+        notes: state.notes.filter((note) => note._id !== action.payload),
+      };
 
     // Handle student and faculty actions
 
