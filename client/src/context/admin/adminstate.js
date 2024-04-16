@@ -44,8 +44,8 @@ const Adminstate = ({ children }) => {
 
   const editNote = async (id, updatedNote) => {
     try {
-      // Ensure id is converted to a string 
-      const url = `/api/notes/${id}`; 
+      // Ensure id is converted to a string
+      const url = `/api/notes/${id}`;
       const response = await axios.put(url, updatedNote);
       dispatch({
         type: 'EDIT_NOTE',
@@ -103,6 +103,19 @@ const Adminstate = ({ children }) => {
         type: 'getapprovedstudents',
         payload: response.data,
       });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Enroll student in Course
+  const addStudentInCourse = async (studentId, courseId) => {
+    try {
+      const res = await axios.post(
+        'http://localhost:8080/api/courses/addcourse',
+        { studentId, courseId }
+      );
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -289,6 +302,7 @@ const Adminstate = ({ children }) => {
         getAllFaculty,
         markAttendance,
         deleteFaculty,
+        addStudentInCourse,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,

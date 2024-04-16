@@ -30,17 +30,17 @@ const Sidebar = ({ children }) => {
       icon: <PiStudent />,
     },
     {
-      path: 'teachers',
+      path: 'faculties',
       name: 'Teachers',
       icon: <FaChalkboardTeacher />,
     },
     {
-      path: 'adduser',
+      path: 'newregistration',
       name: 'Register',
       icon: <FaRegAddressCard />,
     },
     {
-      path: 'usermanagement',
+      path: 'pendingregistrations',
       name: 'User Manangment',
       icon: <FaUsersCog />,
     },

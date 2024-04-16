@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
-import AuthContext from '../../../../context/auth/authcontext';
 
 const Course = ({
   name,
@@ -12,13 +11,20 @@ const Course = ({
   students,
   classes_days,
 }) => {
-  const { deleteCourse, approvedStudents } = useContext(AdminContext);
+  const {
+    deleteCourse,
+    approvedStudents,
+    getApprovedStudents,
+    addStudentInCourse,
+  } = useContext(AdminContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] =
     useState([]);
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
   const [showAddStudentModel, setShowAddStudentModel] = useState(false);
-  const handleCloseAddStudentModel = () => setShowAddStudentModel(false);
+  const handleCloseAddStudentModel = () => {
+    setShowAddStudentModel(false);
+  };
   const inputDate = start_date;
 
   // Parse the input date string into a Date object
@@ -40,16 +46,16 @@ const Course = ({
   //  Adding student to the course
   const handleAddStudnets = () => {
     setShowAddStudentModel(true);
+    const newArray = approvedStudents.filter(
+      (obj2) => !students.some((obj1) => obj1.name === obj2.name)
+    );
+    setStudensThatCanBeAddToCourse(newArray);
+    console.log(studensThatCanBeAddToCourse);
   };
-  // const showstudents = () => {
-  //   const studentsNotEnrolled = approvedStudents.filter((student) => {
-  //     // Check if the student's id is not present in the enrolledStudents array
-  //     return !students.some(
-  //       (enrolledStudent) => enrolledStudent.id === student.id
-  //     );
-  //   });
-  //   console.log(studentsNotEnrolled);
-  // };
+
+  useEffect(() => {
+    getApprovedStudents();
+  }, []);
 
   return (
     <>
@@ -71,8 +77,6 @@ const Course = ({
           </Button>
         </td>
       </tr>
-      {/* <button onClick={showstudents}>show</button> */}
-
       <Modal
         show={showUserDataModal}
         className="modal-lg"
@@ -132,7 +136,7 @@ const Course = ({
                 <th>Action</th>
               </tr>
             </thead>
-            {approvedStudents.map((student) => {
+            {studensThatCanBeAddToCourse.map((student) => {
               return (
                 <tbody>
                   <tr>
@@ -140,7 +144,14 @@ const Course = ({
                     <td>{student.fatherName}</td>
                     <td>{student.email}</td>
                     <td>
-                      <Button variant="danger">Add</Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          addStudentInCourse(student._id, id);
+                        }}
+                      >
+                        Add
+                      </Button>
                     </td>
                   </tr>
                 </tbody>
