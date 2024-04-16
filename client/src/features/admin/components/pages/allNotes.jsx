@@ -1,68 +1,53 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Button,
   Grid,
-  Card,
-  Typography,
   TextField,
-  IconButton,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AdminContext from '../../../../context/admin/admincontext';
+import toast, { Toaster } from 'react-hot-toast';
+import Note from './note';
 
 function AllNotes() {
-  const [notes, setNotes] = useState([]); // State to store all notes
-  const [newNoteTitle, setNewNoteTitle] = useState(''); // State for the new note title
-  const [newNoteContent, setNewNoteContent] = useState(''); // State for the new note content
-  const [editingNoteId, setEditingNoteId] = useState(null); // State to track the ID of the note being edited
-  const [editingNoteTitle, setEditingNoteTitle] = useState(''); // State to store the title of the note being edited
-  const [editingNoteContent, setEditingNoteContent] = useState(''); // State to store the content of the note being edited
+  const { addNote, editNote, deleteNote, notes, getNotes } = useContext(AdminContext);
+  const [data, setData] = useState({
+    title: '',
+    content: '',
+    _id: '',
+  });
 
-  const { addNote, editNote } = useContext(AdminContext);
+  const [current_data, setCurrentData] = useState(null);
 
   const handleAddNote = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
-    if (!newNoteTitle.trim() || !newNoteContent.trim()) {
-      return; // Don't create empty notes
+    e.preventDefault();
+    if (data.title !== '' && data.content !== '') {
+      if (current_data !== null) {
+        editNote(current_data._id, data); // Change current_data.id to current_data._id
+      } else {
+        addNote(data);
+      }
+    } else {
+      toast.error('Please fill out all fields');
     }
+    setData({
+      title: '',
+      content: '',
+    });
+  };
+  
 
-    const newNoteObj = {
-      id: Math.random().toString(36).substring(2, 15), // Generate a random ID for demo purposes
-      title: newNoteTitle,
-      content: newNoteContent,
-    };
-
-    setNotes([...notes, newNoteObj]); // Add the new note to the state
-    setNewNoteTitle(''); // Clear the input field for title
-    setNewNoteContent(''); // Clear the input field for content
+  const onChangeHandler = (e) => {
+    setData((prevstate) => {
+      return {
+        ...prevstate,
+        [e.target.name]: e.target.value,
+      };
+    });
   };
 
-  const handleEditNote = (id, title, content) => {
-    setEditingNoteId(id);
-    setEditingNoteTitle(title); // Pre-populate the edit field with the current note title
-    setEditingNoteContent(content); // Pre-populate the edit field with the current note content
-  };
-
-  const handleSaveEdit = (id) => {
-    if (!editingNoteTitle.trim() || !editingNoteContent.trim()) {
-      return; // Don't save empty edits
-    }
-
-    const updatedNotes = notes.map((note) =>
-      note.id === id ? { ...note, title: editingNoteTitle, content: editingNoteContent } : note
-    );
-    setNotes(updatedNotes); // Update the note in the state with the edited title and content
-    setEditingNoteId(null); // Clear editing state
-    setEditingNoteTitle(''); // Clear edit field for title
-    setEditingNoteContent(''); // Clear edit field for content
-  };
-
-  const handleDeleteNote = (id) => {
-    const filteredNotes = notes.filter((note) => note.id !== id);
-    setNotes(filteredNotes); // Remove the deleted note from the state
-  };
+  useEffect(() => {
+    getNotes();
+  }, []);
 
   return (
     <div className="noteDash">
@@ -72,71 +57,39 @@ function AllNotes() {
           <form onSubmit={handleAddNote}>
             <TextField
               label="Title"
-              value={newNoteTitle}
-              onChange={(e) => setNewNoteTitle(e.target.value)}
               fullWidth
               margin="normal"
+              name="title"
+              onChange={onChangeHandler}
+              value={data.title}
             />
             <TextField
               label="Content"
-              value={newNoteContent}
-              onChange={(e) => setNewNoteContent(e.target.value)}
               fullWidth
               margin="normal"
+              name="content"
+              onChange={onChangeHandler}
+              value={data.content}
             />
             <Button type="submit" variant="contained" color="primary">
-              Add Note
+              {current_data !== null ? 'Edit Note' : 'Add Note'}
             </Button>
           </form>
         </Grid>
-        {notes.map((note) => (
-          <Grid item xs={12} key={note.id}>
-            <Card className='contentNoteDash'>
-              <div>
-                {editingNoteId === note.id ? (
-                  <>
-                    <TextField
-                      autoFocus
-                      value={editingNoteTitle}
-                      onChange={(e) => setEditingNoteTitle(e.target.value)}
-                    />
-                    <TextField
-                      value={editingNoteContent}
-                      onChange={(e) => setEditingNoteContent(e.target.value)}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Typography variant="h6" component="div">
-                      {note.title}
-                    </Typography>
-                    <Typography variant="body2" component="div">
-                      {note.content}
-                    </Typography>
-                  </>
-                )}
-              </div>
-              <div>
-                <IconButton onClick={() => handleEditNote(note.id, note.title, note.content)}>
-                  <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => handleDeleteNote(note.id)}>
-                  <DeleteIcon />
-                </IconButton>
-              </div>
-              {editingNoteId === note.id && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleSaveEdit(note.id)}
-                >
-                  Save
-                </Button>
-              )}
-            </Card>
-          </Grid>
-        ))}
+        {notes.length > 0
+          ? notes.map((note) => (
+              <Note
+                title={note.title}
+                content={note.content}
+                key={note._id}
+                id={note._id}
+                setCurrentData={setCurrentData} // Pass setCurrentData function down to Note component
+                deleteNote={deleteNote} // Pass deleteNote function down to Note component
+              />
+            ))
+          : ''}
       </Grid>
+      <Toaster />
     </div>
   );
 }

@@ -13,6 +13,9 @@
   justify-content: center;
   gap: 20px;
 }
+.NoteStudents{
+  color: black;
+}
 
 .userprofile .userprofilein .left {
   width: 20%;
