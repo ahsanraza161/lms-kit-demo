@@ -53,7 +53,7 @@ function Courses() {
       classes_days: '',
       total_days: '',
     });
-    addCourse(formattedCourse);
+    // addCourse(formattedCourse);
   };
   return (
     <div className="container">

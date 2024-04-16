@@ -46,17 +46,13 @@ function Dashboard() {
 
   return (
     <div>
-    <Grid container spacing={5}>
+    <Grid container mt={1} justifyContent={'space-around'} spacing={5}>
       <DashboardCard
         title="Students"
         count={cardData?.students}
         path="/teacher/students"
       />
-      <DashboardCard
-        title="Teachers"
-        count={cardData?.teachers}
-        path="/teacher/note"
-      />
+     
       <DashboardCard
         title="Courses"
         count={cardData?.courses}

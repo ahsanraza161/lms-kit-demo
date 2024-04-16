@@ -142,4 +142,3 @@ function AllNotes() {
 }
 
 export default AllNotes;
-// i have created a component in my lms project based on mern stack named courses in courses i have a button named add student to the courses, add the students i am getting from backend but i am stucking in how can i add student from all student list i created a button in the last of the every student named add now logic is that i also have a button in main table of courses named show students who are already selected or added from add students button table but i also want that is any students are selected or added then it do not have to show on add student table button
