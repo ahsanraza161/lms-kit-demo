@@ -13,7 +13,7 @@ const AdminReducer = (state, action) => {
         return {
           ...state,
           notes: state.notes.map((note) =>
-            note._id === action.payload.id ? action.payload.updatedNote : note
+             action.payload.updatedNote ? note._id === action.payload.id : note
           )
         };
     case 'DELETE_NOTE':

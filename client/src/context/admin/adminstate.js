@@ -44,9 +44,8 @@ const Adminstate = ({ children }) => {
 
   const editNote = async (id, updatedNote) => {
     try {
-      // Ensure id is converted to a string 
-      const url = `/api/notes/${id}`; 
-      const response = await axios.put(url, updatedNote);
+      console.log('Note ID:', id);
+       const res = await axios.put(`http://localhost:8080/api/note/${id}`, updatedNote);
       dispatch({
         type: 'EDIT_NOTE',
         payload: { id, updatedNote },

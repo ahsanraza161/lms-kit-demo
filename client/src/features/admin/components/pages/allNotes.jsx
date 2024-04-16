@@ -27,16 +27,18 @@ function AllNotes() {
         // Otherwise, we're adding a new note
         addNote(data);
       }
+      
+      // Clear the form fields after submission
+      setData({
+        ...data, // Preserve existing note data
+        title: '',
+        content: '',
+      });
     } else {
       toast.error('Please fill out all fields');
     }
-    // Clear the form fields after submission
-    setData({
-      title: '',
-      content: '',
-      _id: '',
-    });
   };
+  
 
   // Function to set the data of the note to be edited
   const setCurrentData = (note) => {
@@ -88,16 +90,17 @@ function AllNotes() {
           </form>
         </Grid>
         {notes.length > 0 &&
-          notes.map((note) => (
-            <Note
-              title={note.title}
-              content={note.content}
-              key={note._id}
-              id={note._id}
-              setCurrentData={setCurrentData}
-              deleteNote={deleteNote}
-            />
-          ))}
+  notes.map((note) => (
+    <Note
+      title={note.title}
+      content={note.content}
+      key={note._id} // Use the unique ID of each note as the key
+      id={note._id}
+      setCurrentData={setCurrentData}
+      deleteNote={deleteNote}
+    />
+  ))
+}
       </Grid>
       <Toaster />
     </div>

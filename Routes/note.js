@@ -38,6 +38,8 @@ router.post('/', async (req, res) => {
 // Update a note
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
+  console.log('Received note ID:', id); // Move this line below the 'id' declaration
+
   const { title, content } = req.body;
   try {
     const updatedNote = await Note.findByIdAndUpdate(id, { title, content }, { new: true });
