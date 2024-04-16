@@ -107,6 +107,19 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // Enroll student in Course
+  const addStudentInCourse = async (studentId, courseId) => {
+    try {
+      const res = await axios.post(
+        'http://localhost:8080/api/courses/addcourse',
+        { studentId, courseId }
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // approve student
   const approveHandler = async (id) => {
     try {
@@ -288,6 +301,7 @@ const Adminstate = ({ children }) => {
         getAllFaculty,
         markAttendance,
         deleteFaculty,
+        addStudentInCourse,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,

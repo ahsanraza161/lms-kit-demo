@@ -45,7 +45,7 @@ function Courses() {
       start_date: course.start_date.replace(/-/g, '/'),
     };
     // Now, you can send the request with the updated course object
-    console.log(formattedCourse);
+    addCourse(course);
     setCourse({
       name: '',
       teacher: '',
