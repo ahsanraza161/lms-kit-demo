@@ -33,23 +33,22 @@ const UserSidebar = ({ activepage }) => {
           </Link>
       }
       
-{
-        activepage === 'allNotes' ?
-          <div className='s2'>
-           <FaNotesMedical />
+      {
+  activepage === 'allnotes' ?  // Corrected to 'allnotes' instead of 'allNotes'
+    <div className='s2'>
+      <FaNotesMedical />
+      <span>Noteboard</span>
+    </div>
+    :
+    <Link
+      to='/user/allnotes' className='stylenone'>
+      <div className='s1'>
+        <FaNotesMedical />
+        <span>Noteboard</span>
+      </div>
+    </Link>
+}
 
-            <span>Noteboard</span>
-          </div>
-
-          :
-          <Link
-            to='/user/allNotes' className='stylenone'>
-            <div className='s1'>
-            <FaNotesMedical />
-              <span>Noteboard</span>
-            </div>
-          </Link>
-      }
       
 {
         activepage === 'yourcourses' ?

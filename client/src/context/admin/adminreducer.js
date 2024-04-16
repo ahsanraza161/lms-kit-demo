@@ -9,11 +9,13 @@ const AdminReducer = (state, action) => {
       };
     case 'ADD_NOTE':
       return { ...state, notes: [action.payload, ...state.notes] };
-    case 'EDIT_NOTE':
-      const updatedNotes = state.map((note) =>
-        note._id === action.payload.id ? action.payload.updatedNote : note
-      ); // Update specific note based on ID
-      return updatedNotes;
+      case 'EDIT_NOTE':
+        return {
+          ...state,
+          notes: state.notes.map((note) =>
+            note._id === action.payload.id ? action.payload.updatedNote : note
+          )
+        };
     case 'DELETE_NOTE':
       return {
         ...state,

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Grid,
   Card,
   Typography,
@@ -10,7 +9,20 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const Note = ({ title, content, id }) => {
+const Note = ({ title, content, id, setCurrentData, deleteNote }) => {
+  const handleEditClick = () => {
+    // Call setCurrentData to populate input fields with note data
+    setCurrentData({
+      title,
+      content,
+      _id: id,
+    });
+  };
+
+  const handleDeleteClick = () => {
+    deleteNote(id); // Call deleteNote function with the note's id
+  };
+
   return (
     <>
       <Grid item xs={12}>
@@ -24,23 +36,10 @@ const Note = ({ title, content, id }) => {
             </Typography>
           </div>
           <div>
-            <IconButton
-              onClick={() => {
-                setData({
-                  title,
-                  content,
-                  id,
-                });
-                setCurrentData({
-                  title,
-                  content,
-                  id,
-                });
-              }}
-            >
+            <IconButton onClick={handleEditClick}>
               <EditIcon />
             </IconButton>
-            <IconButton onClick={() => deleteNote(id)}>
+            <IconButton onClick={handleDeleteClick}>
               <DeleteIcon />
             </IconButton>
           </div>

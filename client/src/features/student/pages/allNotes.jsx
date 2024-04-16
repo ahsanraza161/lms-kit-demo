@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react';
+import AdminContext from '../../../context/admin/admincontext'; // Update the path
 
-function noteboard() {
+const AllNotes = () => {
+  const { notes, getNotes } = useContext(AdminContext);
+
+  useEffect(() => {
+    getNotes(); // Fetch notes when component mounts
+  }, []);
+
   return (
-    <div>
-      hello
+    <div className='NoteStudents'>
+      <h2>Notes</h2>
+      <ul>
+        {notes.map((note) => (
+          <li key={note._id}>
+            <h3>{note.title}</h3>
+            <p>{note.content}</p>
+          </li>
+        ))}
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default noteboard
+export default AllNotes;

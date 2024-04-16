@@ -2,20 +2,14 @@ import React, { useState, useContext, useEffect } from 'react';
 import {
   Button,
   Grid,
-  Card,
-  Typography,
   TextField,
-  IconButton,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AdminContext from '../../../../context/admin/admincontext';
 import toast, { Toaster } from 'react-hot-toast';
 import Note from './note';
 
 function AllNotes() {
-  const { addNote, editNote, notes, getNotes, deleteNote } =
-    useContext(AdminContext);
+  const { addNote, editNote, deleteNote, notes, getNotes } = useContext(AdminContext);
   const [data, setData] = useState({
     title: '',
     content: '',
@@ -28,7 +22,7 @@ function AllNotes() {
     e.preventDefault();
     if (data.title !== '' && data.content !== '') {
       if (current_data !== null) {
-        editNote();
+        editNote(current_data._id, data); // Change current_data.id to current_data._id
       } else {
         addNote(data);
       }
@@ -40,6 +34,7 @@ function AllNotes() {
       content: '',
     });
   };
+  
 
   const onChangeHandler = (e) => {
     setData((prevstate) => {
@@ -48,16 +43,11 @@ function AllNotes() {
         [e.target.name]: e.target.value,
       };
     });
-    console.log(data);
   };
 
   useEffect(() => {
     getNotes();
   }, []);
-
-  const stateHandler = (data) => {
-    setData(data);
-  };
 
   return (
     <div className="noteDash">
@@ -93,6 +83,8 @@ function AllNotes() {
                 content={note.content}
                 key={note._id}
                 id={note._id}
+                setCurrentData={setCurrentData} // Pass setCurrentData function down to Note component
+                deleteNote={deleteNote} // Pass deleteNote function down to Note component
               />
             ))
           : ''}

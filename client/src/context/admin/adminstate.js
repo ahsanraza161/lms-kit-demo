@@ -44,12 +44,12 @@ const Adminstate = ({ children }) => {
 
   const editNote = async (id, updatedNote) => {
     try {
-      // Replace with the actual endpoint for editing notes
-      const response = await axios.put(`/api/notes/${id}`, updatedNote); // Adjust the URL based on your backend
-
+      // Ensure id is converted to a string 
+      const url = `/api/notes/${id}`; 
+      const response = await axios.put(url, updatedNote);
       dispatch({
         type: 'EDIT_NOTE',
-        payload: { id, updatedNote }, // Return both id and updated note
+        payload: { id, updatedNote },
       });
     } catch (error) {
       dispatch({ type: 'SET_ERROR', payload: error.message });
