@@ -13,38 +13,49 @@ function AllNotes() {
   const [data, setData] = useState({
     title: '',
     content: '',
-    _id: '',
+    _id: '', // Add _id field to track the ID of the note being edited
   });
 
-  const [current_data, setCurrentData] = useState(null);
-
+  // Function to handle adding or editing a note
   const handleAddNote = (e) => {
     e.preventDefault();
     if (data.title !== '' && data.content !== '') {
-      if (current_data !== null) {
-        editNote(current_data._id, data); // Change current_data.id to current_data._id
+      if (data._id) {
+        // If _id exists, it means we're editing an existing note
+        editNote(data._id, data);
       } else {
+        // Otherwise, we're adding a new note
         addNote(data);
       }
     } else {
       toast.error('Please fill out all fields');
     }
+    // Clear the form fields after submission
     setData({
       title: '',
       content: '',
+      _id: '',
     });
   };
-  
 
+  // Function to set the data of the note to be edited
+  const setCurrentData = (note) => {
+    setData({
+      title: note.title,
+      content: note.content,
+      _id: note._id, // Set the _id field to the ID of the note being edited
+    });
+  };
+
+  // Function to handle changes in form fields
   const onChangeHandler = (e) => {
-    setData((prevstate) => {
-      return {
-        ...prevstate,
-        [e.target.name]: e.target.value,
-      };
-    });
+    setData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
+  // Fetch notes when component mounts
   useEffect(() => {
     getNotes();
   }, []);
@@ -72,22 +83,21 @@ function AllNotes() {
               value={data.content}
             />
             <Button type="submit" variant="contained" color="primary">
-              {current_data !== null ? 'Edit Note' : 'Add Note'}
+              {data._id ? 'Edit Note' : 'Add Note'} {/* Change button label based on whether we're editing or adding */}
             </Button>
           </form>
         </Grid>
-        {notes.length > 0
-          ? notes.map((note) => (
-              <Note
-                title={note.title}
-                content={note.content}
-                key={note._id}
-                id={note._id}
-                setCurrentData={setCurrentData} // Pass setCurrentData function down to Note component
-                deleteNote={deleteNote} // Pass deleteNote function down to Note component
-              />
-            ))
-          : ''}
+        {notes.length > 0 &&
+          notes.map((note) => (
+            <Note
+              title={note.title}
+              content={note.content}
+              key={note._id}
+              id={note._id}
+              setCurrentData={setCurrentData}
+              deleteNote={deleteNote}
+            />
+          ))}
       </Grid>
       <Toaster />
     </div>
