@@ -2,56 +2,81 @@ import React, { useState } from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Topbar from '../common/navbar/navbar';
 import { Form, Button } from 'react-bootstrap';
-import Link from '@mui/material/Link';
-import "../../global.css"
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import "../../global.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  axios.defaults.withCredentials = true;
 
-    // Handle password reset logic here
-    // This might involve sending a password reset email to the provided email address
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      alert('Please enter an email address.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post('http://localhost:3001/forgot-password', { email });
+      if (response.data.Status === "Success") {
+        navigate('/login');
+      } else {
+        alert('An error occurred while processing your request. Please try again later.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred while processing your request. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const isFormValid = email !== '' && !loading;
 
   return (
     <>
-    <Topbar/>
-    <div className="ForgetPass">
-      <div className="one">
-    <Form className='form' onSubmit={handleSubmit}>
-  <LockOutlinedIcon className='icon' sx={{ bgcolor: 'secondary.main' }} />
-      <Form.Group controlId="formGroupEmail">
-    <h2 className='headingReset' >
-Forget Password
-</h2>
-<p className='notereset'><span>*</span> Reset Password Will be Sent to your Email Address So kindly put the valid address!! </p>
-        <Form.Control
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </Form.Group>
-      <Button className='resetBtn' variant="primary" xs={12} sm={12} type="submit">
-        Reset Password
-      </Button>
-    </Form>
-    <div className='resetLink'>
-                  <div>
-                    <Link href="/login" variant="body2">
-                      Login
-                    </Link>
-                  </div>
-                  <div >
-                    <Link href="/registration" variant="body2">
-                      Create New Account
-                    </Link>
-                  </div>
-                </div>
-    </div>
-    </div>
+      <Topbar />
+      <div className="ForgetPass">
+        <div className="one">
+          <Form className='form' onSubmit={handleSubmit}>
+            <LockOutlinedIcon className='icon' sx={{ bgcolor: 'secondary.main' }} />
+            <Form.Group controlId="formGroupEmail">
+              <h2 className='headingReset' >
+                Forget Password
+              </h2>
+              <p className='notereset'><span>*</span> Reset Password Will be Sent to your Email Address So kindly put the valid address!! </p>
+              <div className="resetInput">
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Button className='resetBtn' variant="primary" xs={12} sm={12} type="submit" disabled={!isFormValid}>
+                  {loading ? 'Loading...' : 'Reset Password'}
+                </Button>
+              </div>
+            </Form.Group>
+          </Form>
+          <div className='resetLink'>
+            <div>
+              <Button href="/login" variant="body2">
+                Login
+              </Button>
+            </div>
+            <div >
+              <Button href="/registration" variant="body2">
+                Create New Account
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

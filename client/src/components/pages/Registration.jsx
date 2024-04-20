@@ -112,6 +112,11 @@ const RegistrationForm = () => {
     }
   }, [message]);
 
+  // Check if all fields are filled
+  const isFormValid =
+    Object.values(formData).every((value) => value !== '') &&
+    !Object.values(formData).includes(null);
+
   return (
     <>
       <header className="App-header">
@@ -157,7 +162,7 @@ const RegistrationForm = () => {
                       ))}
                     </Select>
                   </FormControl>
-                </Grid>
+                  </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
                     style={{ width: '100%' }}
@@ -340,6 +345,7 @@ const RegistrationForm = () => {
                 variant="contained"
                 style={{ width: '100%' }}
                 sx={{ mt: 2 }}
+                disabled={!isFormValid}
               >
                 Register
               </Button>

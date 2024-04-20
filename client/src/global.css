@@ -182,8 +182,9 @@ body {
   background-color: #fff;
   width: 30%;
   border-radius: 30px;
-  /* height: 70vh; */
-  margin: 90px auto;
+  margin: 0px auto;
+  margin-top: 90px;
+  height: 78vh;
 }
 
 .ForgetPass .one{
@@ -194,17 +195,20 @@ body {
 
 }
 .one .icon{
-    font-size: 30px !important;
+    font-size: 50px !important;
     /* background-color: var(--col1); */
-    color: var(--col3);
+    color: #fff;
     width: 50px;
     /* height: 50px; */
-    padding: 5px;
+    padding: 10px;
     margin: 20px;
     border-radius: 50px;
 }
+.resetInput{
+  margin: 50px  auto 70px;
+}
 .headingReset{
-  margin: 20px;
+  margin: 10px 0px 20px;
 }
 .notereset{
   font-size: 15px;
