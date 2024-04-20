@@ -4,7 +4,7 @@ const connectdb = require('./db/db');
 
 const app = express();
 const corsOptions = {
-  origin: 'https://lms2-front.vercel.app',
+  origin:  '*',
 };
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
