@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+
 import toast, { Toaster } from 'react-hot-toast';
+import AuthContext from '../../context/auth/authcontext';
 
 const ResetPassword = () => {
   const { token } = useParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const { ResetPassword } = useContext(AuthContext);
+
   const handleResetPassword = (e) => {
     e.preventDefault();
-
+    
     if (password !== confirmPassword) {
       toast.error("Passwords don't match");
-    }
-    else{
-        
+    } else {
+      ResetPassword(password, confirmPassword, token)
     }
   };
 

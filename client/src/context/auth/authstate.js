@@ -135,6 +135,17 @@ const Authstate = ({ children }) => {
     }
   };
 
+  const ResetPassword = async (password, confirmPassword, token) => {
+    try {
+      const res = await axios.put(`http://localhost:8080/api/users/${token}`, {
+        password,
+        confirmPassword,
+      });
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const ForgetPassword = async (email) => {
     try {
       const res = await axios.get('http://localhost:8080/api/users', { email });
@@ -165,6 +176,7 @@ const Authstate = ({ children }) => {
         GetCoursesOfStudent,
         GetStudentsOfCourses,
         ForgetPassword,
+        ResetPassword
       }}
     >
       {children}
