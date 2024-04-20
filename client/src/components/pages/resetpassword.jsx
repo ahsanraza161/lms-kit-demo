@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-
 import toast, { Toaster } from 'react-hot-toast';
 import AuthContext from '../../context/auth/authcontext';
 

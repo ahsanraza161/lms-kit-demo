@@ -5,16 +5,22 @@ import { Form, Button } from 'react-bootstrap';
 import Link from '@mui/material/Link';
 import '../../global.css';
 import AuthContext from '../../context/auth/authcontext';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const { ForgetPassword } = useContext(AuthContext);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    ForgetPassword(email);
+    try {
+      await ForgetPassword(email);
+      toast.success('Reset email sent successfully.');
+    } catch (error) {
+      toast.error('Email not found. Please enter a valid email.');
+    }
   };
-
   return (
     <>
       <Topbar />
@@ -62,6 +68,8 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
+      <Toaster />
+
     </>
   );
 };
