@@ -7,20 +7,23 @@ const RequireAuth = () => {
     isAdminAuthenticated,
     isStudentAuthenticated,
     isTeacherAuthenticated,
+    LogoutUser,
   } = useContext(AuthContext);
   const location = useLocation();
 
-  console.log(location.pathname);
+  // if (location.pathname.includes('dashboard') && !isAdminAuthenticated) {
+  //   console.log(isAdminAuthenticated);
+  //   return <Navigate to="/login" state={{ from: location }} replace />;
+  // } else if (location.pathname.includes('user') && !isStudentAuthenticated) {
+  //   //LogoutUser();
+  //   return <Navigate to="/login" state={{ from: location }} replace />;
+  // } else if (location.pathname.includes('teacher') && !isTeacherAuthenticated) {
+  //   //LogoutUser();
+  //   return <Navigate to="/login" state={{ from: location }} replace />;
+  // } else {
+  //   return <Outlet />;
 
-  if (location.pathname.includes('gfd') && !isAdminAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  } else if (location.pathname.includes('gsd') && !isStudentAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  } else if (location.pathname.includes('gsg') && !isTeacherAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  } else {
     return <Outlet />;
   }
-};
 
 export default RequireAuth;

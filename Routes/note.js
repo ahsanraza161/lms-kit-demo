@@ -3,75 +3,72 @@ require('dotenv').config();
 const router = express.Router();
 const Note = require('../models/Notes');
 
-// @route GET api/note
-// @describe Get all notes
-// @access public
+// GET all notes
 router.get('/', async (req, res) => {
   try {
-    const Notes = await Note.find();
-    return res.status(200).json(Notes);
+    const notes = await Note.find();
+    return res.status(200).json(notes);
   } catch (err) {
-    console.error('msg', err);
-    res.status(500).send({ message: err });
+    console.error('Error retrieving notes:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-// @route PUT api/note
-// @describe Create Note
-// @access private
+// Create a note
 router.post('/', async (req, res) => {
   const { title, content } = req.body;
   try {
-    const note = await new Note({
+    const note = new Note({
       title,
       content,
     });
 
     await note.save();
 
-    return res.status(200).json({ note });
+    return res.status(201).json(note);
   } catch (err) {
-    res.status(500).json({ err });
-    console.error(err);
+    if (err.code === 11000 && err.keyPattern.content) {
+      return res.status(409).json({ message: 'Note with this content already exists.' });
+    }
+    console.error('Error creating note:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-// @route PUT api/note
-// @describe update the note
-// @access private
+// Update a note
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
+  console.log('Received note ID:', id); // Move this line below the 'id' declaration
+
   const { title, content } = req.body;
   try {
-    const newNote = {};
+    const updatedNote = await Note.findByIdAndUpdate(id, { title, content }, { new: true });
 
-    if (title) newNote.title = title;
-    if (content) newNote.content = content;
-    const note = await Note.findByIdAndUpdate(
-      id,
-      {
-        $set: newNote,
-      },
-      { new: true }
-    );
-    return res.status(200).json({ msg: 'Note Updated', note });
+    if (!updatedNote) {
+      return res.status(404).json({ message: 'Note not found' });
+    }
+
+    return res.status(200).json(updatedNote);
   } catch (err) {
-    res.status(500).json({ err });
-    console.error(err);
+    console.error('Error updating note:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-// @route DELETE api/note
-// @describe delete the note
-// @access private
+// Delete a note
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    await Note.findByIdAndDelete(id);
-    return res.status(200).json({ msg: 'Note Successfully Deleted' });
+    const deletedNote = await Note.findByIdAndDelete(id);
+
+    if (!deletedNote) {
+      return res.status(404).json({ message: 'Note not found' });
+    }
+
+    return res.status(200).json({ message: 'Note successfully deleted' });
   } catch (err) {
-    res.status(500).json({ err });
-    console.error(err);
+    console.error('Error deleting note:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 

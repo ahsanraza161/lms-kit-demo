@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import UserSidebar from './common/sidebar';
 import AccountSettings from './pages/AccountSettings.jsx';
 import './student.css';
-import Noteboard from './pages/noteboard.jsx';
+import AllNotes from './pages/allNotes.jsx';
 import YourCourses from './pages/YourCourses';
 import Dashboard from './pages/dashboard';
 import AuthContext from '../../context/auth/authcontext';
@@ -28,7 +28,7 @@ const StudentPanel = () => {
         </div>
         <div className="right">
           {activepage === 'yourdashboard' && <Dashboard />}
-          {activepage === 'noteboard' && <Noteboard />}
+          {activepage === 'allnotes' && <AllNotes />}
           {activepage === 'yourcourses' && <YourCourses />}
           {activepage === 'accountsettings' && <AccountSettings />}
         </div>

@@ -6,12 +6,63 @@ import setAuthToken from '../../utils/setAuthToken';
 
 const Adminstate = ({ children }) => {
   const initstate = {
+    notes: [],
     pendingStudents: [],
     approvedStudents: [],
     deleteFacultys: [],
     faculties: [],
     courses: [],
     cardData: {},
+    error: null,
+  };
+  const getNotes = async () => {
+    try {
+      // Replace with the actual endpoint for your notes API
+      const response = await axios.get('https://lms2-two.vercel.app/api/note'); // Adjust the URL based on your backend
+      dispatch({
+        type: 'getnotes',
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+      // Handle errors appropriately (e.g., display an error message)
+    }
+  };
+  const addNote = async (data) => {
+    try {
+      const response = await axios.post('https://lms2-two.vercel.app/api/note', data);
+
+      dispatch({
+        type: 'ADD_NOTE',
+        payload: response.data,
+      });
+      console.log(response.data);
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
+  };
+
+  const editNote = async (id, updatedNote) => {
+    try {
+      console.log('Note ID:', id);
+       const res = await axios.put(`https://lms2-two.vercel.app/api/note/${id}`, updatedNote);
+      dispatch({
+        type: 'EDIT_NOTE',
+        payload: { id, updatedNote },
+      });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
+  };
+
+  const deleteNote = async (id) => {
+    try {
+      const res = await axios.delete(`https://lms2-two.vercel.app/api/note/${id}`);
+
+      dispatch({ type: 'DELETE_NOTE', payload: id });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
   };
 
   // Get pending students
@@ -56,6 +107,19 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // Enroll student in Course
+  const addStudentInCourse = async (studentId, courseId) => {
+    try {
+      const res = await axios.post(
+        'https://lms2-two.vercel.app/api/courses/addcourse',
+        { studentId, courseId }
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // approve student
   const approveHandler = async (id) => {
     try {
@@ -80,9 +144,7 @@ const Adminstate = ({ children }) => {
   // Delete Student
   const deleteStudent = async (id) => {
     try {
-      const res = await axios.delete(
-        `https://lms2-two.vercel.app/api/admin/${id}`
-      );
+      const res = await axios.delete(`https://lms2-two.vercel.app/api/admin/${id}`);
       dispatch({
         type: 'deletestudent',
         payload: id,
@@ -93,7 +155,9 @@ const Adminstate = ({ children }) => {
   };
   const deleteFaculty = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/api/admin/teacher/${id}`); // Replace with your actual API endpoint
+      const response = await axios.delete(
+        `https://lms2-two.vercel.app/api/admin/teacher/${id}`
+      ); // Replace with your actual API endpoint
       dispatch({
         type: 'deletefaculty',
         payload: id,
@@ -106,9 +170,7 @@ const Adminstate = ({ children }) => {
   // Add the getUserData function
   const getUserData = async (id) => {
     try {
-      const response = await axios.get(
-        `https://lms2-two.vercel.app/api/user/${id}`
-      );
+      const response = await axios.get(`https://lms2-two.vercel.app/api/user/${id}`);
 
       if (response.status === 200) {
         return response.data;
@@ -131,7 +193,7 @@ const Adminstate = ({ children }) => {
         },
       };
       const res = await axios.get(
-        'http://localhost:8080/api/admin/getteacher',
+        'https://lms2-two.vercel.app/api/admin/getteacher',
         config
       );
       dispatch({
@@ -150,10 +212,7 @@ const Adminstate = ({ children }) => {
           'Content-type': 'application-json',
         },
       };
-      const res = await axios.get(
-        'https://lms2-two.vercel.app/api/courses',
-        config
-      );
+      const res = await axios.get('https://lms2-two.vercel.app/api/courses', config);
       dispatch({
         type: 'getcourses',
         payload: res.data,
@@ -166,9 +225,7 @@ const Adminstate = ({ children }) => {
   // Delete Course
   const deleteCourse = async (id) => {
     try {
-      const res = await axios.delete(
-        `https://lms2-two.vercel.app/api/courses/${id}`
-      );
+      const res = await axios.delete(`https://lms2-two.vercel.app/api/courses/${id}`);
       console.log(res.data);
       dispatch({
         type: 'deletecourse',
@@ -182,10 +239,7 @@ const Adminstate = ({ children }) => {
   // Add Course
   const addCourse = async (data) => {
     try {
-      const res = await axios.post(
-        'https://lms2-two.vercel.app/api/courses',
-        data
-      );
+      const res = await axios.post('https://lms2-two.vercel.app/api/courses', data);
       dispatch({
         type: 'addcourse',
         payload: res.data,
@@ -198,7 +252,7 @@ const Adminstate = ({ children }) => {
   // Get Numbers
   const getNumbers = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/admin/getNumbers');
+      const res = await axios.get('https://lms2-two.vercel.app/api/admin/getNumbers');
       console.log(res.data);
       dispatch({
         type: 'getCardData',
@@ -214,7 +268,7 @@ const Adminstate = ({ children }) => {
     setAuthToken(localStorage.token);
     try {
       const res = await axios.post(
-        'http://localhost:8080/api/attendance',
+        'https://lms2-two.vercel.app/api/attendance',
         data
       );
       console.log(res.data);
@@ -231,6 +285,10 @@ const Adminstate = ({ children }) => {
         pendingStudents: state.pendingStudents,
         approvedStudents: state.approvedStudents,
         faculties: state.faculties,
+        getNotes,
+        addNote,
+        editNote,
+        deleteNote,
         getPendingStudents,
         getNumbers,
         approveHandler,
@@ -243,10 +301,11 @@ const Adminstate = ({ children }) => {
         getAllFaculty,
         markAttendance,
         deleteFaculty,
+        addStudentInCourse,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,
-        
+        notes: state.notes,
       }}
     >
       {children}

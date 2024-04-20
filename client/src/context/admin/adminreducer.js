@@ -1,5 +1,29 @@
 const AdminReducer = (state, action) => {
   switch (action.type) {
+    // Handle note actions (GET_NOTES, ADD_NOTE, EDIT_NOTE, DELETE_NOTE)
+
+    case 'getnotes':
+      return {
+        ...state,
+        notes: action.payload,
+      };
+    case 'ADD_NOTE':
+      return { ...state, notes: [action.payload, ...state.notes] };
+      case 'EDIT_NOTE':
+        return {
+          ...state,
+          notes: state.notes.map((note) =>
+             action.payload.updatedNote ? note._id === action.payload.id : note
+          )
+        };
+    case 'DELETE_NOTE':
+      return {
+        ...state,
+        notes: state.notes.filter((note) => note._id !== action.payload),
+      };
+
+    // Handle student and faculty actions
+
     case 'getpendingstudents':
       return {
         ...state,
@@ -31,6 +55,9 @@ const AdminReducer = (state, action) => {
           (student) => student._id !== action.payload
         ),
       };
+
+    // Handle other actions (getcourses, deletecourse, addcourse, getFaculty, getCardData)
+
     case 'getcourses':
       return {
         ...state,
@@ -58,6 +85,8 @@ const AdminReducer = (state, action) => {
         ...state,
         cardData: action.payload,
       };
+
+    // Default case (handles unknown actions)
     default:
       return state;
   }

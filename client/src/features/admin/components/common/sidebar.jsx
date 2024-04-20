@@ -6,8 +6,12 @@ import {
   FaChalkboardTeacher,
   FaRegAddressCard,
   FaUsersCog,
+  FaNotesMedical,
+  
 } from 'react-icons/fa';
+import { SlCalender } from "react-icons/sl";
 import { PiStudent } from 'react-icons/pi';
+import { BsCalendar2Week } from "react-icons/bs";
 import { HiClipboardList } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
@@ -26,17 +30,17 @@ const Sidebar = ({ children }) => {
       icon: <PiStudent />,
     },
     {
-      path: 'teachers',
+      path: 'faculties',
       name: 'Teachers',
       icon: <FaChalkboardTeacher />,
     },
     {
-      path: 'adduser',
+      path: 'newregistration',
       name: 'Register',
       icon: <FaRegAddressCard />,
     },
     {
-      path: 'usermanagement',
+      path: 'pendingregistrations',
       name: 'User Manangment',
       icon: <FaUsersCog />,
     },
@@ -48,12 +52,17 @@ const Sidebar = ({ children }) => {
     {
       path: 'shedulecalender',
       name: 'Calender',
-      icon: <HiClipboardList />,
+      icon: <SlCalender />,
     },
     {
       path: 'attendence',
       name: 'Attendence',
-      icon: <HiClipboardList />,
+      icon: <BsCalendar2Week />,
+    },
+    {
+      path: 'allNotes',
+      name: 'Notes',
+      icon: <FaNotesMedical />,
     },
   ];
   return (

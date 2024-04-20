@@ -24,15 +24,16 @@ router.get('/', async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course
 // @access private
-router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {  
   try {
-    const { course_name, teacher, start_date, classes_date } = req.body;
+    const { name, teacher, start_date, classes_days, total_days } = req.body;
 
     let course = new Course({
-      name: course_name,
+      name,
       teacher,
       start_date,
-      classes_date,
+      classes_days,
+      total_days,
     });
 
     course = await course.save();
@@ -79,6 +80,21 @@ router.delete('/:id', async (req, res) => {
     await Course.findByIdAndDelete(id);
 
     res.status(200).json({ msg: 'Course Deleted' });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ msg: 'Server error' });
+  }
+});
+
+// @route DELETE api/courses
+// @Describe Delete Student from  Course
+// @access private
+router.delete('/deletestudent', async (req, res) => {
+  const { courseId } = req.body;
+  try {
+    const course = await Course.findById(courseId);
+
+    return res.status(200).json(course);
   } catch (err) {
     console.error(err);
     return res.status(400).json({ msg: 'Server error' });

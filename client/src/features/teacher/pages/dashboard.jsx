@@ -7,7 +7,7 @@ import {
   Button,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import AdminContext from '../../../../context/admin/admincontext';
+import AdminContext from '../../../context/admin/admincontext';
 import AllNotes from './allNotes';
 
 function DashboardCard({ title, count, path }) {
@@ -46,21 +46,17 @@ function Dashboard() {
 
   return (
     <div>
-    <Grid container spacing={5}>
+    <Grid container mt={1} justifyContent={'space-around'} spacing={5}>
       <DashboardCard
         title="Students"
         count={cardData?.students}
-        path="/dashboard/students"
+        path="/teacher/students"
       />
-      <DashboardCard
-        title="Teachers"
-        count={cardData?.teachers}
-        path="/dashboard/teachers"
-      />
+     
       <DashboardCard
         title="Courses"
         count={cardData?.courses}
-        path="/dashboard/courses"
+        path="/teacher/courses"
       />
     </Grid>
     <div className="importingNoteToDash">
@@ -71,7 +67,7 @@ function Dashboard() {
                   variant="contained"
                   color="success"
                 >
-                  <Link to={"/dashboard/allNotes"} style={{ textDecoration: 'none' }}>
+                  <Link to={"/user/allNotes"} style={{ textDecoration: 'none' }}>
                   View All Notifications
                   </Link>
                 </Button>

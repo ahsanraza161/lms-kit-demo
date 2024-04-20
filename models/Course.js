@@ -14,9 +14,13 @@ const CourseSchema = new mongoose.Schema({
     required: true,
     type: Date,
   },
-  classes_date: {
+  classes_days: {
     required: true,
-    type: Date,
+    type: String,
+  },
+  total_days:{
+    type : Number,
+    required: true
   },
   students: [
     {

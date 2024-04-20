@@ -1,6 +1,7 @@
-import '../../admin/mainadmin.css';
+import './UserSidebar.css'
 import { CgProfile } from "react-icons/cg";
 import * as React from 'react';
+import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -58,9 +59,10 @@ function Topbar() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem > <Link to={"/teacher/accountsettings"} style={{ textDecoration: 'none' }}>
+                  Profile
+                  </Link></MenuItem>
+        <MenuItem onClick={handleClose} >Logout</MenuItem>
       </Menu>
     </div>
   );
