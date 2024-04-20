@@ -3,9 +3,12 @@ const cors = require('cors');
 const connectdb = require('./db/db');
 
 const app = express();
+const corsOptions = {
+  origin: 'https://lms2-front.vercel.app',
+};
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors(corsOptions));
 
 connectdb();
 

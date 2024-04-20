@@ -51,8 +51,8 @@ router.get('/approved', async (req, res) => {
       usertype: 'Student', // Assuming you have a field called userType
     })
       .populate({
-        path:"courses",
-        model:"Courses"
+        path: 'courses',
+        model: 'Courses',
       })
       .sort({ created_at: -1 })
       .select('-password');
@@ -101,17 +101,13 @@ router.patch('/:id', async (req, res) => {
 
     // Save the updated student
     await student.save();
-    try {
-      await sendMail(
-        'Request Accepted',
-        student.email,
-        requestAcceptedEmail(student.name)
-      );
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ msg: 'Server error' });
-    }
-    // Send email to users email
+
+    await sendMail(
+      'Request Accepted',
+      requestAcceptedEmail(student.name),
+      student.email
+    );
+
     return res.status(200).json({ msg: 'Email Successfully Sent' });
   } catch (err) {
     res.status(500).json({ err });
@@ -134,52 +130,18 @@ router.delete('/:id', async (req, res) => {
     console.error(err);
   }
 });
-// @route DELETE api/admin
-// @describe delete the faculty
-// @access private
-router.delete('/teacher/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
 
-    await Student.findByIdAndDelete(id);
+// router.delete('/teacher/:id', async (req, res) => {
+//   try {
+//     const id = req.params.id;
 
-    return res.status(200).json({ msg: 'faculty deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ err });
-    console.error(err);
-  }
-});
-app.post('/forgot-password', (req, res) => {
-  const {email} = req.body;
-  Student.findOne({email: email})
-  .then(user => {
-      if(!user) {
-          return res.send({Status: "User not existed"})
-      } 
-      const token = jwt.sign({id: user._id}, "jwt_secret_key", {expiresIn: "1d"})
-      var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'neweraprovider@gmail.com',
-            pass: 'otil cabz xhgb onmc'
-          }
-        });
-        
-        var mailOptions = {
-          from: 'youremail@gmail.com',
-          to: 'user email@gmail.com',
-          subject: 'Reset Password Link',
-          text: `http://localhost:5173/reset_password/${user._id}/${token}`
-        };
-        
-        transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            console.log(error);
-          } else {
-            return res.send({Status: "Success"})
-          }
-        });
-  })
-})
+//     await Student.findByIdAndDelete(id);
+
+//     return res.status(200).json({ msg: 'faculty deleted successfully' });
+//   } catch (err) {
+//     res.status(500).json({ err });
+//     console.error(err);
+//   }
+// });
 
 module.exports = router;

@@ -12,7 +12,10 @@ const StudentSchema = new mongoose.Schema({
   subject: String,
   completionYear: Number,
   universityCollege: String,
-  email: String,
+  email: {
+    type: String,
+    unique: true,
+  },
   password: String,
   status: {
     type: String,
