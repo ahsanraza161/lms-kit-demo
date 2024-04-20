@@ -87,14 +87,13 @@ router.get('/', async (req, res) => {
 
     await user.save();
 
-    const resetLink = `${req.protocol}://${req.get(
-      'host'
-    )}/api/users/${resetToken}`;
+    const resetLink = `http://localhost:3001/resetpassword/${resetToken}`;
 
     try {
       await sendMail(
         'Reset Password',
-        forgotPasswordEmail(user.name, resetLink, email)
+        forgotPasswordEmail(user.name, resetLink),
+        email
       );
     } catch (err) {
       user.passwordResetToken = undefined;
