@@ -92,8 +92,6 @@ const AttendanceForm = () => {
         }
       });
     }
-
-    console.log(data);
   }, [data.course, data.student]);
 
   // JSX for attendance form and modal

@@ -4,9 +4,7 @@ const router = express.Router();
 const crypto = require('crypto');
 const sendMail = require('../utils/sendmail');
 const Student = require('../models/Student');
-
-
-// const { forgotPasswordEmail } = require('../utils/email');
+const { requestSentEmail, forgotPasswordEmail } = require('../utils/emails');
 
 // @route POST api/users
 // @describe Register a new User
@@ -58,6 +56,8 @@ router.post('/', async (req, res) => {
 
     await newStudent.save();
 
+    await sendMail('Request Sent to Admin', requestSentEmail(name), email);
+
     return res.status(200).json({ msg: 'Your request has been send to admin' });
   } catch (err) {
     console.error('Error registering user:', err);
@@ -91,13 +91,10 @@ router.get('/', async (req, res) => {
       'host'
     )}/api/users/${resetToken}`;
 
-    const emailContent = forgotPasswordEmail(user.name, resetLink);
-    // Assuming you have code to send the email here
     try {
       await sendMail(
-        'Password reset request recieved',
-        user.email,
-        emailContent
+        'Reset Password',
+        forgotPasswordEmail(user.name, resetLink, email)
       );
     } catch (err) {
       user.passwordResetToken = undefined;

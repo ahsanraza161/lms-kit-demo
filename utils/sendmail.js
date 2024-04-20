@@ -1,27 +1,26 @@
 const nodemailer = require('nodemailer');
-require('dotenv').config;
+require('dotenv').config();
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
-  port: '2525',
   auth: {
     user: process.env.sender,
     pass: process.env.apppass,
   },
 });
 
-async function sendMail(subject, to, email) {
-  if (!subject) {
-    console.error('Subject is required to send an email');
+async function sendMail(subject, text, to) {
+  if (!subject || !text) {
+    console.error('Subject and text are required to send an email');
     return; // Do not proceed if subject or text is missing
   }
 
   var mailOptions = {
     from: process.env.sender,
     //! Change
-    to: to || 'neweraprovider@gmail.com',
+    to: to || 'mhuzaif523@gmail.com',
     subject: subject,
-    html: email,
+    html: text,
   };
 
   try {
