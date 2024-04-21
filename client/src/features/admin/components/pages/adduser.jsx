@@ -52,7 +52,7 @@ const genders = [
   { value: 'other', label: 'Other' },
 ];
 
-const addUser = () => {
+const AddUser = () => {
   const { RegisterHandler, message } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -110,6 +110,11 @@ const addUser = () => {
       toast.success(message);
     }
   }, [message]);
+
+  // Check if all fields are filled
+  const isFormValid =
+    Object.values(formData).every((value) => value !== '') &&
+    !Object.values(formData).includes(null);
 
   return (
     <>
@@ -337,6 +342,7 @@ const addUser = () => {
                 variant="contained"
                 style={{ width: '100%' }}
                 sx={{ mt: 2 }}
+                disabled={!isFormValid}
               >
                 Register
               </Button>
@@ -356,4 +362,4 @@ const addUser = () => {
   );
 };
 
-export default addUser;
+export default AddUser;
