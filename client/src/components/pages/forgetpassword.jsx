@@ -10,9 +10,6 @@ const ForgotPassword = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Handle password reset logic here
-    // This might involve sending a password reset email to the provided email address
   };
 
   return (
