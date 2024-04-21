@@ -137,7 +137,7 @@ const Authstate = ({ children }) => {
 
   const ResetPassword = async (password, confirmPassword, token) => {
     try {
-      const res = await axios.put(`http://localhost:8080/api/users/${token}`, {
+      const res = await axios.put(`https://lms2-two.vercel.app/api/users/${token}`, {
         password,
         confirmPassword,
       });
@@ -148,7 +148,7 @@ const Authstate = ({ children }) => {
   };
   const ForgetPassword = async (email) => {
     try {
-      const res = await axios.get('http://localhost:8080/api/users', { email });
+      const res = await axios.get('https://lms2-two.vercel.app/api/users', { email });
       console.log(res.data);
     } catch (err) {
       console.error(err);

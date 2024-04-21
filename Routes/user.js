@@ -87,7 +87,7 @@ router.get('/', async (req, res) => {
 
     await user.save();
 
-    const resetLink = `http://localhost:3000/resetpassword/${resetToken}`;
+    const resetLink = `https://lms2-front.vercel.app/resetpassword/${resetToken}`;
 
     try {
       await sendMail(
