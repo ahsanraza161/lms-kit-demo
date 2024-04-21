@@ -3,6 +3,7 @@ import Login from '../components/pages/login';
 import Home from '../components/pages/home';
 import About from '../components/pages/about';
 import Forgetpassword from '../components/pages/forgetpassword';
+import Resetpassword from '../components/pages/resetpassword';
 import Dashboard from '../features/admin/components/pages/dashboard';
 import StudentPanel from '../features/student';
 import TeacherPanel from '../features/teacher';
@@ -28,6 +29,10 @@ const routes = {
     path: '/forgetpassword',
     component: <Forgetpassword />,
   },
+  ResetPassword: {
+    path: '/resetpassword/:token',
+    component: <Resetpassword />,
+  },
   Dashboard: {
     path: '/dashboard',
     component: <Dashboard />,
@@ -49,6 +54,7 @@ const defaultRoutes = {
     routes.homePage,
     routes.about,
     routes.ForgetPassword,
+    routes.ResetPassword,
   ],
   protectedRoutes: [routes.Dashboard, routes.StudentPanel, routes.TeacherPanel],
 };
