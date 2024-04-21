@@ -148,12 +148,13 @@ const Authstate = ({ children }) => {
   };
   const ForgetPassword = async (email) => {
     try {
-      const res = await axios.get('https://lms2-two.vercel.app/api/users', { email });
+      const res = await axios.post('https://lms2-two.vercel.app/api/users/forgotpassword', { email });
       console.log(res.data);
     } catch (err) {
       console.error(err);
     }
   };
+  
 
   const [state, dispatch] = useReducer(Authreducer, initstate);
   return (
@@ -176,7 +177,7 @@ const Authstate = ({ children }) => {
         GetCoursesOfStudent,
         GetStudentsOfCourses,
         ForgetPassword,
-        ResetPassword
+        ResetPassword,
       }}
     >
       {children}

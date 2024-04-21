@@ -68,7 +68,7 @@ router.post('/', async (req, res) => {
 // @route POST api/users
 // @describe Forgot Password
 // @access public
-router.get('/', async (req, res) => {
+router.post('/forgotpassword', async (req, res) => {
   const { email } = req.body;
   try {
     const user = await Student.findOne({ email });

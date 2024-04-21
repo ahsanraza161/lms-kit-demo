@@ -1,41 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Topbar from '../common/navbar/navbar';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import AuthContext from '../../context/auth/authcontext';
 import "../../global.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  axios.defaults.withCredentials = true;
+  const { ForgetPassword } = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!email) {
-      alert('Please enter an email address.');
-      return;
-    }
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      setLoading(true);
-      const response = await axios.post('http://localhost:3001/forgot-password', { email });
-      if (response.data.Status === "Success") {
-        navigate('/login');
-      } else {
-        alert('An error occurred while processing your request. Please try again later.');
-      }
+      await ForgetPassword(email);
+      toast.success('Reset email sent successfully.');
     } catch (error) {
-      console.error(error);
-      alert('An error occurred while processing your request. Please try again later.');
-    } finally {
-      setLoading(false);
+      toast.error('Email not found. Please enter a valid email.');
     }
-  }
-
+  };
   const isFormValid = email !== '' && !loading;
 
   return (
@@ -77,6 +63,7 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
+      <Toaster/>
     </>
   );
 };
