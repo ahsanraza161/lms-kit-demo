@@ -42,6 +42,10 @@ const AppRouter = () => {
             <Route path="allnotes" element={<AllNotes />} />
           </Route>
           <Route path="/user/:activepage" element={<StudentPanel />} />
+          <Route
+            path="/resetpassword/:token"
+            element={<div>Reset Password</div>}
+          />
           <Route path="/teacher/:activepage" element={<TeacherPanel />} />
         </Route>
         <Route path="*" element={<h1 className="notfound">Not found</h1>} />

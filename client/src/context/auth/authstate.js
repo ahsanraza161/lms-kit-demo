@@ -135,6 +135,15 @@ const Authstate = ({ children }) => {
     }
   };
 
+  const ForgetPassword = async (email) => {
+    try {
+      const res = await axios.get('http://localhost:8080/api/users', { email });
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const [state, dispatch] = useReducer(Authreducer, initstate);
   return (
     <AuthContext.Provider
@@ -155,6 +164,7 @@ const Authstate = ({ children }) => {
         LogoutUser,
         GetCoursesOfStudent,
         GetStudentsOfCourses,
+        ForgetPassword,
       }}
     >
       {children}
