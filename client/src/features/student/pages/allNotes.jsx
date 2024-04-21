@@ -11,9 +11,9 @@ const AllNotes = () => {
   return (
     <div className='NoteStudents'>
       <h2>Notes</h2>
-      <ul>
+      <ul className='noteUL' >
         {notes.map((note) => (
-          <li key={note._id}>
+          <li className='noteslist' key={note._id}>
             <h3>{note.title}</h3>
             <p>{note.content}</p>
           </li>

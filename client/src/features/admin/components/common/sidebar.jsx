@@ -49,11 +49,11 @@ const Sidebar = ({ children }) => {
       name: 'Courses',
       icon: <HiClipboardList />,
     },
-    {
-      path: 'shedulecalender',
-      name: 'Calender',
-      icon: <SlCalender />,
-    },
+    // {
+    //   path: 'shedulecalender',
+    //   name: 'Calender',
+    //   icon: <SlCalender />,
+    // },
     {
       path: 'attendence',
       name: 'Attendence',

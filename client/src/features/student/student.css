@@ -13,8 +13,40 @@
   justify-content: center;
   gap: 20px;
 }
+.noteslist{
+  /* background-color: #464646; */
+  background: linear-gradient(to right bottom, #430089, #2f0027);
+  padding: 15px 0px;
+  border-radius: 15px;
+  
+}
+.noteUL p{
+  color: #fff;
+  margin: 0px !important;
+}
+.noteUL{
+  padding: 0 !important;
+}
 .NoteStudents{
   color: black;
+  text-align: center;
+  margin: 10px auto;
+  width: 60vw;
+}
+.NoteStudents h2{
+  font-size: 40px;
+  text-transform: uppercase !important;
+  
+}
+.NoteStudents h3{
+  font-weight: 700;
+  font-size: 20px;
+  text-transform: uppercase !important;
+}
+.NoteStudents li{
+  text-decoration: none;
+  list-style: none;
+  margin: 20px 0px;
 }
 
 .userprofile .userprofilein .left {
