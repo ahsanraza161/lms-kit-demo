@@ -180,7 +180,8 @@ body {
 
 .ForgetPass{
   background-color: #fff;
-  width: 30%;
+  width: 40%;
+  padding: 0px 20px;
   border-radius: 30px;
   margin: 0px auto;
   margin-top: 90px;
@@ -188,7 +189,7 @@ body {
 }
 
 .ForgetPass .one{
-  padding-top: 50px ;
+  padding-top: 30px ;
   width: 90%;
   margin: 0px auto;
   text-align: center;

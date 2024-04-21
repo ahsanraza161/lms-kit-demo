@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import Topbar from '../common/navbar/navbar';
 import { useParams } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
@@ -23,7 +24,8 @@ const ResetPassword = () => {
 
   return (
     <>
-      <Container>
+    <Topbar/>
+      <div className='container'>
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
             <h2 className="mt-5">Reset Password</h2>
@@ -52,7 +54,7 @@ const ResetPassword = () => {
             </Form>
           </Col>
         </Row>
-      </Container>
+      </div>
       <Toaster />
     </>
   );

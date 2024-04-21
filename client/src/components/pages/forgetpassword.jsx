@@ -1,75 +1,82 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Topbar from '../common/navbar/navbar';
 import { Form, Button } from 'react-bootstrap';
-import Link from '@mui/material/Link';
-import '../../global.css';
-import AuthContext from '../../context/auth/authcontext';
-import toast, { Toaster } from 'react-hot-toast';
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import "../../global.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-  const { ForgetPassword } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await ForgetPassword(email);
-      toast.success('Reset email sent successfully.');
-    } catch (error) {
-      toast.error('Email not found. Please enter a valid email.');
+  axios.defaults.withCredentials = true;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      alert('Please enter an email address.');
+      return;
     }
-  };
+
+    try {
+      setLoading(true);
+      const response = await axios.post('http://localhost:3001/forgot-password', { email });
+      if (response.data.Status === "Success") {
+        navigate('/login');
+      } else {
+        alert('An error occurred while processing your request. Please try again later.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred while processing your request. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const isFormValid = email !== '' && !loading;
+
   return (
     <>
       <Topbar />
       <div className="ForgetPass">
         <div className="one">
-          <Form className="form" onSubmit={handleSubmit}>
-            <LockOutlinedIcon
-              className="icon"
-              sx={{ bgcolor: 'secondary.main' }}
-            />
+          <Form className='form' onSubmit={handleSubmit}>
+            <LockOutlinedIcon className='icon' sx={{ bgcolor: 'secondary.main' }} />
             <Form.Group controlId="formGroupEmail">
-              <h2 className="headingReset">Forget Password</h2>
-              <p className="notereset">
-                <span>*</span> Reset Password Will be Sent to your Email Address
-                So kindly put the valid address!!{' '}
-              </p>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <h2 className='headingReset' >
+                Forget Password
+              </h2>
+              <p className='notereset'>Reset Password Will be Sent to your Email Address So kindly put the valid address</p>
+              <div className="resetInput">
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Button className='resetBtn' variant="primary" xs={12} sm={12} type="submit" disabled={!isFormValid}>
+                  {loading ? 'Loading...' : 'Reset Password'}
+                </Button>
+              </div>
             </Form.Group>
-            <Button
-              className="resetBtn"
-              variant="primary"
-              xs={12}
-              sm={12}
-              type="submit"
-            >
-              Reset Password
-            </Button>
           </Form>
-          <div className="resetLink">
+          <div className='resetLink'>
             <div>
-              <Link href="/login" variant="body2">
+              <Button href="/login" variant="body2">
                 Login
-              </Link>
+              </Button>
             </div>
-            <div>
-              <Link href="/registration" variant="body2">
+            <div >
+              <Button href="/registration" variant="body2">
                 Create New Account
-              </Link>
+              </Button>
             </div>
           </div>
         </div>
       </div>
-      <Toaster />
-
     </>
   );
 };
