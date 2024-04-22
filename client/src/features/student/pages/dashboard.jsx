@@ -1,52 +1,52 @@
-import React, {  useContext, useEffect } from 'react';
+// import React, {  useContext, useEffect } from 'react';
 import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
+  // Grid,
+  // Card,
+  // CardContent,
+  // Typography,
   Button,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import AdminContext from '../../../context/admin/admincontext';
+// import AdminContext from '../../../context/admin/admincontext';
 import AllNotes from './allNotes';
 
-function DashboardCard({ title, count, path }) {
-  return (
-      <Grid item xs={4}>
-        <Link to={path} style={{ textDecoration: 'none' }}>
-          <Card
-            sx={{
-              background: 'linear-gradient(to right bottom, #430089, #2f0027)',
-              padding: '16px',
-              color: '#fff',
-            }}
-          >
-            <CardContent>
-              <Typography variant="h6" component="div">
-                {title}
-              </Typography>
-              <Typography variant="h4" component="div">
-                {count}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Link>
-      </Grid>
-  );
-}
+// function DashboardCard({ title, count, path }) {
+//   return (
+//       <Grid item xs={4}>
+//         <Link to={path} style={{ textDecoration: 'none' }}>
+//           <Card
+//             sx={{
+//               background: 'linear-gradient(to right bottom, #430089, #2f0027)',
+//               padding: '16px',
+//               color: '#fff',
+//             }}
+//           >
+//             <CardContent>
+//               <Typography variant="h6" component="div">
+//                 {title}
+//               </Typography>
+//               <Typography variant="h4" component="div">
+//                 {count}
+//               </Typography>
+//             </CardContent>
+//           </Card>
+//         </Link>
+//       </Grid>
+//   );
+// }
 
 function Dashboard() {
   
 
-  const { getNumbers, cardData } = useContext(AdminContext);
+  // const { getNumbers, cardData } = useContext(AdminContext);
 
-  useEffect(() => {
-    getNumbers();
-  }, []);
+  // useEffect(() => {
+  //   getNumbers();
+  // }, []);
 
   return (
     <div>
-    <Grid container mt={1} justifyContent={'space-around'} spacing={5}>
+    {/* <Grid container mt={1} justifyContent={'space-around'} spacing={5}>
       <DashboardCard
         title="Teachers"
         count={cardData?.teachers}
@@ -57,7 +57,7 @@ function Dashboard() {
         count={cardData?.courses}
         path="/dashboard/courses"
       />
-    </Grid>
+    </Grid> */}
     <div className="importingNoteToDash">
     <AllNotes/>
     </div>

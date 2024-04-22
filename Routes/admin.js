@@ -124,7 +124,7 @@ router.delete('/:id', async (req, res) => {
 
     await Student.findByIdAndDelete(id);
 
-    return res.status(200).json({ msg: 'Contact deleted successfully' });
+    return res.status(200).json({ msg: 'deleted successfully' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);

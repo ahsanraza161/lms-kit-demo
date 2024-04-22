@@ -1,20 +1,20 @@
-import './UserSidebar.css'
-import { CgProfile } from "react-icons/cg";
+import '../../admin/mainadmin.css';
+import { CgProfile } from 'react-icons/cg';
 import * as React from 'react';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
-const user = {
-  name: 'Ahsan Raza',
-};
+import AuthContext from '../../../context/auth/authcontext';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 
 function Topbar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { data, LogoutUser } = useContext(AuthContext);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,9 +24,14 @@ function Topbar() {
     setAnchorEl(null);
   };
 
+  const LogoutHandler = () => {
+    LogoutUser('isStudentAuthenticated');
+    navigate('/');
+  };
+
   return (
     <div className="topBar">
-      <h3>Learning Managment System</h3>
+      <h3>Learning Management System</h3>
       <div
         sx={{
           display: 'flex',
@@ -38,7 +43,8 @@ function Topbar() {
           aria-haspopup="true"
           onClick={handleClick}
           startIcon={<KeyboardArrowDownIcon />}
-          sx={{  // Using the 'sx' prop for styling
+          sx={{
+            // Using the 'sx' prop for styling
             '& .MuiAvatar-root': {
               width: 50,
               height: 50,
@@ -46,8 +52,8 @@ function Topbar() {
             },
           }}
         >
-          {user.name}
-          <CgProfile className='avatar' />
+          {data && data.name ? data.name : ''}
+          <CgProfile className="avatar" />
         </Button>
       </div>
 
@@ -59,10 +65,9 @@ function Topbar() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem > <Link to={"/teacher/accountsettings"} style={{ textDecoration: 'none' }}>
-                  Profile
-                  </Link></MenuItem>
-        <MenuItem onClick={handleClose} >Logout</MenuItem>
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={LogoutHandler}>Logout</MenuItem>
       </Menu>
     </div>
   );
