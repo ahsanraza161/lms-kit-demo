@@ -24,7 +24,7 @@ const Note = ({ title, content, id, setCurrentData, deleteNote }) => {
   };
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} >
       <Card className="contentNoteDash">
         <div>
           <Typography className="noteTitle" variant="h6" component="div">
@@ -36,10 +36,16 @@ const Note = ({ title, content, id, setCurrentData, deleteNote }) => {
         </div>
         <div>
           <IconButton onClick={handleEditClick}>
-            <EditIcon />
+            <EditIcon sx={{
+              color:"#FFF"
+            }
+            } />
           </IconButton>
           <IconButton onClick={handleDeleteClick}>
-            <DeleteIcon />
+            <DeleteIcon sx={{
+              color:"#FFF"
+            }
+            } />
           </IconButton>
         </div>
       </Card>

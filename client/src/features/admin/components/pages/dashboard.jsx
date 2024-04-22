@@ -12,7 +12,7 @@ import AllNotes from './allNotes';
 
 function DashboardCard({ title, count, path }) {
   return (
-      <Grid item xs={4}>
+      <Grid item xs={4} >
         <Link to={path} style={{ textDecoration: 'none' }}>
           <Card
             sx={{
@@ -55,7 +55,7 @@ function Dashboard() {
       <DashboardCard
         title="Teachers"
         count={cardData?.teachers}
-        path="/dashboard/teachers"
+        path="/dashboard/faculties"
       />
       <DashboardCard
         title="Courses"
@@ -63,7 +63,7 @@ function Dashboard() {
         path="/dashboard/courses"
       />
     </Grid>
-    <div className="importingNoteToDash">
+    <div className="mt-2 importingNoteToDash">
     <AllNotes/>
     </div>
     <div>
