@@ -40,12 +40,12 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true); // Start loading when form is submitted
+    setLoading(true); 
     setFormData((prevdata) => {
       return { email: '', password: '' };
     });
     await LoginHandler(formData);
-    setLoading(false); // Stop loading after handling login
+    setLoading(false); 
   };
 
   useEffect(() => {

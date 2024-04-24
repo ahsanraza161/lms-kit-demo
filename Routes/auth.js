@@ -12,6 +12,7 @@ const Student = require('../models/Student');
 // @access public
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
+  console.log("the is calling from vbackend")
   try {
     let student = await Student.findOne({ email });
     if (!student) {

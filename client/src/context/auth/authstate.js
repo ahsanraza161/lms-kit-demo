@@ -22,6 +22,7 @@ const Authstate = ({ children }) => {
     token: localStorage.getItem('token'),
     message: null,
     studentcourses: [],
+  
   };
 
   const LoginHandler = async (formData) => {
@@ -36,6 +37,7 @@ const Authstate = ({ children }) => {
         formData,
         config
       );
+      console.log(formData)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -153,7 +155,14 @@ const Authstate = ({ children }) => {
     } catch (err) {
       console.error(err);
     }
+  }
+  const RefreshPage = () => {
+    const token = localStorage.getItem("token");
+    console.log(token)
+    return token
+
   };
+
   
 
   const [state, dispatch] = useReducer(Authreducer, initstate);
@@ -170,6 +179,7 @@ const Authstate = ({ children }) => {
         message: state.message,
         studentcourses: state.studentcourses,
         LoginHandler,
+        RefreshPage,
         RegisterHandler,
         GetUserData,
         UpdateUser,
