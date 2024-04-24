@@ -1,4 +1,4 @@
-import { React, useContext, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useReducer, useState } from 'react';
 import Topbar from '../common/navbar/navbar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,15 +12,20 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AuthContext from '../../context/auth/authcontext';
+import Authreducer from '../../context/auth/authreducer';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import  axios from 'axios';
 
 const defaultTheme = createTheme();
 const SignIn = () => {
+  const [state, dispatch] = useReducer(Authreducer, initstate);
+
   const {
     LoginHandler,
     error,
     isStudentAuthenticated,
+    GetUserData,
     isTeacherAuthenticated,
     isAdminAuthenticated,
   } = useContext(AuthContext);
@@ -37,15 +42,35 @@ const SignIn = () => {
       return { ...prevdata, [e.target.name]: e.target.value };
     });
   };
+  // useEffect(() => {
+
+  //   const fetch = async () => {
+  //   const res = await axios.get('https://lms2-two.vercel.app/api/auth');
+  //   console.log(res.data)
+  //   if(res.data.usertype=="admin"){
+  //     // isAdminAuthenticated;
+  //     // navigate('/dashboard');
+  //     dispatch({
+  //       type: "admin",
+  //       payload: res.data,
+  //     });
+
+  //   }
+  //   }
+  //   // GetUserData();
+  //   fetch(),
+  //   console.log('calling func');
+
+  // }, [isAdminAuthenticated, isStudentAuthenticated, isTeacherAuthenticated]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true); 
+    setLoading(true);
     setFormData((prevdata) => {
       return { email: '', password: '' };
     });
     await LoginHandler(formData);
-    setLoading(false); 
+    setLoading(false);
   };
 
   useEffect(() => {

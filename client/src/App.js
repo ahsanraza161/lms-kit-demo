@@ -23,23 +23,6 @@ function App() {
     <Authstate>
       <Adminstate>
         <BrowserRouter>
-          {/* <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgetpassword" element={<ForgetPassword />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/dashboard" element={<Admindashboard />}>
-              <Route index element={<Dashboard />}></Route>
-              <Route path="students" element={<Student />} />
-              <Route path="teachers" element={<Student />} />
-              <Route path="usermanagement" element={<Usermanagement />} />
-              <Route path="adduser" element={<AddUser />} />
-              <Route path="courses" element={<Courses />} />
-            </Route>
-            <Route path="/user/:activepage" element={<StudentPanel />} />
-            <Route path="/teacher/:activepage" element={<TeacherPanel />} />
-          </Routes> */}
           <AppRouter />
         </BrowserRouter>
       </Adminstate>

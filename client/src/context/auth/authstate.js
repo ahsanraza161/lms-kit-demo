@@ -37,7 +37,7 @@ const Authstate = ({ children }) => {
         formData,
         config
       );
-      console.log(formData)
+      
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,

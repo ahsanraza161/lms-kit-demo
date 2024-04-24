@@ -7,15 +7,15 @@ const RequireAuth = () => {
     isAdminAuthenticated,
     isStudentAuthenticated,
     isTeacherAuthenticated,
-    RefreshPage,
+    GetUserData,
     LogoutUser,
   } = useContext(AuthContext);
   const location = useLocation();
 
   useEffect(() => {
-const token =  RefreshPage();
-if (token) ;
-  });
+    GetUserData();
+    console.log("calling func")
+  }, [isAdminAuthenticated, isStudentAuthenticated, isTeacherAuthenticated]);
   if (location.pathname.includes('dashboard') && !isAdminAuthenticated) {
     console.log(isAdminAuthenticated);
     return <Navigate to="/login" state={{ from: location }} replace />;
