@@ -1,4 +1,4 @@
-import React, {  useContext, useEffect } from 'react';
+import React, {  useContext, useEffect, useState } from 'react';
 import {
   Grid,
   Card,
@@ -37,47 +37,53 @@ function DashboardCard({ title, count, path }) {
 
 function Dashboard() {
   
-
   const { getNumbers, cardData } = useContext(AdminContext);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
-    getNumbers();
+    const fetchData = async () => {
+      await getNumbers();
+      setLoading(false);
+    };
+    fetchData();
   }, []);
-
   return (
     <div>
-    <Grid container spacing={5}>
-      <DashboardCard
-        title="Students"
-        count={cardData?.students}
-        path="/dashboard/students"
-      />
-      <DashboardCard
-        title="Teachers"
-        count={cardData?.teachers}
-        path="/dashboard/faculties"
-      />
-      <DashboardCard
-        title="Courses"
-        count={cardData?.courses}
-        path="/dashboard/courses"
-      />
-    </Grid>
-    <div className="mt-2 importingNoteToDash">
-    <AllNotes/>
+      {loading ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <>
+          <Grid container spacing={5}>
+            <DashboardCard
+              title="Students"
+              count={cardData?.students}
+              path="/dashboard/students"
+            />
+            <DashboardCard
+              title="Teachers"
+              count={cardData?.teachers}
+              path="/dashboard/faculties"
+            />
+            <DashboardCard
+              title="Courses"
+              count={cardData?.courses}
+              path="/dashboard/courses"
+            />
+          </Grid>
+          <div className="mt-2 importingNoteToDash">
+            <AllNotes />
+          </div>
+          <div>
+            <Button className="btnForViewNote" variant="contained" color="success">
+              <Link to="/dashboard/allNotes" style={{ textDecoration: 'none' }}>
+                View All Notifications
+              </Link>
+            </Button>
+          </div>
+        </>
+      )}
     </div>
-    <div>
-          <Button className='btnForViewNote'
-                  variant="contained"
-                  color="success"
-                >
-                  <Link to={"/dashboard/allNotes"} style={{ textDecoration: 'none' }}>
-                  View All Notifications
-                  </Link>
-                </Button>
-                </div>
-     
-        </div>
   );
 }
 

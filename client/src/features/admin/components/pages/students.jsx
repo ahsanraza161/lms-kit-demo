@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 import Approved_Student from './approved_student';
@@ -6,13 +6,26 @@ import './students.css'
 
 const AdminStudentsTable = () => {
   const { getApprovedStudents, approvedStudents } = useContext(AdminContext);
+  const [loading, setLoading] = useState(true);
 
   // Call API
   useEffect(() => {
-    getApprovedStudents();
+    const fetchData = async () => {
+      await getApprovedStudents();
+      setLoading(false); // Set loading to false after data is fetched
+    };
+
+    fetchData();
   }, []);
 
   return (
+    <>
+    {loading ? (
+        <div className="loading">
+          {/* Loading indicator (e.g., spinner or loading gif) */}
+          Loading...
+        </div>
+      ) : (
     <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
       <thead>
         <tr className='sHeading' >
@@ -36,6 +49,8 @@ const AdminStudentsTable = () => {
           ))}
       </tbody>
     </Table>
+    )}
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import Course from './course';
 import AdminContext from '../../../../context/admin/admincontext';
 function Courses() {
   const [showAddCourse, setShowAddCourse] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { getAllCourses, courses, addCourse, faculties, getAllFaculty } =
     useContext(AdminContext);
 
@@ -15,8 +16,11 @@ function Courses() {
   const handleCloseAddCourse = () => setShowAddCourse(false);
 
   useEffect(() => {
-    getAllCourses();
-    getAllFaculty();
+    const fetchData = async () => {
+      await Promise.all([getAllCourses(), getAllFaculty()]);
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   // add course get data
@@ -64,6 +68,12 @@ function Courses() {
       </div>
       <Row>
         <Col xs={12}>
+        {loading ? (
+        <div className="loading">
+          {/* Loading indicator (e.g., spinner or loading gif) */}
+          Loading...
+        </div>
+      ) : (
           <Table responsive striped bordered hover>
             <thead style={{ textAlign: 'center' }}>
               <tr>
@@ -92,6 +102,8 @@ function Courses() {
               })}
             </tbody>
           </Table>
+     )}
+
         </Col>
 
         <Modal show={showAddCourse} onHide={handleCloseAddCourse}>

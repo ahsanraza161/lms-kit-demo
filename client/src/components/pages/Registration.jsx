@@ -56,6 +56,8 @@ const genders = [
 const RegistrationForm = () => {
   const { RegisterHandler, message } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -88,7 +90,9 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    RegisterHandler(formData);
+    setLoading(true);
+    await RegisterHandler(formData);
+    setLoading(false);
     setFormData({
       usertype: '',
       name: '',
@@ -345,15 +349,15 @@ const RegistrationForm = () => {
                 variant="contained"
                 style={{ width: '100%' }}
                 sx={{ mt: 2 }}
-                disabled={!isFormValid}
+                disabled={!isFormValid || loading}
               >
-                Register
+                {loading ? 'Registering...' : 'Register'}
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link to="/login" variant="body2">
+                    <Link href='/login' variant="body2" >
                     Already have an account? Login
-                  </Link>
+                    </Link>
                 </Grid>
               </Grid>
             </Box>

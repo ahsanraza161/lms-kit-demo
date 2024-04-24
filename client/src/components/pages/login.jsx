@@ -30,6 +30,7 @@ const SignIn = () => {
     email: '',
     password: '',
   });
+  const [loading, setLoading] = useState(false); // State to track loading
 
   const handleChange = (e) => {
     setFormData((prevdata) => {
@@ -39,10 +40,12 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Start loading when form is submitted
     setFormData((prevdata) => {
       return { email: '', password: '' };
     });
-    LoginHandler(formData);
+    await LoginHandler(formData);
+    setLoading(false); // Stop loading after handling login
   };
 
   useEffect(() => {
@@ -65,6 +68,7 @@ const SignIn = () => {
     isTeacherAuthenticated,
     isAdminAuthenticated,
   ]);
+
   return (
     <>
       <Topbar />
@@ -74,7 +78,6 @@ const SignIn = () => {
             <CssBaseline />
             <Box
               sx={{
-                // marginTop: 8,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -123,8 +126,9 @@ const SignIn = () => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  disabled={loading} // Disable button when loading
                 >
-                  Log in
+                  {loading ? 'Loading...' : 'Log in'} {/* Show loading text */}
                 </Button>
                 <Grid container>
                   <Grid item xs>
@@ -149,4 +153,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-    
