@@ -1,4 +1,6 @@
-import { React, useContext, useEffect, useReducer, useState } from 'react';
+// import { React, useContext, useEffect, useReducer, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
+
 import Topbar from '../common/navbar/navbar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,17 +17,17 @@ import AuthContext from '../../context/auth/authcontext';
 import Authreducer from '../../context/auth/authreducer';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import  axios from 'axios';
+// import  axios from 'axios';
 
 const defaultTheme = createTheme();
 const SignIn = () => {
-  const [state, dispatch] = useReducer(Authreducer, initstate);
+  // const [state, dispatch] = useReducer(Authreducer, initstate);
 
   const {
     LoginHandler,
     error,
     isStudentAuthenticated,
-    GetUserData,
+    // GetUserData,
     isTeacherAuthenticated,
     isAdminAuthenticated,
   } = useContext(AuthContext);
