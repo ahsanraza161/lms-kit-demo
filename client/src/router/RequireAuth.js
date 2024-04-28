@@ -20,18 +20,18 @@ const RequireAuth = () => {
     if (token);
   });
 
-  if (location.pathname.includes('dashboard') && !isAdminAuthenticated) {
-    console.log(isAdminAuthenticated);
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  } else if (location.pathname.includes('user') && !isStudentAuthenticated) {
-    //LogoutUser();
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  } else if (location.pathname.includes('teacher') && !isTeacherAuthenticated) {
-    //LogoutUser();
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  } else {
-    return <Outlet />;
-  }
+  // if (location.pathname.includes('dashboard') && !isAdminAuthenticated) {
+  //   console.log(isAdminAuthenticated);
+  //   return <Navigate to="/login" state={{ from: location }} replace />;
+  // } else if (location.pathname.includes('user') && !isStudentAuthenticated) {
+  //   //LogoutUser();
+  //   return <Navigate to="/login" state={{ from: location }} replace />;
+  // } else if (location.pathname.includes('teacher') && !isTeacherAuthenticated) {
+  //   //LogoutUser();
+  //   return <Navigate to="/login" state={{ from: location }} replace />;
+  // } else {
+  //   return <Outlet />;
+  // }
 };
 
 export default RequireAuth;
