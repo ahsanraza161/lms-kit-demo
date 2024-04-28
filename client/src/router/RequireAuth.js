@@ -1,37 +1,26 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import AuthContext from '../context/auth/authcontext';
-import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const RequireAuth = () => {
   const {
     isAdminAuthenticated,
     isStudentAuthenticated,
     isTeacherAuthenticated,
-    GetUserData,
-    LogoutUser,
   } = useContext(AuthContext);
   const location = useLocation();
 
-  useEffect(() => {
-    //   GetUserData();
-    //   console.log("calling func")
-    // }, [isAdminAuthenticated, isStudentAuthenticated, isTeacherAuthenticated]);
-    const token = RefreshPage();
-    if (token);
-  });
+  console.log(location.pathname);
 
-  // if (location.pathname.includes('dashboard') && !isAdminAuthenticated) {
-  //   console.log(isAdminAuthenticated);
-  //   return <Navigate to="/login" state={{ from: location }} replace />;
-  // } else if (location.pathname.includes('user') && !isStudentAuthenticated) {
-  //   //LogoutUser();
-  //   return <Navigate to="/login" state={{ from: location }} replace />;
-  // } else if (location.pathname.includes('teacher') && !isTeacherAuthenticated) {
-  //   //LogoutUser();
-  //   return <Navigate to="/login" state={{ from: location }} replace />;
-  // } else {
-  //   return <Outlet />;
-  // }
+  if (location.pathname.includes('dashboard') && !isAdminAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  } else if (location.pathname.includes('user') && !isStudentAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  } else if (location.pathname.includes('teacher') && !isTeacherAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  } else {
+    return <Outlet />;
+  }
 };
 
 export default RequireAuth;
