@@ -30,7 +30,7 @@ const AppRouter = () => {
         {publicPageRoutes}
         
 
-        <Route element={<RequireAuth />}>
+        {/* <Route element={<RequireAuth />}> */}
           <Route path="/dashboard" element={<Admindashboard />}>
             <Route index element={<Dashboard />} />
             <Route path="students" element={<Student />} />
@@ -47,7 +47,7 @@ const AppRouter = () => {
           <Route path="/teacher/:activepage" element={<TeacherPanel />} />
         </Route>
         <Route path="*" element={<h1 className="notfound">Not found</h1>} />
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 };
