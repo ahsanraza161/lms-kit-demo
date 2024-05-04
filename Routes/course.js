@@ -89,12 +89,12 @@ router.delete('/:id', async (req, res) => {
 // @route DELETE api/courses
 // @Describe Delete Student from  Course
 // @access private
-router.delete('/deletestudent', async (req, res) => {
-  const { courseId } = req.body;
+router.delete('/deletestudent/:courseId', async (req, res) => {
+  const { courseId } = req.params; // Extract courseId from URL parameters
   try {
     const course = await Course.findById(courseId);
 
-    return res.status(200).json(course);
+    return res.status(200).json({ msg: 'Student removed from course successfully' });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ msg: 'Server error' });

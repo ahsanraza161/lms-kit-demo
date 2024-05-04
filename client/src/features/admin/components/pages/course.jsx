@@ -16,6 +16,7 @@ const Course = ({
     approvedStudents,
     getApprovedStudents,
     addStudentInCourse,
+    removeStudentFromCourse, // Import the removeStudentFromCourse function
   } = useContext(AdminContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] =
@@ -38,19 +39,23 @@ const Course = ({
     deleteCourse(id);
   };
 
-  //   Student data
+  // Student data
   const handleShowUserDataModal = () => {
     setShowUserDataModal(true);
   };
 
-  //  Adding student to the course
-  const handleAddStudnets = () => {
+  // Adding student to the course
+  const handleAddStudents = () => {
     setShowAddStudentModel(true);
     const newArray = approvedStudents.filter(
       (obj2) => !students.some((obj1) => obj1.name === obj2.name)
     );
     setStudensThatCanBeAddToCourse(newArray);
-    console.log(studensThatCanBeAddToCourse);
+  };
+
+  // Remove student from the course
+  const handleRemoveStudent = (studentId) => {
+    removeStudentFromCourse(studentId, id);
   };
 
   useEffect(() => {
@@ -69,7 +74,7 @@ const Course = ({
           <Button variant="primary" onClick={handleShowUserDataModal}>
             Show Students
           </Button>
-          <Button variant="success" onClick={handleAddStudnets}>
+          <Button variant="success" onClick={handleAddStudents}>
             Add Students
           </Button>
           <Button variant="danger" onClick={deleteHandler}>
@@ -98,13 +103,18 @@ const Course = ({
 
             {students.map((student) => {
               return (
-                <tbody>
+                <tbody key={student._id}>
                   <tr>
                     <td>{student?.name}</td>
                     <td>{student?.fatherName}</td>
                     <td>{student.email}</td>
                     <td>
-                      <Button variant="danger">remove</Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleRemoveStudent(student._id)}
+                      >
+                        Remove
+                      </Button>
                     </td>
                   </tr>
                 </tbody>
@@ -138,7 +148,7 @@ const Course = ({
             </thead>
             {studensThatCanBeAddToCourse.map((student) => {
               return (
-                <tbody>
+                <tbody key={student._id}>
                   <tr>
                     <td>{student.name}</td>
                     <td>{student.fatherName}</td>

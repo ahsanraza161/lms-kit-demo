@@ -84,10 +84,10 @@ const SignIn = () => {
       navigate('/dashboard');
     }
     if (isStudentAuthenticated) {
-      navigate('/user/yourdashboard');
+      navigate('/user/allnotes');
     }
     if (isTeacherAuthenticated) {
-      navigate('/teacher/yourdashboard');
+      navigate('/teacher/allnotes');
     }
   }, [
     error,

@@ -15,6 +15,18 @@ const Adminstate = ({ children }) => {
     cardData: {},
     error: null,
   };
+  const removeStudentFromCourse = async (studentId, courseId) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8080/api/courses/deletestudent`,
+        { data: { studentId, courseId } } // Send data as part of the request body
+      );
+      console.log(res.data);
+      // You might want to dispatch an action to update the state after removing the student
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const getNotes = async () => {
     try {
       // Replace with the actual endpoint for your notes API
@@ -323,6 +335,7 @@ const Adminstate = ({ children }) => {
         markAttendance,
         deleteFaculty,
         addStudentInCourse,
+        removeStudentFromCourse,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,

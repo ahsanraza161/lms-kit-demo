@@ -14,7 +14,7 @@ const UserSidebar = ({ activepage }) => {
     <div className='usersidebar'>
 
       
-{
+{/* {
         activepage === 'yourdashboard' ?
           <div className='s2'>
                         <FaTh/>
@@ -31,7 +31,7 @@ const UserSidebar = ({ activepage }) => {
               <span>Your Dashboard</span>
             </div>
           </Link>
-      }
+      } */}
       
       {
   activepage === 'allnotes' ?  // Corrected to 'allnotes' instead of 'allNotes'

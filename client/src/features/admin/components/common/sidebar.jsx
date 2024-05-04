@@ -64,6 +64,11 @@ const Sidebar = ({ children }) => {
       name: 'Notes',
       icon: <FaNotesMedical />,
     },
+    {
+      path: 'activity',
+      name: 'activity',
+      icon: <FaNotesMedical />,
+    },
   ];
   return (
     <div className="container2">
