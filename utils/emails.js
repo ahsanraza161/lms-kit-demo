@@ -62,7 +62,7 @@ const requestAcceptedEmail = (name) => {
             <p>If you have any questions or need further assistance, feel free to contact us.</p>
             <p>Thank you!</p>
             <p><strong>From KIT</strong></p>
-            <p style="text-align: center;"><a href="#" class="btn">Visit our website</a></p>
+            <p style="text-align: center;"><a href="kit-lms.vercel.app" class="btn">Visit our website</a></p>
         </div>
     </body>
     
@@ -206,7 +206,7 @@ const forgotPasswordEmail = (name, resetLink) => {
             <p>If you have any questions or need further assistance, feel free to contact us.</p>
             <p>Thank you!</p>
             <p><strong>From KIT</strong></p>
-            <p style="text-align: center;"><a href="#" class="btn">Visit our website</a></p>
+            <p style="text-align: center;"><a href="kit-lms.vercel.app" class="btn">Visit our website</a></p>
         </div>
     </body>
 
