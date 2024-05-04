@@ -179,7 +179,7 @@ const Adminstate = ({ children }) => {
     try {
       const response = await axios.delete(
         `https://lms2-two.vercel.app/api/admin/teacher/${id}`
-      ); // Replace with your actual API endpoint
+      ); 
       dispatch({
         type: 'deletefaculty',
         payload: id,
