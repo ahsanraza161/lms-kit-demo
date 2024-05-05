@@ -22,9 +22,15 @@ const Authstate = ({ children }) => {
     token: localStorage.getItem('token'),
     message: null,
     studentcourses: [],
-  
-  };
 
+  };
+  const RefreshHandler = async () => {
+    dispatch(
+      {
+        type: 'refresh',
+      }
+    )
+  }
   const LoginHandler = async (formData) => {
     try {
       const config = {
@@ -37,7 +43,7 @@ const Authstate = ({ children }) => {
         formData,
         config
       );
-      
+
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -163,7 +169,7 @@ const Authstate = ({ children }) => {
 
   };
 
-  
+
 
   const [state, dispatch] = useReducer(Authreducer, initstate);
   return (
@@ -188,6 +194,7 @@ const Authstate = ({ children }) => {
         GetStudentsOfCourses,
         ForgetPassword,
         ResetPassword,
+        RefreshHandler
       }}
     >
       {children}

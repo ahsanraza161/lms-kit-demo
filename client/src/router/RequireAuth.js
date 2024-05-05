@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AuthContext from '../context/auth/authcontext';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
@@ -7,8 +7,13 @@ const RequireAuth = () => {
     isAdminAuthenticated,
     isStudentAuthenticated,
     isTeacherAuthenticated,
+    RefreshHandler
   } = useContext(AuthContext);
   const location = useLocation();
+
+  useEffect(() => {
+    RefreshHandler();
+  }, [isAdminAuthenticated, isStudentAuthenticated, isTeacherAuthenticated])
 
   console.log(location.pathname);
 

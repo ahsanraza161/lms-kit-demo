@@ -131,17 +131,17 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.delete('/teacher/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
+// router.delete('/teacher/:id', async (req, res) => {
+//   try {
+//     const id = req.params.id;
 
-    await Student.findByIdAndDelete(id);
+//     await Student.findByIdAndDelete(id);
 
-    return res.status(200).json({ msg: 'faculty deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ err });
-    console.error(err);
-  }
-});
+//     return res.status(200).json({ msg: 'faculty deleted successfully' });
+//   } catch (err) {
+//     res.status(500).json({ err });
+//     console.error(err);
+//   }
+// });
 
 module.exports = router;

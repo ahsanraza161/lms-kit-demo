@@ -11,6 +11,7 @@ const Authreducer = (state, action) => {
       // Assuming the payload contains userType
       const { usertype, token } = action.payload;
       localStorage.setItem('token', token);
+      localStorage.setItem('role',usertype);
       let isAuthenticated = '';
       if (usertype === 'Student') {
         isAuthenticated = 'isStudentAuthenticated';
@@ -53,6 +54,32 @@ const Authreducer = (state, action) => {
       return {
         ...state,
         data: action.payload,
+      };
+    case 'refresh':
+      const token2 = localStorage.getItem('token');
+      const role = localStorage.getItem('role');
+      let isAdminAuthenticated = false;
+      let isStudentAuthenticated = false;
+      let isTeacherAuthenticated = false;
+      if (token2 && role == 'admin') {
+        console.log("This condition run");
+        isAdminAuthenticated = true
+      }
+      else if (token2 && role == 'Student') {
+        console.log("This condition run");
+        isStudentAuthenticated = true
+      }
+      else if (token2 && role == 'teacher') {
+        console.log('This condition run')
+        isTeacherAuthenticated = true
+      }
+      console.log('The token is ', token2);
+      console.log('Role: ', role);
+      return {
+        ...state,
+        isAdminAuthenticated,
+        isStudentAuthenticated,
+        isTeacherAuthenticated
       };
     case 'logout':
       localStorage.removeItem('token');

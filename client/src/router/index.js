@@ -29,9 +29,9 @@ const AppRouter = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         {publicPageRoutes}
-        
 
-        {/* <Route element={<RequireAuth />}> */}
+
+        <Route element={<RequireAuth />}>
           <Route path="/dashboard" element={<Admindashboard />}>
             <Route index element={<Dashboard />} />
             <Route path="students" element={<Student />} />
@@ -45,11 +45,11 @@ const AppRouter = () => {
             <Route path="allnotes" element={<AllNotes />} />
           </Route>
           <Route path="/user/:activepage" element={<StudentPanel />} />
-          
+
           <Route path="/teacher/:activepage" element={<TeacherPanel />} />
         </Route>
         <Route path="*" element={<h1 className="notfound">Not found</h1>} />
-      {/* </Route> */}
+      </Route>
     </Routes>
   );
 };
