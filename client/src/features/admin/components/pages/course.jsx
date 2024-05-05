@@ -16,22 +16,18 @@ const Course = ({
     approvedStudents,
     getApprovedStudents,
     addStudentInCourse,
-    removeStudentFromCourse, // Import the removeStudentFromCourse function
+    deleteStudentCourse, 
   } = useContext(AdminContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] =
     useState([]);
+  const [loading, setLoading] = useState(false); // Added loading state
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
   const [showAddStudentModel, setShowAddStudentModel] = useState(false);
-  const handleCloseAddStudentModel = () => {
-    setShowAddStudentModel(false);
-  };
+  const handleCloseAddStudentModel = () => setShowAddStudentModel(false);
+
   const inputDate = start_date;
-
-  // Parse the input date string into a Date object
   const dateObj = new Date(inputDate);
-
-  // Format the date using built-in toLocaleDateString() method
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
   const formattedDate = dateObj.toLocaleDateString('en-GB', options);
 
@@ -39,12 +35,10 @@ const Course = ({
     deleteCourse(id);
   };
 
-  // Student data
   const handleShowUserDataModal = () => {
     setShowUserDataModal(true);
   };
 
-  // Adding student to the course
   const handleAddStudents = () => {
     setShowAddStudentModel(true);
     const newArray = approvedStudents.filter(
@@ -53,9 +47,15 @@ const Course = ({
     setStudensThatCanBeAddToCourse(newArray);
   };
 
-  // Remove student from the course
-  const handleRemoveStudent = (studentId) => {
-    removeStudentFromCourse(studentId, id);
+  const handleRemoveStudent = async (studentId) => {
+    try {
+      setLoading(true); // Start loading
+      await deleteStudentCourse(studentId, id); // Wait for deletion
+      setLoading(false); // Stop loading
+    } catch (err) {
+      console.log(err);
+      setLoading(false); // Stop loading in case of error
+    }
   };
 
   useEffect(() => {
@@ -109,12 +109,16 @@ const Course = ({
                     <td>{student?.fatherName}</td>
                     <td>{student.email}</td>
                     <td>
-                      <Button
-                        variant="danger"
-                        onClick={() => handleRemoveStudent(student._id)}
-                      >
-                        Remove
-                      </Button>
+                      {loading ? (
+                        <span>Loading...</span>
+                      ) : (
+                        <Button
+                          variant="danger"
+                          onClick={() => handleRemoveStudent(student._id)}
+                        >
+                          Remove
+                        </Button>
+                      )}
                     </td>
                   </tr>
                 </tbody>

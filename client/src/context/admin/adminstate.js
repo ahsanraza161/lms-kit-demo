@@ -22,7 +22,6 @@ const Adminstate = ({ children }) => {
         { data: { studentId, courseId } } // Send data as part of the request body
       );
       console.log(res.data);
-      // You might want to dispatch an action to update the state after removing the student
     } catch (error) {
       console.error(error);
     }
@@ -249,6 +248,21 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // Delete student Course
+  const deleteStudentCourse = async (id) => {
+    try {
+      const res = await axios.delete(
+        `https://lms2-two.vercel.app/api/courses/deletestudent/${id}` // Corrected endpoint
+      );
+      console.log(res.data);
+      dispatch({
+        type: 'deletestudentcourse',
+        payload: id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // Delete Course
   const deleteCourse = async (id) => {
     try {
@@ -329,6 +343,7 @@ const Adminstate = ({ children }) => {
         getApprovedStudents,
         deleteStudent,
         getAllCourses,
+        deleteStudentCourse,
         deleteCourse,
         addCourse,
         getAllFaculty,
