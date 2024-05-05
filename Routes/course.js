@@ -86,7 +86,6 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// @route DELETE api/courses
 // @Describe Delete Student from  Course
 // @access private
 router.delete('/deletestudent/:courseId/:studentId', async (req, res) => {

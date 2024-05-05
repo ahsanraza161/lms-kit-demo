@@ -238,27 +238,27 @@ const Adminstate = ({ children }) => {
   };
 
   // Delete student Course
-const deleteStudentCourse = async (id) => {
-  try {
-    const res = await axios.delete(
-      `https://lms2-two.vercel.app/api/courses/deletestudent/${id}`
-    );
-    console.log(res.data); // Log the response data
-
-    // Check if the deletion was successful before dispatching the action
-    if (res.status === 200) {
-      dispatch({
-        type: 'deletestudentcourse',
-        payload: id,
-      });
-    } else {
-      console.log('Deletion unsuccessful'); // Log an error message if deletion was unsuccessful
+  const deleteStudentCourse = async (courseId, studentId) => {
+    try {
+      const res = await axios.delete(
+        `https://lms2-two.vercel.app/api/courses/deletestudent/${courseId}/${studentId}`
+      );
+      console.log(res.data); // Log the response data
+  
+      // Check if the deletion was successful before further actions
+      if (res.status === 200) {
+        // Assuming dispatch is defined elsewhere
+        dispatch({
+          type: 'deletestudentcourse',
+          payload: studentId, // Sending the studentId as payload
+        });
+      } else {
+        console.log('Deletion unsuccessful'); // Log an error message if deletion was unsuccessful
+      }
+    } catch (err) {
+      console.log(err); // Log any errors that occur during the deletion process
     }
-  } catch (err) {
-    console.log(err); // Log any errors that occur during the deletion process
-  }
-};
-
+  };
   // Delete Course
   const deleteCourse = async (id) => {
     try {

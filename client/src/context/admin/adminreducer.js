@@ -64,14 +64,13 @@ const AdminReducer = (state, action) => {
         courses: action.payload,
       };
       case 'deletestudentcourse':
-        return {
-          ...state,
-          courses: state.courses.map(course => ({
-            ...course,
-            students: course.students.filter(student => student._id !== action.payload)
-          }))
-        };
-      
+  return {
+    ...state,
+    courses: state.courses.map(course => ({
+      ...course,
+      students: course.students.filter(student => student._id !== action.payload)
+    }))
+  };
     case 'deletecourse':
       return {
         ...state,
