@@ -15,17 +15,6 @@ const Adminstate = ({ children }) => {
     cardData: {},
     error: null,
   };
-  const removeStudentFromCourse = async (studentId, courseId) => {
-    try {
-      const res = await axios.delete(
-        `http://localhost:8080/api/courses/deletestudent`,
-        { data: { studentId, courseId } } // Send data as part of the request body
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const getNotes = async () => {
     try {
       // Replace with the actual endpoint for your notes API
@@ -249,20 +238,27 @@ const Adminstate = ({ children }) => {
   };
 
   // Delete student Course
-  const deleteStudentCourse = async (id) => {
-    try {
-      const res = await axios.delete(
-        `https://lms2-two.vercel.app/api/courses/deletestudent/${id}` // Corrected endpoint
-      );
-      console.log(res.data);
+const deleteStudentCourse = async (id) => {
+  try {
+    const res = await axios.delete(
+      `https://lms2-two.vercel.app/api/courses/deletestudent/${id}`
+    );
+    console.log(res.data); // Log the response data
+
+    // Check if the deletion was successful before dispatching the action
+    if (res.status === 200) {
       dispatch({
         type: 'deletestudentcourse',
         payload: id,
       });
-    } catch (err) {
-      console.log(err);
+    } else {
+      console.log('Deletion unsuccessful'); // Log an error message if deletion was unsuccessful
     }
-  };
+  } catch (err) {
+    console.log(err); // Log any errors that occur during the deletion process
+  }
+};
+
   // Delete Course
   const deleteCourse = async (id) => {
     try {
@@ -350,7 +346,6 @@ const Adminstate = ({ children }) => {
         markAttendance,
         deleteFaculty,
         addStudentInCourse,
-        removeStudentFromCourse,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,

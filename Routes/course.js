@@ -89,15 +89,24 @@ router.delete('/:id', async (req, res) => {
 // @route DELETE api/courses
 // @Describe Delete Student from  Course
 // @access private
-router.delete('/deletestudent/:courseId', async (req, res) => {
-  const { courseId } = req.params; // Extract courseId from URL parameters
+router.delete('/deletestudent/:courseId/:studentId', async (req, res) => {
+  const { courseId, studentId } = req.params; // Extract courseId and studentId from URL parameters
   try {
-    const course = await Course.findById(courseId);
+    // Find the course by its ID and update it to remove the student
+    const course = await Course.findByIdAndUpdate(
+      courseId,
+      { $pull: { students: studentId } }, // Remove the student from the 'students' array
+      { new: true } // Return the updated document
+    );
+
+    if (!course) {
+      return res.status(404).json({ msg: 'Course not found' });
+    }
 
     return res.status(200).json({ msg: 'Student removed from course successfully' });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ msg: 'Server error' });
+    return res.status(500).json({ msg: 'Server error' });
   }
 });
 

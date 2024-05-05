@@ -71,6 +71,7 @@ const AdminReducer = (state, action) => {
             students: course.students.filter(student => student._id !== action.payload)
           }))
         };
+      
     case 'deletecourse':
       return {
         ...state,
