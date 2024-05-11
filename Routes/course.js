@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course
 // @access private
-router.post('/', async (req, res) => {  
+router.post('/', async (req, res) => {
   try {
     const { name, teacher, start_date, classes_days, total_days } = req.body;
 
@@ -89,20 +89,22 @@ router.delete('/:id', async (req, res) => {
 // @Describe Delete Student from  Course
 // @access private
 router.delete('/deletestudent/:courseId/:studentId', async (req, res) => {
-  const { courseId, studentId } = req.params; // Extract courseId and studentId from URL parameters
+  const { courseId, studentId } = req.params;
   try {
-    // Find the course by its ID and update it to remove the student
-    const course = await Course.findByIdAndUpdate(
-      courseId,
-      { $pull: { students: studentId } }, // Remove the student from the 'students' array
-      { new: true } // Return the updated document
+    // Update the student document to remove the courseId from the courses array
+    const updatedStudent = await Student.findByIdAndUpdate(
+      studentId,
+      { $pull: { courses: courseId } },
+      { new: true }
     );
 
-    if (!course) {
-      return res.status(404).json({ msg: 'Course not found' });
-    }
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      { $pull: { students: studentId } },
+      { new: true }
+    );
 
-    return res.status(200).json({ msg: 'Student removed from course successfully' });
+    return res.status(200).json({ updatedStudent, updatedCourse });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ msg: 'Server error' });

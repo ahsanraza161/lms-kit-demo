@@ -1,9 +1,12 @@
 import { React, useContext, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import CircularProgress from '@mui/material/CircularProgress';
 import { FormSelect, Table, Row, Col, Modal, Button } from 'react-bootstrap';
 import '../../mainadmin.css';
 import Course from './course';
 import AdminContext from '../../../../context/admin/admincontext';
+
+
 function Courses() {
   const [showAddCourse, setShowAddCourse] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -57,7 +60,6 @@ function Courses() {
       classes_days: '',
       total_days: '',
     });
-    // addCourse(formattedCourse);
   };
   return (
     <div className="container">
@@ -70,8 +72,7 @@ function Courses() {
         <Col xs={12}>
         {loading ? (
         <div className="loading">
-          {/* Loading indicator (e.g., spinner or loading gif) */}
-          Loading...
+          <CircularProgress color="success" />
         </div>
       ) : (
           <Table responsive striped bordered hover>

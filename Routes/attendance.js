@@ -6,6 +6,22 @@ const Student = require('../models/Student');
 const Course = require('../models/Course');
 const Attendance = require('../models/Attendance'); // Import the Attendance model
 
+// @route GET api/attendance
+// @description View an attendance
+// @access Private (requires authentication) Only admin can mark attendance
+router.get('/getattendance', async (req, res) => {
+  try {
+    const Attendances = await Attendance.find()
+      .populate('course')
+      .populate('students');
+
+    return res.status(200).json({ Attendances });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: 'Server Error' });
+  }
+});
+
 // @route POST api/admin
 // @description Mark an attendance
 // @access Private (requires authentication) Only admin can mark attendance

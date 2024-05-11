@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../mainadmin.css';
+import { RxActivityLog } from "react-icons/rx";
 import {
   FaTh,
   FaBars,
@@ -64,11 +65,12 @@ const Sidebar = ({ children }) => {
       name: 'Notes',
       icon: <FaNotesMedical />,
     },
-    // {
-    //   path: 'activity',
-    //   name: 'activity',
-    //   icon: <FaNotesMedical />,
-    // },
+    {
+      path: 'activity',
+      name: 'activity',
+      icon: <RxActivityLog />
+      ,
+    },
   ];
   return (
     <div className="container2">
@@ -92,7 +94,6 @@ const Sidebar = ({ children }) => {
             <div className="icon">{item.icon}</div>
             <div
               style={{ display: isOpen ? 'block' : 'none' }}
-              // className="link_text"
               className={isOpen ? 'displayH' : 'displayH'}
             >
               {item.name}

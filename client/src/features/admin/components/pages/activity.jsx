@@ -1,60 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Table } from 'react-bootstrap';
-import { Spinner } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 
-function AdminActivityDashboard() {
-  const [activities, setActivities] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const ActivityLog = () => {
+  const [activityLog, setActivityLog] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedLog, setSelectedLog] = useState({});
 
   useEffect(() => {
+    // fetch activity log data from API or database
     const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/admin/activity'); // Update the endpoint
-        setActivities(response.data);
-      } catch (err) {
-        console.error("Error fetching activities:", err);
-      } finally {
-        setIsLoading(false);
-      }
+      const response = await fetch('/api/activity-log');
+      const data = await response.json();
+      setActivityLog(data);
     };
-
     fetchData();
   }, []);
 
+  const handleShowModal = (log) => {
+    setSelectedLog(log);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div>
-      <h1>Admin Activity Dashboard</h1>
-      {isLoading ? (
-        <div className="d-flex justify-content-center">
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </div>
-      ) : (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>User</th>
-              <th>Action</th>
-              <th>Details</th>
+      <h1>Activity Log</h1>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>User</th>
+            <th>Activity</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          {activityLog.map((log, index) => (
+            <tr key={index}>
+              <td>{log.date}</td>
+              <td>{log.user}</td>
+              <td>{log.activity}</td>
+              <td>
+                <Button variant="primary" onClick={() => handleShowModal(log)}>
+                  View Details
+                </Button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {activities.map((activity) => (
-              <tr key={activity._id}>
-                <td>{activity.timestamp}</td>
-                <td>{activity.userId}</td>
-                <td>{activity.action}</td>
-                <td>{activity.details.studentId || '-'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
+          ))}
+        </tbody>
+      </Table>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Activity Log Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Date:</strong> {selectedLog.date}
+          </p>
+          <p>
+            <strong>User:</strong> {selectedLog.user}
+          </p>
+          <p>
+            <strong>Activity:</strong> {selectedLog.activity}
+          </p>
+          <p>
+            <strong>Details:</strong> {selectedLog.details}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
-}
+};
 
-export default AdminActivityDashboard;
+export default ActivityLog;

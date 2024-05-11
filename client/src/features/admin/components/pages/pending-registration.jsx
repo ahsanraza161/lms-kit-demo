@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Pending_student from './pending_student';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Table } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 
@@ -18,7 +19,7 @@ const PendingRegistrations = () => {
   return (
     <div>
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className="loading"><CircularProgress color="success" /></div>
       ) : (
         <>
           <h1 className="text-center m-3">Pending Registrations</h1>

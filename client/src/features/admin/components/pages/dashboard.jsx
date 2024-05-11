@@ -6,6 +6,8 @@ import {
   Typography,
   Button,
 } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import { Link } from 'react-router-dom';
 import AdminContext from '../../../../context/admin/admincontext';
 import AllNotes from './allNotes';
@@ -51,7 +53,8 @@ function Dashboard() {
   return (
     <div>
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className="loading">          <CircularProgress color="success" />
+        </div>
       ) : (
         <>
           <Grid container spacing={5}>

@@ -1,5 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import AdminContext from '../../../../context/admin/admincontext';
 import GetTeachers from './getTeachers.jsx';
 import './students.css';
@@ -24,8 +26,9 @@ const AdminTeacherTable = () => {
     <>
      {loading ? (
         <div className="loading">
-          {/* Loading indicator (e.g., spinner or loading gif) */}
-          Loading...
+          
+          <CircularProgress color="success" />
+
         </div>
       ) : (
     <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
