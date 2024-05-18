@@ -96,7 +96,6 @@ router.get('/getNumbers', async (req, res) => {
 // @access private
 router.patch('/:id', auth, async (req, res) => {
   try {
-    const id = req.params.id;
     const adminid = req.user.id;
     const student = await Student.findById(id).select('-password');
     // Update the status
@@ -131,14 +130,28 @@ router.patch('/:id', auth, async (req, res) => {
 });
 
 // @route DELETE api/admin
-// @describe delete the students
+// @describe Delete the students
 // @access private
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const id = req.params.id;
+    const adminid = req.user.id;
+    const student = await Student.findById(id).select('-password');
 
     await Student.findByIdAndDelete(id);
-    return res.status(200).json({ msg: 'deleted successfully' });
+
+    // Capture Activity;
+    const admin = await Student.findById(adminid).select('-password');
+    const newActivity = new Activity({
+      name: admin.name,
+      action: 'deleted the student',
+      object: student.name,
+    });
+
+    await newActivity.save();
+    return res
+      .status(200)
+      .json({ msg: 'Deleted successfully and Activity also captured' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);
