@@ -2,10 +2,12 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router();
 const sendMail = require('../utils/sendmail');
+const auth = require('../Middlewares/auth');
 const { requestAcceptedEmail } = require('../utils/emails');
 
 const Student = require('../models/Student');
 const Course = require('../models/Course');
+const Activity = require('../models/Activity.js');
 
 // @route GET api/admin
 // @describe Get all Users with status pending
@@ -89,12 +91,13 @@ router.get('/getNumbers', async (req, res) => {
   }
 });
 
-// @route PUT api/admin
+// @route PATCH api/admin
 // @describe Change the Student status from pending to approved
 // @access private
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', auth, async (req, res) => {
   try {
     const id = req.params.id;
+    const adminid = req.user.id;
     const student = await Student.findById(id).select('-password');
     // Update the status
     student.status = 'approved';
@@ -108,7 +111,19 @@ router.patch('/:id', async (req, res) => {
       student.email
     );
 
-    return res.status(200).json({ msg: 'Email Successfully Sent' });
+    // Capture Activity;
+    const admin = await Student.findById(adminid).select('-password');
+    const newActivity = new Activity({
+      name: admin.name,
+      action: 'changed the status from pending to approved',
+      object: student.name,
+    });
+
+    await newActivity.save();
+
+    return res
+      .status(200)
+      .json({ msg: 'Email Successfully Sent and Activity also captured' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);
@@ -123,25 +138,11 @@ router.delete('/:id', async (req, res) => {
     const id = req.params.id;
 
     await Student.findByIdAndDelete(id);
-
     return res.status(200).json({ msg: 'deleted successfully' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);
   }
 });
-
-// router.delete('/teacher/:id', async (req, res) => {
-//   try {
-//     const id = req.params.id;
-
-//     await Student.findByIdAndDelete(id);
-
-//     return res.status(200).json({ msg: 'faculty deleted successfully' });
-//   } catch (err) {
-//     res.status(500).json({ err });
-//     console.error(err);
-//   }
-// });
 
 module.exports = router;

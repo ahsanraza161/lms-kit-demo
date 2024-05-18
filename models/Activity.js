@@ -1,23 +1,22 @@
 const mongoose = require('mongoose');
 
 const ActivitySchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
+  name: {
+    type: String,
     required: true,
-    ref: 'User' // Assuming you have a User model for storing admin information
   },
   action: {
     type: String,
-    required: true
+    required: true,
   },
   timestamp: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  details: {
-    type: Object,
-    default: {}
-  }
+  object: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Activity', ActivitySchema);
