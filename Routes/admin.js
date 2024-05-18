@@ -30,7 +30,7 @@ router.get('/pending', async (req, res) => {
 // @route GET api/admin
 // @describe Get all teacher with status approved
 // @access private
-router.get('/getteacher', async (req, res) => {
+router.get('/getteacher',auth, async (req, res) => {
   try {
     const teacher = await Student.find({
       usertype: 'Faculty',

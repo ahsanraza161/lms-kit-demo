@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router();
 const auth = require('../Middlewares/auth');
+const Activity = require('../models/Activity.js');
 const Student = require('../models/Student');
 const Course = require('../models/Course');
 const Attendance = require('../models/Attendance'); // Import the Attendance model
@@ -27,6 +28,7 @@ router.get('/getattendance', async (req, res) => {
 // @access Private (requires authentication) Only admin can mark attendance
 router.post('/', auth, async (req, res) => {
   try {
+    const adminid = req.user.id;
     // Extract the course ID, student ID, and date from the request body
     const { courseId, studentId, date } = req.body;
 
@@ -41,16 +43,24 @@ router.post('/', auth, async (req, res) => {
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
-
     // Create the attendance record
     const attendance = new Attendance({
       course: courseId,
       student: studentId,
       date: new Date(date), // Convert the date string to a Date object
     });
-
     // Save the attendance record to the database
     await attendance.save();
+    // Capture Activity;
+    const admin = await Student.findById(adminid).select('-password');
+    const newActivity = new Activity({
+      name: admin.name,
+      action: 'mark attendence of',
+      object: student.name,
+    });
+  
+    await newActivity.save();
+    
 
     res.status(201).json({ message: 'Attendance marked successfully' });
   } catch (err) {

@@ -3,6 +3,7 @@ require('dotenv').config();
 const router = express.Router();
 const Course = require('../models/Course');
 const Student = require('../models/Student');
+const Activity = require('../models/Activity.js');
 const auth = require('../Middlewares/auth');
 
 // @route GET api/courses
@@ -24,8 +25,9 @@ router.get('/', async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course
 // @access private
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
+    const adminid = req.user.id;
     const { name, teacher, start_date, classes_days, total_days } = req.body;
 
     let course = new Course({
@@ -38,6 +40,17 @@ router.post('/', async (req, res) => {
 
     course = await course.save();
 
+    // Capture Activity;
+    const admin = await Student.findById(adminid).select('-password');
+    const newActivity = new Activity({
+      name: admin.name,
+      action: 'created a course of',
+      object: name,
+    });
+
+    await newActivity.save();
+
+
     return res.status(200).json(course);
   } catch (err) {
     console.error(err);
@@ -48,15 +61,23 @@ router.post('/', async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course in students and courses field
 // @access private
-router.post('/addcourse', async (req, res) => {
+router.post('/addcourse', auth, async (req, res) => {
   const { studentId, courseId } = req.body;
   try {
+    const adminid = req.user.id;
     const updatedStudent = await Student.findByIdAndUpdate(
       studentId,
       { $addToSet: { courses: courseId } }, // Use $addToSet to avoid adding duplicates
       { new: true }
     );
-
+    const student = await Student.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: 'course not found' });
+    }
     // Update the courses model with the student ID
     const updatedCourse = await Course.findByIdAndUpdate(
       courseId,
@@ -67,6 +88,16 @@ router.post('/addcourse', async (req, res) => {
     res.json({ student: updatedStudent, course: updatedCourse });
   } catch (err) {
     console.error(err);
+    
+    // Capture Activity;
+    const admin = await Student.findById(adminid).select('-password');
+    const newActivity = new Activity({
+      name: admin.name,
+      action: 'added a course of',
+      object: studen,
+    });
+
+    await newActivity.save();
     return res.status(400).json({ msg: 'Server error' });
   }
 });

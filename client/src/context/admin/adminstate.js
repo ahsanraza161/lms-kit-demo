@@ -15,9 +15,21 @@ const Adminstate = ({ children }) => {
     cardData: {},
     error: null,
   };
+  const addMaterial = async (data) => {
+    try {
+      console.log("context is working")
+      const response = await axios.post(
+        `http://localhost:8080/api/materials/${id}/upload`, data);  
+      dispatch({
+        type: 'ADD_MATERIAL',
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
+  };
   const getNotes = async () => {
     try {
-      // Replace with the actual endpoint for your notes API
       const response = await axios.get('https://lms2-two.vercel.app/api/note'); // Adjust the URL based on your backend
       dispatch({
         type: 'getnotes',
@@ -25,7 +37,6 @@ const Adminstate = ({ children }) => {
       });
     } catch (error) {
       console.error(error);
-      // Handle errors appropriately (e.g., display an error message)
     }
   };
   const addNote = async (data) => {
@@ -316,6 +327,7 @@ const Adminstate = ({ children }) => {
         pendingStudents: state.pendingStudents,
         approvedStudents: state.approvedStudents,
         faculties: state.faculties,
+        addMaterial,
         getNotes,
         addNote,
         editNote,
