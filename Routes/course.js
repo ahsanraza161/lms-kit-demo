@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course
 // @access private
-router.post('/', auth, async (req, res) => {
+router.post('/',  async (req, res) => {
   try {
     const adminid = req.user.id;
     const { name, teacher, start_date, classes_days, total_days } = req.body;

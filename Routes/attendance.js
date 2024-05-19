@@ -26,7 +26,7 @@ router.get('/getattendance', async (req, res) => {
 // @route POST api/admin
 // @description Mark an attendance
 // @access Private (requires authentication) Only admin can mark attendance
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const adminid = req.user.id;
     // Extract the course ID, student ID, and date from the request body

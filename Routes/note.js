@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 });
 
 // Create a note
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
   const { title, content } = req.body;
   try {
     const adminid = req.user.id;
@@ -52,7 +52,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // Update a note
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params;
   console.log('Received note ID:', id); // Move this line below the 'id' declaration
 
@@ -83,7 +83,7 @@ router.put('/:id', auth, async (req, res) => {
 });
 
 // Delete a note
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const deletedNote = await Note.findByIdAndDelete(id);
