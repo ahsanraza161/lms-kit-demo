@@ -130,7 +130,7 @@ const Adminstate = ({ children }) => {
   const addStudentInCourse = async (studentId, courseId) => {
     try {
       const res = await axios.post(
-        'https://lms2-two.vercel.app/api/courses/addcourse',
+        'http://localhost:8080/api/courses/addcourse',
         { studentId, courseId }
       );
       console.log(res.data);

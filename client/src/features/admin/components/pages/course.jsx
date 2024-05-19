@@ -21,6 +21,7 @@ const Course = ({
   } = useContext(AdminContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+  const [studentList, setStudentList] = useState(students);
   const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] =
     useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,8 +36,13 @@ const Course = ({
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
   const formattedDate = dateObj.toLocaleDateString('en-GB', options);
 
-  const deleteHandler = () => {
-    deleteCourse(id);
+  const deleteHandler = async () => {
+    try {
+      await deleteCourse(id);
+      setStudentList([]);
+    } catch (error) {
+      console.error('Error deleting course:', error);
+    }
   };
 
   const handleShowUserDataModal = () => {
@@ -44,9 +50,9 @@ const Course = ({
   };
 
   const handleAddStudents = () => {
-    setShowAddStudentModal(true); // Corrected typo here
+    setShowAddStudentModal(true);
     const newArray = approvedStudents.filter(
-      (obj2) => !students.some((obj1) => obj1.name === obj2.name)
+      (obj2) => !studentList.some((obj1) => obj1.name === obj2.name)
     );
     setStudensThatCanBeAddToCourse(newArray);
   };
@@ -122,7 +128,7 @@ const Course = ({
         onHide={handleCloseUserDataModal}
       >
         <Modal.Header>
-          <Modal.Title>Students Of Web development</Modal.Title>
+          <Modal.Title>Students Of {name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Table responsive striped bordered hover>
