@@ -19,7 +19,7 @@ const Adminstate = ({ children }) => {
     try {
       console.log("context is working")
       const response = await axios.post(
-        `http://localhost:8080/api/materials/${id}/upload`, data);  
+        `https://lms2-two.vercel.app/api/materials/${id}/upload`, data);  
       dispatch({
         type: 'ADD_MATERIAL',
         payload: response.data,
@@ -130,7 +130,7 @@ const Adminstate = ({ children }) => {
   const addStudentInCourse = async (studentId, courseId) => {
     try {
       const res = await axios.post(
-        'http://localhost:8080/api/courses/addcourse',
+        'https://lms2-two.vercel.app/api/courses/addcourse',
         { studentId, courseId }
       );
       console.log(res.data);
@@ -252,7 +252,7 @@ const Adminstate = ({ children }) => {
   const deleteStudentCourse = async (courseId, studentId) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8080/api/courses/deletestudent/${courseId}/${studentId}`
+        `https://lms2-two.vercel.app/api/courses/deletestudent/${courseId}/${studentId}`
       );
     } catch (err) {
       console.log(err);
