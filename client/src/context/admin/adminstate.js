@@ -142,13 +142,14 @@ const Adminstate = ({ children }) => {
   // approve student
   const approveHandler = async (id) => {
     try {
+      setAuthToken(localStorage.token)
       const config = {
         data: {
           'Content-type': 'application-json',
         },
       };
       const res = await axios.patch(
-        `https://lms2-two.vercel.app/api/admin/${id}`,
+        `http://localhost:8080/api/admin/${id}`,
         config
       );
       dispatch({
@@ -163,8 +164,9 @@ const Adminstate = ({ children }) => {
   // Delete Student
   const deleteStudent = async (id) => {
     try {
+      setAuthToken(localStorage.token)
       const res = await axios.delete(
-        `https://lms2-two.vercel.app/api/admin/${id}`
+        `http://localhost:8080/api/admin/${id}`
       );
       dispatch({
         type: 'deletestudent',
