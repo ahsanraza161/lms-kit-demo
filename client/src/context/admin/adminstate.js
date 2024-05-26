@@ -17,9 +17,11 @@ const Adminstate = ({ children }) => {
   };
   const addMaterial = async (data) => {
     try {
-      console.log("context is working")
+      console.log('context is working');
       const response = await axios.post(
-        `https://lms2-two.vercel.app/api/materials/${id}/upload`, data);  
+        `https://lms2-two.vercel.app/api/materials/${id}/upload`,
+        data
+      );
       dispatch({
         type: 'ADD_MATERIAL',
         payload: response.data,
@@ -41,8 +43,9 @@ const Adminstate = ({ children }) => {
   };
   const addNote = async (data) => {
     try {
+      setAuthToken(localStorage.token);
       const response = await axios.post(
-        'https://lms2-two.vercel.app/api/note',
+        'http://localhost:8080/api/note',
         data
       );
 
@@ -58,9 +61,10 @@ const Adminstate = ({ children }) => {
 
   const editNote = async (id, updatedNote) => {
     try {
+      setAuthToken(localStorage.token);
       console.log('Note ID:', id);
       const res = await axios.put(
-        `https://lms2-two.vercel.app/api/note/${id}`,
+        `http://localhost:8080/api/note/${id}`,
         updatedNote
       );
       dispatch({
@@ -74,8 +78,10 @@ const Adminstate = ({ children }) => {
 
   const deleteNote = async (id) => {
     try {
+      setAuthToken(localStorage.token);
+
       const res = await axios.delete(
-        `https://lms2-two.vercel.app/api/note/${id}`
+        `http://localhost:8080/api/note/${id}`
       );
 
       dispatch({ type: 'DELETE_NOTE', payload: id });
@@ -142,7 +148,7 @@ const Adminstate = ({ children }) => {
   // approve student
   const approveHandler = async (id) => {
     try {
-      setAuthToken(localStorage.token)
+      setAuthToken(localStorage.token);
       const config = {
         data: {
           'Content-type': 'application-json',
@@ -164,10 +170,8 @@ const Adminstate = ({ children }) => {
   // Delete Student
   const deleteStudent = async (id) => {
     try {
-      setAuthToken(localStorage.token)
-      const res = await axios.delete(
-        `http://localhost:8080/api/admin/${id}`
-      );
+      setAuthToken(localStorage.token);
+      const res = await axios.delete(`http://localhost:8080/api/admin/${id}`);
       dispatch({
         type: 'deletestudent',
         payload: id,
@@ -179,8 +183,8 @@ const Adminstate = ({ children }) => {
   const deleteFaculty = async (id) => {
     try {
       const response = await axios.delete(
-        `https://lms2-two.vercel.app/api/admin/teacher/${id}`
-      ); // Replace with your actual API endpoint
+        `http://localhost:8080/api/admin/teacher/${id}`
+      ); 
       dispatch({
         type: 'deletefaculty',
         payload: id,
@@ -208,10 +212,27 @@ const Adminstate = ({ children }) => {
       return null; // Or return a custom error object
     }
   };
+  // Add the getactivity function
+  const getActivity = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/activity'); // Use HTTP for local development
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        throw new Error(`Failed to fetch activity data: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Error fetching activity data:', error);
+      return null; // Or return a custom error object
+    }
+  };
 
   // get all faculty
   const getAllFaculty = async () => {
     try {
+      setAuthToken(localStorage.token);
+
       const config = {
         data: {
           'Content-type': 'application-json',
@@ -279,8 +300,9 @@ const Adminstate = ({ children }) => {
   // Add Course
   const addCourse = async (data) => {
     try {
+      setAuthToken(localStorage.token);
       const res = await axios.post(
-        'https://lms2-two.vercel.app/api/courses',
+        'http://localhost:8080/api/courses',
         data
       );
       dispatch({
@@ -308,16 +330,29 @@ const Adminstate = ({ children }) => {
   };
 
   // Mark attenddance
-  const markAttendance = async (data) => {
+  const markAttendance = async (attendanceList) => {
     setAuthToken(localStorage.token);
     try {
       const res = await axios.post(
-        'https://lms2-two.vercel.app/api/attendance',
-        data
+        'http://localhost:8080/api/attendance',
+        {attendanceList}
       );
       console.log(res.data);
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const getAttendanceData = async () => {
+    try {
+      const res = await axios.get('http://localhost:8080/api/attendance/getattendance');
+      dispatch({
+        type: 'GET_ATTENDANCE_DATA',
+        payload: res.data.attendances,
+      });
+    } catch (err) {
+      console.error(err);
+      console.log('wor;kjsdhffdhk;')
     }
   };
 
@@ -338,6 +373,7 @@ const Adminstate = ({ children }) => {
         getNumbers,
         approveHandler,
         getUserData,
+        getActivity,
         getApprovedStudents,
         deleteStudent,
         getAllCourses,
@@ -348,6 +384,7 @@ const Adminstate = ({ children }) => {
         markAttendance,
         deleteFaculty,
         addStudentInCourse,
+        getAttendanceData,
         courses: state.courses,
         faculties: state.faculties,
         cardData: state.cardData,

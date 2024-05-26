@@ -30,7 +30,7 @@ router.get('/pending', async (req, res) => {
 // @route GET api/admin
 // @describe Get all teacher with status approved
 // @access private
-router.get('/getteacher',auth, async (req, res) => {
+router.get('/getteacher', auth, async (req, res) => {
   try {
     const teacher = await Student.find({
       usertype: 'Faculty',
@@ -97,7 +97,14 @@ router.get('/getNumbers', async (req, res) => {
 router.patch('/:id', auth, async (req, res) => {
   try {
     const adminid = req.user.id;
+    const id = req.params.id; // Retrieve the id parameter from the URL
     const student = await Student.findById(id).select('-password');
+
+    // Check if the student exists
+    if (!student) {
+      return res.status(404).json({ msg: 'Student not found' });
+    }
+
     // Update the status
     student.status = 'approved';
 
@@ -110,7 +117,7 @@ router.patch('/:id', auth, async (req, res) => {
       student.email
     );
 
-    // Capture Activity;
+    // Capture Activity
     const admin = await Student.findById(adminid).select('-password');
     const newActivity = new Activity({
       name: admin.name,
@@ -120,19 +127,46 @@ router.patch('/:id', auth, async (req, res) => {
 
     await newActivity.save();
 
-    return res
-      .status(200)
-      .json({ msg: 'Email Successfully Sent and Activity also captured' });
+    return res.status(200).json({ msg: 'Email Successfully Sent and Activity also captured' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);
   }
 });
 
+
 // @route DELETE api/admin
 // @describe Delete the students
 // @access private
 router.delete('/:id', auth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const adminid = req.user.id;
+    const student = await Student.findById(id).select('-password');
+
+    await Student.findByIdAndDelete(id);
+
+    // Capture Activity;
+    const admin = await Student.findById(adminid).select('-password');
+    const newActivity = new Activity({
+      name: admin.name,
+      action: 'deleted the student',
+      object: student.name,
+    });
+
+    await newActivity.save();
+    return res
+      .status(200)
+      .json({ msg: 'Deleted successfully and Activity also captured' });
+  } catch (err) {
+    res.status(500).json({ err });
+    console.error(err);
+  }
+});
+// @route DELETE api/admin
+// @describe Delete the students
+// @access private
+router.delete('/teacher/:id', auth, async (req, res) => {
   try {
     const id = req.params.id;
     const adminid = req.user.id;

@@ -1,5 +1,11 @@
 const AdminReducer = (state, action) => {
   switch (action.type) {
+    case 'GET_ATTENDANCE_DATA':
+      return {
+        ...state,
+        attendances: action.payload,
+      };
+
     case 'ADD_MATERIAL':
       return {
         ...state,

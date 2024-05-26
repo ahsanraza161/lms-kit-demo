@@ -26,4 +26,16 @@ router.post('/', async (req, res) => {
   }
 });
 
+// @route GET /api/admin/activity
+// @describe Get activity data
+// @access private
+router.get('/', async (req, res) => {
+  try {
+    const activities = await Activity.find({}).sort({ timestamp: -1 }); // Sort by timestamp in descending order
+    res.status(200).json(activities);
+  } catch (err) {
+    console.error('Error fetching activities:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;

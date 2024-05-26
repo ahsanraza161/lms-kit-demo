@@ -31,9 +31,9 @@ const AdminTeacherTable = () => {
 
         </div>
       ) : (
-    <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
+    <Table responsive striped bordered hover className="">
       <thead>
-        <tr className="sHeading">
+        <tr className="">
           <th>Name</th>
           <th>Father's Name</th>
           <th>Date of Birth</th>

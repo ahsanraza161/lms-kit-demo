@@ -65,7 +65,7 @@ function AllNotes() {
   return (
     <div >
       <Grid className="noteDash" container spacing={2} sx={{
-              background: 'linear-gradient(to right bottom, #430089, #2f0027)',
+              // background: 'linear-gradient(to right bottom, #430089, #2f0027)',
               padding: '16px',
               color: '#fff',
             }}>

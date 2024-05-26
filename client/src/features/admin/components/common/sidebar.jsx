@@ -61,6 +61,11 @@ const Sidebar = ({ children }) => {
       icon: <BsCalendar2Week />,
     },
     {
+      path: 'viewattendence',
+      name: 'View Attendence',
+      icon: <BsCalendar2Week />,
+    },
+    {
       path: 'allNotes',
       name: 'Notes',
       icon: <FaNotesMedical />,
