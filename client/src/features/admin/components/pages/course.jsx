@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Button, Modal, Table, Form } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
-import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Course = ({
   name,
@@ -18,7 +18,11 @@ const Course = ({
     getApprovedStudents,
     addStudentInCourse,
     deleteStudentCourse,
+    addMaterial,
+    fetchMaterials,
+    materials,
   } = useContext(AdminContext);
+
   const [showUserDataModal, setShowUserDataModal] = useState(false);
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
   const [studentList, setStudentList] = useState(students);
@@ -30,6 +34,7 @@ const Course = ({
   const [materialDate, setMaterialDate] = useState('');
   const [materialAttachment, setMaterialAttachment] = useState(null);
   const [tutorialLink, setTutorialLink] = useState('');
+  const [showMaterialsModal, setShowMaterialsModal] = useState(false);
 
   const inputDate = start_date;
   const dateObj = new Date(inputDate);
@@ -58,7 +63,7 @@ const Course = ({
   };
 
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
-  const handleCloseAddStudentModal = () => setShowAddStudentModal(false); // Corrected typo here
+  const handleCloseAddStudentModal = () => setShowAddStudentModal(false);
   const handleCloseAddMaterialModal = () => setShowAddMaterialModal(false);
 
   useEffect(() => {
@@ -66,35 +71,44 @@ const Course = ({
   }, []);
 
   const handleMaterialSubmit = async () => {
-    if (!materialTitle || !materialDate || !materialAttachment) {
+    if (!allFieldsFilled(materialTitle, materialDate, materialAttachment)) {
       alert('Please fill in all required fields');
       return;
     }
+
     try {
       const formData = new FormData();
       formData.append('title', materialTitle);
       formData.append('date', materialDate);
       formData.append('attachment', materialAttachment);
-      formData.append('tutorialLink', tutorialLink);
+      formData.append('tutorialLink', tutorialLink || '');
 
-      // Concatenate courseId with the base URL
-      const apiUrl = `http://localhost:8080/api/materials/${id}/upload`;
-
-      const response = await axios.post(apiUrl, formData);
-
-      if (!response.ok) {
-        throw new Error('Material upload failed');
-      }
-
-      setMaterialTitle('');
-      setMaterialDate('');
-      setMaterialAttachment(null);
-      setTutorialLink('');
-
+      await addMaterial(id, formData);
+      clearMaterialForm();
       setShowAddMaterialModal(false);
+      toast.success('Material uploaded successfully.');
     } catch (error) {
       console.error('Error uploading material:', error);
     }
+  };
+
+  function allFieldsFilled(...fields) {
+    return fields.every((field) => field);
+  }
+
+  function clearMaterialForm() {
+    setMaterialTitle('');
+    setMaterialDate('');
+    setMaterialAttachment(null);
+    setTutorialLink('');
+  }
+
+  // Function to handle viewing materials
+  const handleCloseMaterialsModal = () => setShowMaterialsModal(false);
+
+  const handleViewMaterials = () => {
+    fetchMaterials(id); // Pass the id to fetchMaterials
+    setShowMaterialsModal(true);
   };
   return (
     <>
@@ -116,6 +130,9 @@ const Course = ({
             onClick={() => setShowAddMaterialModal(true)}
           >
             Add Material
+          </Button>
+          <Button variant="info" onClick={handleViewMaterials}>
+            View Materials
           </Button>
           <Button variant="danger" onClick={deleteHandler}>
             Delete
@@ -140,32 +157,29 @@ const Course = ({
                 <th>Action</th>
               </tr>
             </thead>
-
-            {students.map((student) => {
-              return (
-                <tbody key={student._id}>
-                  <tr>
-                    <td>{student?.name}</td>
-                    <td>{student?.fatherName}</td>
-                    <td>{student.email}</td>
-                    <td>
-                      {loading ? (
-                        <span>Loading...</span>
-                      ) : (
-                        <Button
-                          variant="danger"
-                          onClick={() => {
-                            deleteStudentCourse(id, student._id);
-                          }}
-                        >
-                          Remove
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
+            {students.map((student) => (
+              <tbody key={student._id}>
+                <tr>
+                  <td>{student?.name}</td>
+                  <td>{student?.fatherName}</td>
+                  <td>{student.email}</td>
+                  <td>
+                    {loading ? (
+                      <span>Loading...</span>
+                    ) : (
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          deleteStudentCourse(id, student._id);
+                        }}
+                      >
+                        Remove
+                      </Button>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            ))}
           </Table>
         </Modal.Body>
         <Modal.Footer>
@@ -192,27 +206,25 @@ const Course = ({
                 <th>Action</th>
               </tr>
             </thead>
-            {studensThatCanBeAddToCourse.map((student) => {
-              return (
-                <tbody key={student._id}>
-                  <tr>
-                    <td>{student.name}</td>
-                    <td>{student.fatherName}</td>
-                    <td>{student.email}</td>
-                    <td>
-                      <Button
-                        variant="danger"
-                        onClick={() => {
-                          addStudentInCourse(student._id, id);
-                        }}
-                      >
-                        Add
-                      </Button>
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
+            {studensThatCanBeAddToCourse.map((student) => (
+              <tbody key={student._id}>
+                <tr>
+                  <td>{student.name}</td>
+                  <td>{student.fatherName}</td>
+                  <td>{student.email}</td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        addStudentInCourse(student._id, id);
+                      }}
+                    >
+                      Add
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
           </Table>
         </Modal.Body>
         <Modal.Footer>
@@ -256,11 +268,11 @@ const Course = ({
               />
             </Form.Group>
             <Form.Group controlId="tutorialLink">
-              <Form.Label>Tutorial Link</Form.Label>
+              <Form.Label>Tutorial Link (Optional)</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter tutorial link"
-                value={tutorialLink}
+                value={tutorialLink || ''}
                 onChange={(e) => setTutorialLink(e.target.value)}
               />
             </Form.Group>
@@ -275,6 +287,55 @@ const Course = ({
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={showMaterialsModal}
+        className="modal-lg"
+        onHide={handleCloseMaterialsModal}
+      >
+        <Modal.Header>
+          <Modal.Title>Materials for {name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Table responsive striped bordered hover>
+            <thead style={{ textAlign: 'center' }}>
+              <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Attachment</th>
+                <th>Tutorial Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              {materials.map((material) => (
+                <tr key={material._id}>
+                  <td>{material.title}</td>
+                  <td>{material.date}</td>
+                  <td>
+                    {material.attachment ? (
+                      <a
+                        href={material.attachment}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View Attachment
+                      </a>
+                    ) : (
+                      'No attachment'
+                    )}
+                  </td>
+                  <td>{material.tutorialLink}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseMaterialsModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Toaster />
     </>
   );
 };

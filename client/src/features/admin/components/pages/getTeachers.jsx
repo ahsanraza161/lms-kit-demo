@@ -6,8 +6,9 @@ import AdminContext from '../../../../context/admin/admincontext';
 const getTeachers = ({ item }) => {
   const { deleteFaculty } = useContext(AdminContext);
   const deletehandler = (id) => {
-    // deleteFaculty(id);
+    deleteFaculty(id);
   };
+  
   return (
     <>
       <tr key={item._id}>
@@ -23,7 +24,11 @@ const getTeachers = ({ item }) => {
         <td>{item.universityCollege}</td>
         <td>{item.email}</td>
         <td>
-          <Button variant="danger" size="sm" onClick={deletehandler(item._id)}>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => deletehandler(item._id)}
+          >
             Delete
           </Button>
         </td>

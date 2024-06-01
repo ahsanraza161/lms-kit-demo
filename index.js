@@ -1,16 +1,21 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path'); // Include path module to handle file paths
 const connectdb = require('./db/db');
 
 const app = express();
 const corsOptions = {
-  origin:  ('*'),
+  origin: '*',
 };
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 
 connectdb();
+
+// Serve static files from the "uploads" directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Api routes
 app.use('/api/activity', require('./Routes/activity'));

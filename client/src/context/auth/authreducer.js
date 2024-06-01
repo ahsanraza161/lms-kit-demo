@@ -69,7 +69,7 @@ const Authreducer = (state, action) => {
         console.log("This condition run");
         isStudentAuthenticated = true
       }
-      else if (token2 && role == 'teacher') {
+      else if (token2 && role == 'Faculty') {
         console.log('This condition run')
         isTeacherAuthenticated = true
       }

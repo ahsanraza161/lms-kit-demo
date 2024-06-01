@@ -178,7 +178,7 @@ router.delete('/teacher/:id', auth, async (req, res) => {
     const admin = await Student.findById(adminid).select('-password');
     const newActivity = new Activity({
       name: admin.name,
-      action: 'deleted the student',
+      action: 'deleted the faculty',
       object: student.name,
     });
 

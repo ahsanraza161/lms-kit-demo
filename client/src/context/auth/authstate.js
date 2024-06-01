@@ -121,11 +121,12 @@ const Authstate = ({ children }) => {
   const GetCoursesOfStudent = async () => {
     try {
       setAuthToken(state.token);
-      const res = await axios.get(`https://lms2-two.vercel.app/api/students`);
+      const res = await axios.get(`http://localhost:8080/api/students`);
       dispatch({
         type: 'getcoursesofstudents',
         payload: res.data,
       });
+      console.log(res.data)
     } catch (err) {
       console.error(err);
     }
@@ -134,7 +135,7 @@ const Authstate = ({ children }) => {
     try {
       console.log(id);
       const res = await axios.get(
-        'https://lms2-two.vercel.app/api/courses/getstudents',
+        'http://localhost:8080/api/courses/getstudents',
         { id }
       );
       console.log(res.data);

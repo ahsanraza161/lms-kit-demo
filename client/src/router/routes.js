@@ -42,7 +42,7 @@ const routes = {
     component: <StudentPanel />,
   },
   TeacherPanel: {
-    path: '//teacher/:activepage',
+    path: '/teacher/:activepage',
     component: <TeacherPanel />,
   },
 };

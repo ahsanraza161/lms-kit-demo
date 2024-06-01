@@ -12,6 +12,12 @@ const AdminReducer = (state, action) => {
         materials: [action.payload, ...state.materials],
       };
 
+    case 'FETCH_MATERIALS':
+      return {
+        ...state,
+        materials: action.payload, // Set fetched materials to the state
+      };
+
     // Handle note actions (GET_NOTES, ADD_NOTE, EDIT_NOTE, DELETE_NOTE)
 
     case 'getnotes':
@@ -21,13 +27,13 @@ const AdminReducer = (state, action) => {
       };
     case 'ADD_NOTE':
       return { ...state, notes: [action.payload, ...state.notes] };
-      case 'EDIT_NOTE':
-        return {
-          ...state,
-          notes: state.notes.map((note) =>
-             action.payload.updatedNote ? note._id === action.payload.id : note
-          )
-        };
+    case 'EDIT_NOTE':
+      return {
+        ...state,
+        notes: state.notes.map((note) =>
+          action.payload.updatedNote ? note._id === action.payload.id : note
+        ),
+      };
     case 'DELETE_NOTE':
       return {
         ...state,
@@ -75,14 +81,16 @@ const AdminReducer = (state, action) => {
         ...state,
         courses: action.payload,
       };
-      case 'deletestudentcourse':
-  return {
-    ...state,
-    courses: state.courses.map(course => ({
-      ...course,
-      students: course.students.filter(student => student._id !== action.payload)
-    }))
-  };
+    case 'deletestudentcourse':
+      return {
+        ...state,
+        courses: state.courses.map((course) => ({
+          ...course,
+          students: course.students.filter(
+            (student) => student._id !== action.payload
+          ),
+        })),
+      };
     case 'deletecourse':
       return {
         ...state,
@@ -104,6 +112,17 @@ const AdminReducer = (state, action) => {
       return {
         ...state,
         cardData: action.payload,
+      };
+
+    case 'setattendances':
+      return {
+        ...state,
+        attendances: action.payload,
+      };
+    case 'setactivities':
+      return {
+        ...state,
+        activities: action.payload,
       };
 
     // Default case (handles unknown actions)

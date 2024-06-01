@@ -1,4 +1,5 @@
 import { React, useContext, useEffect, useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import Form from 'react-bootstrap/Form';
 import { FormSelect, Table, Row, Col, Modal, Button } from 'react-bootstrap';
 import '../../mainadmin.css';
@@ -70,8 +71,7 @@ function Courses() {
         <Col xs={12}>
         {loading ? (
         <div className="loading">
-          {/* Loading indicator (e.g., spinner or loading gif) */}
-          Loading...
+          <CircularProgress color="success" />
         </div>
       ) : (
           <Table responsive striped bordered hover>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../mainadmin.css';
 import { RxActivityLog } from "react-icons/rx";
+import { BsCalendar2Check } from "react-icons/bs";
 import {
   FaTh,
   FaBars,
@@ -58,7 +59,7 @@ const Sidebar = ({ children }) => {
     {
       path: 'attendence',
       name: 'Attendence',
-      icon: <BsCalendar2Week />,
+      icon: <BsCalendar2Check />
     },
     {
       path: 'viewattendence',
