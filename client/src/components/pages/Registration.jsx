@@ -151,7 +151,7 @@ const RegistrationForm = () => {
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}>
-                  <FormControl required style={{ width: '100%' }}>
+                  <FormControl variant="filled" required style={{ width: '100%' }}>
                     <InputLabel id="usertype-label">Register as a</InputLabel>
                     <Select
                       labelId="usertype-label"
@@ -246,7 +246,7 @@ const RegistrationForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <FormControl required style={{ width: '100%' }}>
+                  <FormControl variant="filled" required style={{ width: '100%' }}>
                     <InputLabel id="qualification-label">
                       Highest Qualification
                     </InputLabel>
@@ -265,7 +265,7 @@ const RegistrationForm = () => {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <FormControl style={{ width: '100%' }} required>
+                  <FormControl variant="filled" style={{ width: '100%' }} required>
                     <InputLabel id="subject-label">
                       Subject of Studies
                     </InputLabel>
