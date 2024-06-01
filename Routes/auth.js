@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
 
 // @route GET api/users
 // @describe Get User data
-// @access public
+// @access private
 router.get('/', auth, async (req, res) => {
   const id = req.user.id;
   try {
@@ -70,7 +70,7 @@ router.get('/', auth, async (req, res) => {
 
 // @route GET api/users
 // @describe Update User data
-// @access public
+// @access private
 router.put('/', auth, async (req, res) => {
   const id = req.user.id;
   const {

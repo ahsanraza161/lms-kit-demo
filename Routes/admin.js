@@ -9,10 +9,10 @@ const Student = require('../models/Student');
 const Course = require('../models/Course');
 const Activity = require('../models/Activity.js');
 
-// @route GET api/admin
+// @route GET api/admin/pending
 // @describe Get all Users with status pending
 // @access private
-router.get('/pending', async (req, res) => {
+router.get('/pending',auth, async (req, res) => {
   try {
     const students = await Student.find({
       status: 'pending',
@@ -27,10 +27,10 @@ router.get('/pending', async (req, res) => {
     res.status(500).send({ message: err });
   }
 });
-// @route GET api/admin
+// @route GET api/admin/getteacher
 // @describe Get all teacher with status approved
 // @access private
-router.get('/getteacher', async (req, res) => {
+router.get('/getteacher', auth,async (req, res) => {
   try {
     const teacher = await Student.find({
       usertype: 'Faculty',
@@ -43,10 +43,10 @@ router.get('/getteacher', async (req, res) => {
   }
 });
 
-// @route GET api/admin
+// @route GET api/admin/approved
 // @describe Get all Students with status approved
 // @access private
-router.get('/approved', async (req, res) => {
+router.get('/approved',auth, async (req, res) => {
   try {
     const students = await Student.find({
       status: 'approved',
@@ -66,10 +66,10 @@ router.get('/approved', async (req, res) => {
   }
 });
 
-// @route GET api/admin
+// @route GET api/admin/getNumbers
 // @describe Get all Numbers
 // @access private
-router.get('/getNumbers', async (req, res) => {
+router.get('/getNumbers',auth, async (req, res) => {
   try {
     const students = await Student.find({
       usertype: 'Student',
@@ -91,7 +91,7 @@ router.get('/getNumbers', async (req, res) => {
   }
 });
 
-// @route PATCH api/admin
+// @route PATCH api/admin/:id
 // @describe Change the Student status from pending to approved
 // @access private
 router.patch('/:id', auth, async (req, res) => {
@@ -129,7 +129,7 @@ router.patch('/:id', auth, async (req, res) => {
   }
 });
 
-// @route DELETE api/admin
+// @route DELETE api/admin/:id
 // @describe Delete the students
 // @access private
 router.delete('/:id', auth, async (req, res) => {

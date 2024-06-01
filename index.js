@@ -13,7 +13,6 @@ app.use(cors(corsOptions));
 connectdb();
 
 // Api routes
-app.use('/api/activity', require('./Routes/activity'));
 app.use('/api/users', require('./Routes/user'));
 app.use('/api/auth', require('./Routes/auth'));
 app.use('/api/admin', require('./Routes/admin'));

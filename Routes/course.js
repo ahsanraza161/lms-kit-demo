@@ -8,7 +8,7 @@ const auth = require('../Middlewares/auth');
 // @route GET api/courses
 // @Describe Get all Courses
 // @access private
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const courses = await Course.find().populate({
       path: 'students',
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course
 // @access private
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const { name, teacher, start_date, classes_days, total_days } = req.body;
 
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course in students and courses field
 // @access private
-router.post('/addcourse', async (req, res) => {
+router.post('/addcourse',auth, async (req, res) => {
   const { studentId, courseId } = req.body;
   try {
     const updatedStudent = await Student.findByIdAndUpdate(
@@ -74,7 +74,7 @@ router.post('/addcourse', async (req, res) => {
 // @route DELETE api/courses
 // @Describe Delete a Course
 // @access private
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',auth, async (req, res) => {
   const id = req.params.id;
   try {
     await Course.findByIdAndDelete(id);
