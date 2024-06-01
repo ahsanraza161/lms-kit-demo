@@ -6,7 +6,7 @@ import AdminContext from '../../../../context/admin/admincontext';
 const getTeachers = ({ item }) => {
   const { deleteFaculty } = useContext(AdminContext);
   const deletehandler = (id) => {
-    deleteFaculty(id);
+    // deleteFaculty(id);
   };
   return (
     <>

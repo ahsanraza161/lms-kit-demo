@@ -11,6 +11,7 @@ import Teacher from '../features/admin/components/pages/teachers';
 import Usermanagement from '../features/admin/components/pages/pending-registration';
 import AddUser from '../features/admin/components/pages/adduser';
 import Attendence from '../features/admin/components/pages/Attendence';
+import ViewAttendence from '../features/admin/components/pages/viewattendence';
 import Calender from '../features/admin/components/pages/CalenderShedule';
 import Courses from '../features/admin/components/pages/courses';
 import Activity from '../features/admin/components/pages/activity';
@@ -40,6 +41,7 @@ const AppRouter = () => {
             <Route path="newregistration" element={<AddUser />} />
             <Route path="courses" element={<Courses />} />
             <Route path="attendence" element={<Attendence />} />
+            <Route path="viewattendence" element={<ViewAttendence />} />
             <Route path="shedulecalender" element={<Calender />} />
             <Route path="activity" element={<Activity />} />
             <Route path="allnotes" element={<AllNotes />} />

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Button, Modal, Table, Form } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
-
+import axios from 'axios';
 
 const Course = ({
   name,
@@ -20,29 +20,29 @@ const Course = ({
     deleteStudentCourse,
   } = useContext(AdminContext);
   const [showUserDataModal, setShowUserDataModal] = useState(false);
+  const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+  const [studentList, setStudentList] = useState(students);
   const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] =
     useState([]);
-  const [loading, setLoading] = useState(false); // Added loading state
-  const handleCloseUserDataModal = () => setShowUserDataModal(false);
-  const [showAddStudentModel, setShowAddStudentModel] = useState(false);
-  const handleCloseAddStudentModel = () => setShowAddStudentModel(false);
-// MATERIAL  
-  const handleCloseAddMaterialModal = () => setShowAddMaterialModal(false);
-  const [showAddMaterialModal, setShowAddMaterialModal] = useState(false); // Added state for material modal
+  const [loading, setLoading] = useState(false);
+  const [showAddMaterialModal, setShowAddMaterialModal] = useState(false);
   const [materialTitle, setMaterialTitle] = useState('');
   const [materialDate, setMaterialDate] = useState('');
-  const [materialAttachment, setMaterialAttachment] = useState('');
+  const [materialAttachment, setMaterialAttachment] = useState(null);
   const [tutorialLink, setTutorialLink] = useState('');
- 
-
 
   const inputDate = start_date;
   const dateObj = new Date(inputDate);
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
   const formattedDate = dateObj.toLocaleDateString('en-GB', options);
 
-  const deleteHandler = () => {
-    deleteCourse(id);
+  const deleteHandler = async () => {
+    try {
+      await deleteCourse(id);
+      setStudentList([]);
+    } catch (error) {
+      console.error('Error deleting course:', error);
+    }
   };
 
   const handleShowUserDataModal = () => {
@@ -50,42 +50,52 @@ const Course = ({
   };
 
   const handleAddStudents = () => {
-    setShowAddStudentModel(true);
+    setShowAddStudentModal(true);
     const newArray = approvedStudents.filter(
-      (obj2) => !students.some((obj1) => obj1.name === obj2.name)
+      (obj2) => !studentList.some((obj1) => obj1.name === obj2.name)
     );
     setStudensThatCanBeAddToCourse(newArray);
   };
-  const handleAddMaterial = () => {
-    setShowAddMaterialModal(true);
-  };
+
+  const handleCloseUserDataModal = () => setShowUserDataModal(false);
+  const handleCloseAddStudentModal = () => setShowAddStudentModal(false); // Corrected typo here
+  const handleCloseAddMaterialModal = () => setShowAddMaterialModal(false);
 
   useEffect(() => {
     getApprovedStudents();
   }, []);
 
-  
-  const handleMaterialSubmit = () => {
-    // Perform material submission logic here
-    // For simplicity, let's just log the material details
-    console.log({
-      title: materialTitle,
-      date: materialDate,
-      attachment: materialAttachment,
-      tutorialLink: tutorialLink,
-    });
+  const handleMaterialSubmit = async () => {
+    if (!materialTitle || !materialDate || !materialAttachment) {
+      alert('Please fill in all required fields');
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append('title', materialTitle);
+      formData.append('date', materialDate);
+      formData.append('attachment', materialAttachment);
+      formData.append('tutorialLink', tutorialLink);
 
-    // Reset the form fields
-    setMaterialTitle('');
-    setMaterialDate('');
-    setMaterialAttachment('');
-    setTutorialLink('');
+      // Concatenate courseId with the base URL
+      const apiUrl = `http://localhost:8080/api/materials/${id}/upload`;
 
-    // Close the modal
-    setShowAddMaterialModal(false);
+      const response = await axios.post(apiUrl, formData);
+
+      if (!response.ok) {
+        throw new Error('Material upload failed');
+      }
+
+      setMaterialTitle('');
+      setMaterialDate('');
+      setMaterialAttachment(null);
+      setTutorialLink('');
+
+      setShowAddMaterialModal(false);
+    } catch (error) {
+      console.error('Error uploading material:', error);
+    }
   };
-
-
   return (
     <>
       <tr>
@@ -101,7 +111,10 @@ const Course = ({
           <Button variant="success" onClick={handleAddStudents}>
             Add Students
           </Button>
-          <Button variant="success" onClick={handleAddMaterial}>
+          <Button
+            variant="success"
+            onClick={() => setShowAddMaterialModal(true)}
+          >
             Add Material
           </Button>
           <Button variant="danger" onClick={deleteHandler}>
@@ -115,7 +128,7 @@ const Course = ({
         onHide={handleCloseUserDataModal}
       >
         <Modal.Header>
-          <Modal.Title>Students Of Web development</Modal.Title>
+          <Modal.Title>Students Of {name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Table responsive striped bordered hover>
@@ -162,9 +175,9 @@ const Course = ({
         </Modal.Footer>
       </Modal>
       <Modal
-        show={showAddStudentModel}
+        show={showAddStudentModal}
         className="modal-lg"
-        onHide={handleCloseAddStudentModel}
+        onHide={handleCloseAddStudentModal}
       >
         <Modal.Header>
           <Modal.Title>Add Students</Modal.Title>
@@ -203,7 +216,7 @@ const Course = ({
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAddStudentModel}>
+          <Button variant="secondary" onClick={handleCloseAddStudentModal}>
             Close
           </Button>
         </Modal.Footer>

@@ -1,5 +1,17 @@
 const AdminReducer = (state, action) => {
   switch (action.type) {
+    case 'GET_ATTENDANCE_DATA':
+      return {
+        ...state,
+        attendances: action.payload,
+      };
+
+    case 'ADD_MATERIAL':
+      return {
+        ...state,
+        materials: [action.payload, ...state.materials],
+      };
+
     // Handle note actions (GET_NOTES, ADD_NOTE, EDIT_NOTE, DELETE_NOTE)
 
     case 'getnotes':

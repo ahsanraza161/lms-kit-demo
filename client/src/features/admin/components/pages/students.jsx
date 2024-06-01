@@ -26,7 +26,7 @@ const AdminStudentsTable = () => {
                     <CircularProgress color="success" />
         </div>
       ) : (
-    <Table striped bordered hover responsive className="tableStudent mt-5 p-3">
+    <Table striped bordered hover responsive className="">
       <thead>
         <tr className='sHeading' >
           <th className='sHeading' >Name</th>

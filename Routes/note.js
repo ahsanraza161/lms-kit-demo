@@ -1,5 +1,8 @@
 const express = require('express');
 require('dotenv').config();
+const auth = require('../Middlewares/auth');
+const Student = require('../models/Student');
+const Activity = require('../models/Activity.js');
 const router = express.Router();
 const Note = require('../models/Notes');
 
@@ -15,15 +18,28 @@ router.get('/', async (req, res) => {
 });
 
 // Create a note
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const { title, content } = req.body;
   try {
+    const adminid = req.user.id;
+
     const note = new Note({
       title,
       content,
     });
 
     await note.save();
+
+     // Capture Activity;
+     const admin = await Student.findById(adminid).select('-password');
+     const newActivity = new Activity({
+       name: admin.name,
+       action: 'created note',
+       object: title,
+     });
+ 
+     await newActivity.save();
+ 
 
     return res.status(201).json(note);
   } catch (err) {
@@ -36,17 +52,28 @@ router.post('/', async (req, res) => {
 });
 
 // Update a note
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   const { id } = req.params;
   console.log('Received note ID:', id); // Move this line below the 'id' declaration
 
   const { title, content } = req.body;
   try {
+    const adminid = req.user.id;
+
     const updatedNote = await Note.findByIdAndUpdate(id, { title, content }, { new: true });
 
     if (!updatedNote) {
       return res.status(404).json({ message: 'Note not found' });
     }
+         // Capture Activity;
+         const admin = await Student.findById(adminid).select('-password');
+         const newActivity = new Activity({
+           name: admin.name,
+           action: 'edited note',
+           object: title,
+         });
+     
+         await newActivity.save();
 
     return res.status(200).json(updatedNote);
   } catch (err) {
@@ -56,15 +83,24 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete a note
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   const { id } = req.params;
   try {
     const deletedNote = await Note.findByIdAndDelete(id);
+    const adminid = req.user.id;
 
     if (!deletedNote) {
       return res.status(404).json({ message: 'Note not found' });
     }
-
+         // Capture Activity;
+         const admin = await Student.findById(adminid).select('-password');
+         const newActivity = new Activity({
+           name: admin.name,
+           action: 'deleted note',
+           object: id,
+         });
+     
+         await newActivity.save();
     return res.status(200).json({ message: 'Note successfully deleted' });
   } catch (err) {
     console.error('Error deleting note:', err);

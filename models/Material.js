@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const materialSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    // required: true
   },
   date: {
     type: Date,
-    required: true
+    // required: true
   },
   attachment: {
     type: String,
-    required: true
+    // required: true
   },
   tutorialLink: {
     type: String

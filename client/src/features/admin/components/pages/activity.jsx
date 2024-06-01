@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
+import AdminContext from '../../../../context/admin/admincontext';
 
 const ActivityLog = () => {
+  const { getActivity } = useContext(AdminContext);
   const [activityLog, setActivityLog] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedLog, setSelectedLog] = useState({});
 
   useEffect(() => {
-    // fetch activity log data from API or database
     const fetchData = async () => {
-      const response = await fetch('/api/activity-log');
-      const data = await response.json();
-      setActivityLog(data);
+      try {
+        const data = await getActivity();
+        if (data) {
+          setActivityLog(data);
+        }
+      } catch (error) {
+        console.error('Error fetching activity log:', error);
+      }
     };
     fetchData();
-  }, []);
+  }, [getActivity]);
 
   const handleShowModal = (log) => {
     setSelectedLog(log);
@@ -29,20 +35,22 @@ const ActivityLog = () => {
     <div>
       <h1>Activity Log</h1>
       <Table striped bordered hover>
-        <thead>
+        <thead style={{ textAlign: 'center' }}>
           <tr>
-            <th>Date</th>
-            <th>User</th>
-            <th>Activity</th>
+            <th>Date and Time</th>
+            <th>Name</th>
+            <th>Action</th>
+            <th>of</th>
             <th>Details</th>
           </tr>
         </thead>
         <tbody>
           {activityLog.map((log, index) => (
             <tr key={index}>
-              <td>{log.date}</td>
-              <td>{log.user}</td>
-              <td>{log.activity}</td>
+              <td>{new Date(log.timestamp).toLocaleString()}</td>
+              <td>{log.name}</td>
+              <td>{log.action}</td>
+              <td>{log.object}</td>
               <td>
                 <Button variant="primary" onClick={() => handleShowModal(log)}>
                   View Details
@@ -59,16 +67,16 @@ const ActivityLog = () => {
         </Modal.Header>
         <Modal.Body>
           <p>
-            <strong>Date:</strong> {selectedLog.date}
+            <strong>Date:</strong> {new Date(selectedLog.timestamp).toLocaleString()}
           </p>
           <p>
-            <strong>User:</strong> {selectedLog.user}
+            <strong>Name:</strong> {selectedLog.name}
           </p>
           <p>
-            <strong>Activity:</strong> {selectedLog.activity}
+            <strong>Action:</strong> {selectedLog.action}
           </p>
           <p>
-            <strong>Details:</strong> {selectedLog.details}
+            <strong>Object:</strong> {selectedLog.object}
           </p>
         </Modal.Body>
         <Modal.Footer>

@@ -31,7 +31,10 @@ const Note = ({ title, content, id, setCurrentData, deleteNote }) => {
 
   return (
     <Grid item xs={12}>
-    <Card className="contentNoteDash">
+    <Card className="contentNoteDash" style={{
+      background: 'linear-gradient(to right bottom, #430089, #2f0027)',
+    }
+    }>
       <div>
         <Typography className="noteTitle" variant="h6" component="div">
           {title}

@@ -8,7 +8,7 @@ const AttendanceSchema = new mongoose.Schema({
   },
   student: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Students',
     required: true,
   },
   date: {

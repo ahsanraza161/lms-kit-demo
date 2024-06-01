@@ -21,7 +21,7 @@ router.post('/:courseId/upload', async (req, res) => {
       date,
       attachment,
       tutorialLink,
-      courseId
+      courseId,
     });
 
     // Save the material to the database
@@ -29,7 +29,7 @@ router.post('/:courseId/upload', async (req, res) => {
 
     res.status(201).json(savedMaterial);
   } catch (error) {
-    console.error(error);
+    console.error('Error uploading material:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
