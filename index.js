@@ -5,12 +5,16 @@ const connectdb = require('./db/db');
 
 const app = express();
 const corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
 };
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Enable pre-flight
 
 connectdb();
 
