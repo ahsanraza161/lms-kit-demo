@@ -4,6 +4,11 @@ const path = require('path');
 const mime = require('mime-types');
 const fs = require('fs');
 
+const router = express.Router();
+const Material = require('../models/Material');
+const Course = require('../models/Course');
+
+// Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, '../uploads/'));
@@ -17,10 +22,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-const router = express.Router();
-const Material = require('../models/Material');
-const Course = require('../models/Course');
 
 // Serve static files from the "uploads" directory
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -85,19 +86,22 @@ router.get('/:courseId', async (req, res) => {
 // @Describe Download or view an attachment
 // @access public (modify based on your authentication middleware)
 router.get('/download/:filename', (req, res) => {
-  try {
-    const filePath = path.join(__dirname, '../uploads', req.params.filename);
-    const fileStream = fs.createReadStream(filePath);
+  const filePath = path.join(__dirname, '../uploads', req.params.filename);
 
-    const mimeType = mime.lookup(filePath); // Use mime.lookup() to get the MIME type
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(404).json({ message: 'File not found' });
+    }
+
+    const fileStream = fs.createReadStream(filePath);
+    const mimeType = mime.lookup(filePath);
+
     res.setHeader('Content-Type', mimeType);
     res.setHeader('Content-Disposition', `attachment; filename="${req.params.filename}"`);
 
     fileStream.pipe(res);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Server error' });
-  }
+  });
 });
 
 module.exports = router;
