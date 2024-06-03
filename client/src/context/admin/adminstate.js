@@ -24,7 +24,7 @@ const Adminstate = ({ children }) => {
     try {
       console.log('context is working');
       const response = await axios.post(
-        `http://localhost:8080/api/materials/${id}/upload`,  // Use id in the URL
+        `https://lms2-two.vercel.app/api/materials/${id}/upload`,  // Use id in the URL
         data,
         {
           headers: {
@@ -45,7 +45,7 @@ const Adminstate = ({ children }) => {
   const getMaterials = async (id) => {  // Accept id as a parameter
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/materials/${id}`,  // Use id in the URL
+        `https://lms2-two.vercel.app/api/materials/${id}`,  // Use id in the URL
       );
       console.log(id);
       console.log('Materials data:', response.data);
