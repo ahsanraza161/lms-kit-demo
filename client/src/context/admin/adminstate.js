@@ -12,6 +12,7 @@ const Adminstate = ({ children }) => {
     deleteFacultys: [],
     faculties: [],
     courses: [],
+    attendances: [],
     cardData: {},
     error: null,
   };
@@ -44,10 +45,7 @@ const Adminstate = ({ children }) => {
   const addNote = async (data) => {
     try {
       setAuthToken(localStorage.token);
-      const response = await axios.post(
-        'http://localhost:8080/api/note',
-        data
-      );
+      const response = await axios.post('http://localhost:8080/api/note', data);
 
       dispatch({
         type: 'ADD_NOTE',
@@ -80,9 +78,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
 
-      const res = await axios.delete(
-        `http://localhost:8080/api/note/${id}`
-      );
+      const res = await axios.delete(`http://localhost:8080/api/note/${id}`);
 
       dispatch({ type: 'DELETE_NOTE', payload: id });
     } catch (error) {
@@ -184,7 +180,7 @@ const Adminstate = ({ children }) => {
     try {
       const response = await axios.delete(
         `http://localhost:8080/api/admin/teacher/${id}`
-      ); 
+      );
       dispatch({
         type: 'deletefaculty',
         payload: id,
@@ -220,7 +216,9 @@ const Adminstate = ({ children }) => {
       if (response.status === 200) {
         return response.data;
       } else {
-        throw new Error(`Failed to fetch activity data: ${response.statusText}`);
+        throw new Error(
+          `Failed to fetch activity data: ${response.statusText}`
+        );
       }
     } catch (error) {
       console.error('Error fetching activity data:', error);
@@ -301,14 +299,12 @@ const Adminstate = ({ children }) => {
   const addCourse = async (data) => {
     try {
       setAuthToken(localStorage.token);
-      const res = await axios.post(
-        'http://localhost:8080/api/courses',
-        data
-      );
+      const res = await axios.post('http://localhost:8080/api/courses', data);
       dispatch({
         type: 'addcourse',
         payload: res.data,
       });
+      console.log(res.data)
     } catch (err) {
       console.log(err.response.data);
     }
@@ -333,10 +329,9 @@ const Adminstate = ({ children }) => {
   const markAttendance = async (attendanceList) => {
     setAuthToken(localStorage.token);
     try {
-      const res = await axios.post(
-        'http://localhost:8080/api/attendance',
-        {attendanceList}
-      );
+      const res = await axios.post('http://localhost:8080/api/attendance', {
+        attendanceList,
+      });
       console.log(res.data);
     } catch (err) {
       console.error(err);
@@ -345,14 +340,14 @@ const Adminstate = ({ children }) => {
 
   const getAttendanceData = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/attendance/getattendance');
+      const res = await axios.get('http://localhost:8080/api/attendance');
       dispatch({
         type: 'GET_ATTENDANCE_DATA',
-        payload: res.data.attendances,
+        payload: res.data,
       });
+      console.log(res.data);
     } catch (err) {
       console.error(err);
-      console.log('wor;kjsdhffdhk;')
     }
   };
 
@@ -389,6 +384,7 @@ const Adminstate = ({ children }) => {
         faculties: state.faculties,
         cardData: state.cardData,
         notes: state.notes,
+        attendances:state.attendances
       }}
     >
       {children}

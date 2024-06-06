@@ -26,12 +26,10 @@ router.get('/', auth, async (req, res) => {
 // @Describe Add a Course
 // @access private
 router.post('/', auth, async (req, res) => {
-router.post('/', auth, async (req, res) => {
   try {
-    console.log('Request user:', req.user); // Debug log
-
     const adminid = req.user.id;
-    const { name, teacher, start_date, classes_days, total_days } = req.body;
+    const { name, teacher, teacher_id, start_date, classes_days, total_days } =
+      req.body;
 
     let course = new Course({
       name,
@@ -43,6 +41,11 @@ router.post('/', auth, async (req, res) => {
 
     course = await course.save();
 
+    let Teacher = await Student.findByIdAndUpdate(teacher_id, {
+      course: course._id,
+      course_name:course.name
+    });
+
     // Capture Activity;
     const admin = await Student.findById(adminid).select('-password');
     const newActivity = new Activity({
@@ -53,7 +56,7 @@ router.post('/', auth, async (req, res) => {
 
     await newActivity.save();
 
-    return res.status(200).json(course);
+    return res.status(200).json({ course, Teacher });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ msg: 'Server error' });
@@ -63,7 +66,7 @@ router.post('/', auth, async (req, res) => {
 // @route POST api/courses
 // @Describe Add a Course in students and courses field
 // @access private
-router.post('/addcourse',auth, async (req, res) => {
+router.post('/addcourse', auth, async (req, res) => {
   const { studentId, courseId } = req.body;
   try {
     const adminid = req.user.id;
@@ -90,7 +93,7 @@ router.post('/addcourse',auth, async (req, res) => {
     res.json({ student: updatedStudent, course: updatedCourse });
   } catch (err) {
     console.error(err);
-    
+
     // Capture Activity;
     const admin = await Student.findById(adminid).select('-password');
     const newActivity = new Activity({
@@ -107,7 +110,7 @@ router.post('/addcourse',auth, async (req, res) => {
 // @route DELETE api/courses
 // @Describe Delete a Course
 // @access private
-router.delete('/:id',auth, async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   const id = req.params.id;
   try {
     await Course.findByIdAndDelete(id);

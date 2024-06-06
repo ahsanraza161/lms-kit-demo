@@ -7,7 +7,7 @@ import AdminContext from '../../../../context/admin/admincontext';
 function Courses() {
   const [showAddCourse, setShowAddCourse] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { getAllCourses, courses, addCourse, faculties, getAllFaculty } =
+  const { getAllCourses, courses, faculties, getAllFaculty, addCourse } =
     useContext(AdminContext);
 
   const handleAddNewCourse = () => {
@@ -23,14 +23,27 @@ function Courses() {
     fetchData();
   }, []);
 
-  // add course get data
+  // Add course get data
   const [course, setCourse] = useState({
     name: '',
     teacher: '',
+    teacher_id: '',
     start_date: '',
     classes_days: '',
     total_days: '',
   });
+  useEffect(() => {
+    faculties.forEach((faculty) => {
+      if (faculty.name === course.teacher) {
+        setCourse((prevData) => {
+          return {
+            ...prevData,
+            teacher_id: faculty._id,
+          };
+        });
+      }
+    });
+  }, [course.teacher]);
 
   const onChangeHandler = (e) => {
     setCourse((prevData) => {
@@ -44,12 +57,7 @@ function Courses() {
   const onSumitCourseHandler = (e) => {
     e.preventDefault();
 
-    const formattedCourse = {
-      ...course,
-      start_date: course.start_date.replace(/-/g, '/'),
-    };
     // Now, you can send the request with the updated course object
-    addCourse(course);
     setCourse({
       name: '',
       teacher: '',
@@ -57,7 +65,10 @@ function Courses() {
       classes_days: '',
       total_days: '',
     });
-    // addCourse(formattedCourse);
+
+    addCourse(course);
+
+    console.log(course);
   };
   return (
     <div className="container">
@@ -68,42 +79,41 @@ function Courses() {
       </div>
       <Row>
         <Col xs={12}>
-        {loading ? (
-        <div className="loading">
-          {/* Loading indicator (e.g., spinner or loading gif) */}
-          Loading...
-        </div>
-      ) : (
-          <Table responsive striped bordered hover>
-            <thead style={{ textAlign: 'center' }}>
-              <tr>
-                <th>Course Name</th>
-                <th>Teacher</th>
-                <th>Start Date</th>
-                <th>Clases date</th>
-                <th>Total Days</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses.map((item) => {
-                return (
-                  <Course
-                    key={item._id}
-                    id={item._id}
-                    name={item.name}
-                    teacher={item.teacher}
-                    start_date={item.start_date}
-                    total_days={item.total_days}
-                    students={item.students}
-                    classes_days={item.classes_days}
-                  />
-                );
-              })}
-            </tbody>
-          </Table>
-     )}
-
+          {loading ? (
+            <div className="loading">
+              {/* Loading indicator (e.g., spinner or loading gif) */}
+              Loading...
+            </div>
+          ) : (
+            <Table responsive striped bordered hover>
+              <thead style={{ textAlign: 'center' }}>
+                <tr>
+                  <th>Course Name</th>
+                  <th>Teacher</th>
+                  <th>Start Date</th>
+                  <th>Clases date</th>
+                  <th>Total Days</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {courses.map((item) => {
+                  return (
+                    <Course
+                      key={item._id}
+                      id={item._id}
+                      name={item.name}
+                      teacher={item.teacher}
+                      start_date={item.start_date}
+                      total_days={item.total_days}
+                      students={item.students}
+                      classes_days={item.classes_days}
+                    />
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
         </Col>
 
         <Modal show={showAddCourse} onHide={handleCloseAddCourse}>
@@ -129,12 +139,18 @@ function Courses() {
                 value={course.teacher}
                 onChange={onChangeHandler}
               >
-                <option value="">Select Teacher</option>
-                {faculties.map((faculty) => (
-                  <option key={faculty.id} value={faculty.id}>
-                    {faculty.name}
-                  </option>
-                ))}
+                <option>Select Teacher</option>
+                {faculties.length > 0
+                  ? faculties.map((faculty) => (
+                      <option
+                        key={faculty.id}
+                        value={faculty.id}
+                        id={faculty.id}
+                      >
+                        {faculty.name}
+                      </option>
+                    ))
+                  : ''}
               </FormSelect>
               <label htmlFor="floatingTeacherCustom">Teacher</label>
             </Form.Floating>

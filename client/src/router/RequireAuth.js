@@ -7,15 +7,13 @@ const RequireAuth = () => {
     isAdminAuthenticated,
     isStudentAuthenticated,
     isTeacherAuthenticated,
-    RefreshHandler
+    RefreshHandler,
   } = useContext(AuthContext);
   const location = useLocation();
 
   useEffect(() => {
     RefreshHandler();
-  }, [isAdminAuthenticated, isStudentAuthenticated, isTeacherAuthenticated])
-
-  console.log(location.pathname);
+  }, [isAdminAuthenticated, isStudentAuthenticated, isTeacherAuthenticated]);
 
   if (location.pathname.includes('dashboard') && !isAdminAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;

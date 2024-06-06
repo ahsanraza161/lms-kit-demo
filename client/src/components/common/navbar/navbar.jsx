@@ -3,8 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 function Topbar() {
+  const path = useLocation();
   return (
     <>
       <Navbar
@@ -18,16 +19,30 @@ function Topbar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className=" navmain align-items-center">
-              <Link className="navitem" to="/">
+              <Link
+                className={location.pathname === '/' ? 'regnavitem ' : ''}
+                to="/"
+              >
                 Home
               </Link>
-              <Link className="navitem" to="/about">
+              <Link
+                className={location.pathname === '/about' ? 'regnavitem ' : ''}
+                to="/about"
+              >
                 About
               </Link>
-              <Link className="navitem" to="/login">
+              <Link
+                className={location.pathname === '/login' ? 'regnavitem ' : ''}
+                to="/login"
+              >
                 Login
               </Link>
-              <Link className="regnavitem navitem" to="/registration">
+              <Link
+                className={
+                  location.pathname === '/registration' ? 'regnavitem ' : ''
+                }
+                to="/registration"
+              >
                 Register
               </Link>
             </Nav>

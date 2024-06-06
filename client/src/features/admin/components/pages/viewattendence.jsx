@@ -3,26 +3,51 @@ import { Table, Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 
 const ViewAttendance = () => {
-  const { getAttendanceData } = useContext(AdminContext);
+  const { getAttendanceData, attendances } = useContext(AdminContext);
 
   useEffect(() => {
-getAttendanceData();
+    getAttendanceData();
   }, []);
 
-  const calculateAttendancePercentage = (studentId, courseId) => {
-    const studentData = getAttendanceData.find(
-      (item) => item.studentId === studentId && item.courseId === courseId
-    );
-    if (!studentData) {
-      return 'N/A';
-    }
-    const attendancePercentage = (studentData.attendedClasses / studentData.totalClasses) * 100;
-    return attendancePercentage.toFixed(2);
-  };
-
-  if (!getAttendanceData || getAttendanceData.length === 0) {
-    return <div>Loading attendance data...</div>;
+  function roundToSignificantDigits(num, digits) {
+    if (num === 0) return 0;
+    const d = Math.ceil(Math.log10(num < 0 ? -num : num));
+    const power = digits - d;
+    const magnitude = Math.pow(10, power);
+    const shifted = Math.round(num * magnitude);
+    return shifted / magnitude;
   }
+
+  function combineAttendancesByCourseAndStudent(attendances) {
+    const combined = {};
+
+    attendances.forEach((attendance) => {
+      const courseId = attendance.course._id;
+      const studentId = attendance.student._id;
+
+      const key = `${courseId}_${studentId}`;
+
+      if (!combined[key]) {
+        combined[key] = {
+          course: attendance.course,
+          student: attendance.student,
+          totalClasses: 0,
+          attendances: [],
+        };
+      }
+
+      combined[key].totalClasses += 1;
+      combined[key].attendances.push({
+        date: attendance.date,
+        status: attendance.status,
+      });
+    });
+
+    return Object.values(combined);
+  }
+
+  // Usage
+  const combinedAttendances = combineAttendancesByCourseAndStudent(attendances);
 
   return (
     <div className="container mt-5">
@@ -38,17 +63,15 @@ getAttendanceData();
           </tr>
         </thead>
         <tbody>
-          {getAttendanceData.map((attendanceItem) => (
-            <tr key={attendanceItem.id}>
-              <td>{attendanceItem.studentName}</td>
-              <td>{attendanceItem.courseName}</td>
-              <td>{attendanceItem.totalClasses}</td>
-              <td>{attendanceItem.attendedClasses}</td>
+          {combinedAttendances.map((attendanceItem) => (
+            <tr key={attendanceItem._id}>
+              <td>{attendanceItem?.student.name}</td>
+              <td>{attendanceItem?.course.name}</td>
+              <td>{attendanceItem?.course.total_days}</td>
+              <td>{attendanceItem?.totalClasses}</td>
               <td>
-                {calculateAttendancePercentage(
-                  attendanceItem.studentId,
-                  attendanceItem.courseId
-                )}
+                {roundToSignificantDigits(attendanceItem?.totalClasses /
+                  attendanceItem?.course.total_days,2)}
                 %
               </td>
               <td>

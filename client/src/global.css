@@ -3,7 +3,7 @@
   padding: 0%;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
-  scrollbar-width:  none;
+  scrollbar-width: none;
 }
 :root {
   --primary-color: #2e00c6;
@@ -13,7 +13,7 @@
   --col2: gray;
   --col3: #cecece;
 }
-.notfound{
+.notfound {
   color: var(--primary-text-color);
   text-align: center;
   background-color: #000;
@@ -22,7 +22,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-
 }
 
 body {
@@ -71,7 +70,7 @@ body {
   border: 2px solid var(--primary-color);
   color: #ffffff;
 }
-.containerNav{
+.containerNav {
   width: 82%;
 }
 .navSmart {
@@ -85,7 +84,7 @@ body {
   margin-left: 70% !important;
   gap: 30px !important;
 }
-.navitem {
+.navbar-nav a {
   text-decoration: none;
   font-size: small;
   font-weight: bold;
@@ -178,7 +177,7 @@ body {
   color: white;
 }
 
-.ForgetPass{
+.ForgetPass {
   background-color: #fff;
   width: 40%;
   padding: 0px 20px;
@@ -188,37 +187,36 @@ body {
   height: 78vh;
 }
 
-.ForgetPass .one{
-  padding-top: 30px ;
+.ForgetPass .one {
+  padding-top: 30px;
   width: 90%;
   margin: 0px auto;
   text-align: center;
-
 }
-.one .icon{
-    font-size: 50px !important;
-    /* background-color: var(--col1); */
-    color: #fff;
-    width: 50px;
-    /* height: 50px; */
-    padding: 10px;
-    margin: 20px;
-    border-radius: 50px;
+.one .icon {
+  font-size: 50px !important;
+  /* background-color: var(--col1); */
+  color: #fff;
+  width: 50px;
+  /* height: 50px; */
+  padding: 10px;
+  margin: 20px;
+  border-radius: 50px;
 }
-.resetInput{
-  margin: 50px  auto 70px;
+.resetInput {
+  margin: 50px auto 70px;
 }
-.headingReset{
+.headingReset {
   margin: 10px 0px 20px;
 }
-.notereset{
+.notereset {
   font-size: 15px;
 }
-.resetBtn{
+.resetBtn {
   width: 100%;
   margin-top: 10px;
 }
-.resetLink{
+.resetLink {
   display: flex;
   justify-content: space-between;
 }

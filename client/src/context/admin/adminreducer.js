@@ -21,13 +21,13 @@ const AdminReducer = (state, action) => {
       };
     case 'ADD_NOTE':
       return { ...state, notes: [action.payload, ...state.notes] };
-      case 'EDIT_NOTE':
-        return {
-          ...state,
-          notes: state.notes.map((note) =>
-             action.payload.updatedNote ? note._id === action.payload.id : note
-          )
-        };
+    case 'EDIT_NOTE':
+      return {
+        ...state,
+        notes: state.notes.map((note) =>
+          action.payload.updatedNote ? note._id === action.payload.id : note
+        ),
+      };
     case 'DELETE_NOTE':
       return {
         ...state,
@@ -75,14 +75,16 @@ const AdminReducer = (state, action) => {
         ...state,
         courses: action.payload,
       };
-      case 'deletestudentcourse':
-  return {
-    ...state,
-    courses: state.courses.map(course => ({
-      ...course,
-      students: course.students.filter(student => student._id !== action.payload)
-    }))
-  };
+    case 'deletestudentcourse':
+      return {
+        ...state,
+        courses: state.courses.map((course) => ({
+          ...course,
+          students: course.students.filter(
+            (student) => student._id !== action.payload
+          ),
+        })),
+      };
     case 'deletecourse':
       return {
         ...state,

@@ -34,6 +34,9 @@ const StudentSchema = new mongoose.Schema({
       ref: 'Course',
     },
   ],
+  course:{
+    type:String
+  }
 });
 
 const User = mongoose.model('Students', StudentSchema);

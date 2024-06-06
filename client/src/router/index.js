@@ -42,7 +42,7 @@ const AppRouter = () => {
             <Route path="courses" element={<Courses />} />
             <Route path="attendence" element={<Attendence />} />
             <Route path="viewattendence" element={<ViewAttendence />} />
-            <Route path="shedulecalender" element={<Calender />} />
+            {/* <Route path="shedulecalender" element={<Calender />} /> */}
             <Route path="activity" element={<Activity />} />
             <Route path="allnotes" element={<AllNotes />} />
           </Route>
