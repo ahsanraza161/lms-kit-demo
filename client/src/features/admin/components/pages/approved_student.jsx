@@ -16,7 +16,7 @@ const Approved_Student = ({ item }) => {
 
   return (
     <>
-      <tr key={item._id}>
+      <tr key={item._id}> 
         <td>{item.name}</td>
         <td>{item.fatherName}</td>
         <td>{new Date(item.dateOfBirth).toLocaleDateString()}</td>

@@ -4,6 +4,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AdminContext from '../../../../context/admin/admincontext';
 import Approved_Student from './approved_student';
 import './students.css'
+import * as XLSX from 'xlsx';
+
 
 const AdminStudentsTable = () => {
   const { getApprovedStudents, approvedStudents } = useContext(AdminContext);
@@ -19,6 +21,15 @@ const AdminStudentsTable = () => {
     fetchData();
   }, []);
 
+    // Function to download Excel file
+    const downloadExcel = () => {
+      const ws = XLSX.utils.json_to_sheet(approvedStudents);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Approved Students");
+  
+      XLSX.writeFile(wb, "Approved_Students.xlsx");
+    };
+
   return (
     <>
     {loading ? (
@@ -26,6 +37,10 @@ const AdminStudentsTable = () => {
                     <CircularProgress color="success" />
         </div>
       ) : (
+        <>
+        <Button onClick={downloadExcel} variant="success" style={{ marginBottom: '10px' }}>
+        Download as Excel
+      </Button>
     <Table striped bordered hover responsive className="">
       <thead>
         <tr className='sHeading' >
@@ -49,6 +64,7 @@ const AdminStudentsTable = () => {
           ))}
       </tbody>
     </Table>
+    </>
     )}
     </>
   );
