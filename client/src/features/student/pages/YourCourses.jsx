@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
-
-import '../../../global.css';
 import AuthContext from '../../../context/auth/authcontext';
+import AdminContext from '../../../context/admin/admincontext'; // Import AdminContext
+import { Toaster } from 'react-hot-toast';
 
 function YourCourses() {
   const { GetCoursesOfStudent, studentcourses } = useContext(AuthContext);
+  const { fetchMaterials, materials } = useContext(AdminContext); // Access fetchMaterials and materials from AdminContext
   const [selectedCourseMaterials, setSelectedCourseMaterials] = useState([]);
   const [showMaterialModal, setShowMaterialModal] = useState(false);
 
@@ -13,14 +14,8 @@ function YourCourses() {
     GetCoursesOfStudent();
   }, []);
 
-  function formatDateString(dateString) {
-    const date = new Date(dateString);
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  }
-
-  const handleShowMaterials = (materials) => {
-    setSelectedCourseMaterials(materials);
+  const handleShowMaterials = (courseId) => {
+    fetchMaterials(courseId); // Fetch materials for the selected course
     setShowMaterialModal(true);
   };
 
@@ -32,8 +27,9 @@ function YourCourses() {
             <th>Course Name</th>
             <th>Teacher</th>
             <th>Start Date</th>
-            <th>Clases date</th>
-            <th>Action</th>
+            <th>Classes Days</th>
+            <th>Total Days</th>
+            <th>Material</th>
           </tr>
         </thead>
         <tbody>
@@ -41,12 +37,13 @@ function YourCourses() {
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.teacher}</td>
-              <td>{formatDateString(item.start_date)}</td>
-              <td>Every Saturday & Sunday</td>
+              <td>{item.start_date}</td>
+              <td>{item.classes_days}</td>
+              <td>{item.total_days}</td>
               <td className="actionBtnStudent">
                 <Button
                   variant="primary"
-                  onClick={() => handleShowMaterials(item.materials)}
+                  onClick={() => handleShowMaterials(item._id)}
                 >
                   Show Materials
                 </Button>
@@ -75,11 +72,23 @@ function YourCourses() {
               </tr>
             </thead>
             <tbody>
-              {selectedCourseMaterials.map((material, index) => (
-                <tr key={index}>
+              {materials.map((material) => (
+                <tr key={material._id}>
                   <td>{material.title}</td>
                   <td>{material.date}</td>
-                  <td>{material.attachment}</td>
+                  <td>
+                    {material.attachment ? (
+                      <a
+                        href={material.attachment}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View Attachment
+                      </a>
+                    ) : (
+                      'No attachment'
+                    )}
+                  </td>
                   <td>{material.tutorialLink}</td>
                 </tr>
               ))}
@@ -92,6 +101,7 @@ function YourCourses() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Toaster />
     </div>
   );
 }

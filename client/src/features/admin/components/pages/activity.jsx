@@ -3,24 +3,14 @@ import { Table, Button, Modal } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 
 const ActivityLog = () => {
-  const { getActivity } = useContext(AdminContext);
-  const [activityLog, setActivityLog] = useState([]);
+  const { getActivity, activities } = useContext(AdminContext);
+
   const [showModal, setShowModal] = useState(false);
   const [selectedLog, setSelectedLog] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getActivity();
-        if (data) {
-          setActivityLog(data);
-        }
-      } catch (error) {
-        console.error('Error fetching activity log:', error);
-      }
-    };
-    fetchData();
-  }, [getActivity]);
+    getActivity();
+  }, []);
 
   const handleShowModal = (log) => {
     setSelectedLog(log);
@@ -45,7 +35,7 @@ const ActivityLog = () => {
           </tr>
         </thead>
         <tbody>
-          {activityLog.map((log, index) => (
+          {activities.map((log, index) => (
             <tr key={index}>
               <td>{new Date(log.timestamp).toLocaleString()}</td>
               <td>{log.name}</td>
@@ -67,7 +57,8 @@ const ActivityLog = () => {
         </Modal.Header>
         <Modal.Body>
           <p>
-            <strong>Date:</strong> {new Date(selectedLog.timestamp).toLocaleString()}
+            <strong>Date:</strong>{' '}
+            {new Date(selectedLog.timestamp).toLocaleString()}
           </p>
           <p>
             <strong>Name:</strong> {selectedLog.name}

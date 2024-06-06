@@ -11,21 +11,25 @@ const Attendance = require('../models/Attendance');
 // @access Private (requires authentication) Only admin can mark attendance
 router.get('/', async (req, res) => {
   try {
-    const attendances = await Attendance.find()
-      .populate('course')
-      .populate('student');
+    const attendances = await Attendance.find({})
+      .populate('student', 'name')
+      .populate('course', 'name total_days');
 
-    return res.status(200).json(attendances); // Send the array directly
+    if (!attendances.length) {
+      return res.status(404).json({ message: 'No attendance records found' });
+    }
+
+    res.status(200).json(attendances);
   } catch (err) {
-    console.error('Error fetching attendance:', err);
-    return res.status(500).json({ error: 'Server Error', msg: err.message });
+    console.error('Error fetching attendance records:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // @route POST api/admin
 // @description Mark an attendance
 // @access Private (requires authentication) Only admin can mark attendance
-router.post('/', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const adminid = req.user.id;
     const { attendanceList } = req.body;
@@ -77,9 +81,10 @@ router.post('/', auth, async (req, res) => {
 
     res.status(201).json({ message: 'Attendance marked successfully' });
   } catch (err) {
-    console.error('Error marking attendance:', err);
+    console.error('Error fetching attendance records:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 module.exports = router;
+

@@ -81,7 +81,7 @@ body {
 }
 .navmain {
   display: flex !important;
-  margin-left: 70% !important;
+  margin-left: 61% !important;
   gap: 30px !important;
 }
 .navbar-nav a {

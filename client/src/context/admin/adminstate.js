@@ -4,33 +4,75 @@ import AdminReducer from './adminreducer';
 import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
 
+
 const Adminstate = ({ children }) => {
   const initstate = {
     notes: [],
     pendingStudents: [],
+    materials: [],
     approvedStudents: [],
     deleteFacultys: [],
     faculties: [],
     courses: [],
     attendances: [],
     cardData: {},
+    activities: [],
+    attendances: [],
     error: null,
   };
-  const addMaterial = async (data) => {
+  
+  const addMaterial = async (id, data) => {  // Accept id as a parameter
     try {
       console.log('context is working');
       const response = await axios.post(
-        `https://lms2-two.vercel.app/api/materials/${id}/upload`,
-        data
+        `https://lms2-two.vercel.app/api/materials/${id}/upload`,  // Use id in the URL
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       );
       dispatch({
         type: 'ADD_MATERIAL',
         payload: response.data,
       });
     } catch (error) {
+      console.error('Error:', error.message);
       dispatch({ type: 'SET_ERROR', payload: error.message });
     }
   };
+  
+  const getMaterials = async (id) => {  // Accept id as a parameter
+    try {
+      const response = await axios.get(
+        `https://lms2-two.vercel.app/api/materials/${id}`,  // Use id in the URL
+      );
+      console.log(id);
+      console.log('Materials data:', response.data);
+      return response.data; // Return the materials data
+    } catch (error) {
+      console.error('Error:', error.message);
+      throw new Error(error.message); // Throw the error for handling
+    }
+  };
+  
+  // In your component or context provider where you manage state and dispatch actions
+  
+  const fetchMaterials = async (id) => {
+    try {
+      const materials = await getMaterials(id);
+      dispatch({
+        type: 'FETCH_MATERIALS',
+        payload: materials,
+      });
+    } catch (error) {
+      console.error('Error fetching materials:', error.message);
+      dispatch({ type: 'SET_ERROR', payload: error.message });
+    }
+  };
+  
+  
   const getNotes = async () => {
     try {
       const response = await axios.get('https://lms2-two.vercel.app/api/note'); // Adjust the URL based on your backend
@@ -178,7 +220,7 @@ const Adminstate = ({ children }) => {
   };
   const deleteFaculty = async (id) => {
     try {
-      const response = await axios.delete(
+      const res = await axios.delete(
         `http://localhost:8080/api/admin/teacher/${id}`
       );
       dispatch({
@@ -211,15 +253,12 @@ const Adminstate = ({ children }) => {
   // Add the getactivity function
   const getActivity = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/activity'); // Use HTTP for local development
-
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        throw new Error(
-          `Failed to fetch activity data: ${response.statusText}`
-        );
-      }
+      setAuthToken(localStorage.token);
+      const response = await axios.get('http://localhost:8080/api/activity');
+      dispatch({
+        type: 'setactivities',
+        payload: response.data,
+      });
     } catch (error) {
       console.error('Error fetching activity data:', error);
       return null; // Or return a custom error object
@@ -338,16 +377,17 @@ const Adminstate = ({ children }) => {
     }
   };
 
+  // Add the getAttendanceData function
   const getAttendanceData = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/attendance');
+      setAuthToken(localStorage.token);
+      const response = await axios.get('http://localhost:8080/api/attendance');
       dispatch({
-        type: 'GET_ATTENDANCE_DATA',
-        payload: res.data,
+        type: 'setattendances',
+        payload: response.data,
       });
-      console.log(res.data);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error('Error fetching attendance data:', error);
     }
   };
 
@@ -359,7 +399,9 @@ const Adminstate = ({ children }) => {
         pendingStudents: state.pendingStudents,
         approvedStudents: state.approvedStudents,
         faculties: state.faculties,
+        materials: state.materials,
         addMaterial,
+        fetchMaterials,
         getNotes,
         addNote,
         editNote,
@@ -384,7 +426,8 @@ const Adminstate = ({ children }) => {
         faculties: state.faculties,
         cardData: state.cardData,
         notes: state.notes,
-        attendances:state.attendances
+        attendances: state.attendances,
+        activities: state.activities,
       }}
     >
       {children}

@@ -12,6 +12,12 @@ const AdminReducer = (state, action) => {
         materials: [action.payload, ...state.materials],
       };
 
+    case 'FETCH_MATERIALS':
+      return {
+        ...state,
+        materials: action.payload, // Set fetched materials to the state
+      };
+
     // Handle note actions (GET_NOTES, ADD_NOTE, EDIT_NOTE, DELETE_NOTE)
 
     case 'getnotes':
@@ -106,6 +112,17 @@ const AdminReducer = (state, action) => {
       return {
         ...state,
         cardData: action.payload,
+      };
+
+    case 'setattendances':
+      return {
+        ...state,
+        attendances: action.payload,
+      };
+    case 'setactivities':
+      return {
+        ...state,
+        activities: action.payload,
       };
 
     // Default case (handles unknown actions)
