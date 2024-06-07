@@ -12,7 +12,7 @@ const Activity = require('../models/Activity.js');
 // @route GET api/admin/pending
 // @describe Get all Users with status pending
 // @access private
-router.get('/pending',auth, async (req, res) => {
+router.get('/pending', auth, async (req, res) => {
   try {
     const students = await Student.find({
       status: 'pending',
@@ -46,7 +46,7 @@ router.get('/getteacher', auth, async (req, res) => {
 // @route GET api/admin/approved
 // @describe Get all Students with status approved
 // @access private
-router.get('/approved',auth, async (req, res) => {
+router.get('/approved', auth, async (req, res) => {
   try {
     const students = await Student.find({
       status: 'approved',
@@ -69,7 +69,7 @@ router.get('/approved',auth, async (req, res) => {
 // @route GET api/admin/getNumbers
 // @describe Get all Numbers
 // @access private
-router.get('/getNumbers',auth, async (req, res) => {
+router.get('/getNumbers', auth, async (req, res) => {
   try {
     const students = await Student.find({
       usertype: 'Student',
@@ -127,13 +127,14 @@ router.patch('/:id', auth, async (req, res) => {
 
     await newActivity.save();
 
-    return res.status(200).json({ msg: 'Email Successfully Sent and Activity also captured' });
+    return res
+      .status(200)
+      .json({ msg: 'Email Successfully Sent and Activity also captured' });
   } catch (err) {
     res.status(500).json({ err });
     console.error(err);
   }
 });
-
 
 // @route DELETE api/admin
 // @describe Delete the students

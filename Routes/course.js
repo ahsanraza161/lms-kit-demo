@@ -43,7 +43,6 @@ router.post('/', auth, async (req, res) => {
 
     let Teacher = await Student.findByIdAndUpdate(teacher_id, {
       course: course._id,
-      course_name:course.name
     });
 
     // Capture Activity;

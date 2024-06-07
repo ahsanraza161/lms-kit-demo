@@ -30,13 +30,13 @@ const StudentSchema = new mongoose.Schema({
   },
   courses: [
     {
-      type: mongoose.Schema.Types.ObjectId, 
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Course',
     },
   ],
-  course:{
-    type:String
-  }
+  course: {
+    type: String,
+  },
 });
 
 const User = mongoose.model('Students', StudentSchema);

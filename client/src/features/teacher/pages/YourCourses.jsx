@@ -5,43 +5,30 @@ import '../../../global.css';
 import AuthContext from '../../../context/auth/authcontext';
 
 function YourCourses() {
-  const { GetCoursesOfStudent, studentcourses } = useContext(AuthContext);
-  useEffect(() => {
-    GetCoursesOfStudent();
-  }, []);
+  const { teacher_course } = useContext(AuthContext);
 
-  function formatDateString(dateString) {
-    const date = new Date(dateString);
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  }
   return (
     <div className="container mt-3">
       <Table responsive striped bordered hover>
         <thead>
           <tr>
             <th>Course Name</th>
-            <th>Teacher</th>
             <th>Start Date</th>
             <th>Clases date</th>
             <th>Action</th>
           </tr>
         </thead>
-        {studentcourses.map((item) => {
-          return (
-            <tbody>
-              <tr>
-                <td>{item.name}</td>
-                <td>{item.teacher}</td>
-                <td>{formatDateString(item.start_date)}</td>
-                <td>Every Saturday & Sunday</td>
-                <td className="actionBtnStudent">
-                  <Button variant="primary">Show detail</Button>
-                </td>
-              </tr>
-            </tbody>
-          );
-        })}
+
+        <tbody>
+          <tr>
+            <td>{teacher_course?.name}</td>
+            <td>{teacher_course?.start_date}</td>
+            <td>{teacher_course?.classes_days}</td>
+            <td className="actionBtnStudent">
+              <Button variant="primary">Show detail</Button>
+            </td>
+          </tr>
+        </tbody>
       </Table>
     </div>
   );

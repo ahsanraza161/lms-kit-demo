@@ -22,15 +22,13 @@ const Authstate = ({ children }) => {
     token: localStorage.getItem('token'),
     message: null,
     studentcourses: [],
-
+    teacher_course: {},
   };
   const RefreshHandler = async () => {
-    dispatch(
-      {
-        type: 'refresh',
-      }
-    )
-  }
+    dispatch({
+      type: 'refresh',
+    });
+  };
   const LoginHandler = async (formData) => {
     try {
       const config = {
@@ -126,14 +124,13 @@ const Authstate = ({ children }) => {
         type: 'getcoursesofstudents',
         payload: res.data,
       });
-      console.log(res.data)
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
   };
   const GetStudentsOfCourses = async (id) => {
     try {
-      console.log(id);
       const res = await axios.get(
         'http://localhost:8080/api/courses/getstudents',
         { id }
@@ -146,10 +143,13 @@ const Authstate = ({ children }) => {
 
   const ResetPassword = async (password, confirmPassword, token) => {
     try {
-      const res = await axios.put(`https://lms2-two.vercel.app/api/users/${token}`, {
-        password,
-        confirmPassword,
-      });
+      const res = await axios.put(
+        `https://lms2-two.vercel.app/api/users/${token}`,
+        {
+          password,
+          confirmPassword,
+        }
+      );
       console.log(res.data);
     } catch (err) {
       console.error(err);
@@ -157,20 +157,36 @@ const Authstate = ({ children }) => {
   };
   const ForgetPassword = async (email) => {
     try {
-      const res = await axios.post('https://lms2-two.vercel.app/api/users/forgotpassword', { email });
+      const res = await axios.post(
+        'https://lms2-two.vercel.app/api/users/forgotpassword',
+        { email }
+      );
       console.log(res.data);
     } catch (err) {
       console.error(err);
     }
-  }
+  };
   const RefreshPage = () => {
-    const token = localStorage.getItem("token");
-    console.log(token)
-    return token
-
+    const token = localStorage.getItem('token');
+    console.log(token);
+    return token;
   };
 
-
+  const GetTeacherData = async () => {
+    setAuthToken(localStorage.token);
+    try {
+      const res = await axios.get(
+        'http://localhost:8080/api/students/getteacherdata'
+      );
+      dispatch({
+        type:'setteacherdata',
+        payload:res.data
+      })
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const [state, dispatch] = useReducer(Authreducer, initstate);
   return (
@@ -185,6 +201,7 @@ const Authstate = ({ children }) => {
         data: state.data,
         message: state.message,
         studentcourses: state.studentcourses,
+        teacher_course: state.teacher_course,
         LoginHandler,
         RefreshPage,
         RegisterHandler,
@@ -195,7 +212,8 @@ const Authstate = ({ children }) => {
         GetStudentsOfCourses,
         ForgetPassword,
         ResetPassword,
-        RefreshHandler
+        RefreshHandler,
+        GetTeacherData
       }}
     >
       {children}

@@ -7,7 +7,7 @@ const auth = require('../Middlewares/auth');
 
 const Student = require('../models/Student');
 
-// @route POST api/users  
+// @route POST api/users
 // @describe Login User
 // @access public
 router.post('/', async (req, res) => {
@@ -118,5 +118,7 @@ router.put('/', auth, async (req, res) => {
     return res.status(500).json({ err });
   }
 });
+
+
 
 module.exports = router;

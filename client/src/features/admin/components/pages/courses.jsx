@@ -98,7 +98,7 @@ function Courses() {
                 </tr>
               </thead>
               <tbody>
-                {courses.map((item) => {
+                {courses.length > 0 ? courses.map((item) => {
                   return (
                     <Course
                       key={item._id}
@@ -111,7 +111,7 @@ function Courses() {
                       classes_days={item.classes_days}
                     />
                   );
-                })}
+                }) : ""}
               </tbody>
             </Table>
           )}
