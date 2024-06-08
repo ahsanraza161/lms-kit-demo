@@ -17,7 +17,8 @@ const ForgotPassword = () => {
     event.preventDefault();
     try {
       await ForgetPassword(email);
-      toast.success('Reset email sent successfully.');
+      toast.success('Reset email sent successfully. Checkout Your Mail');
+      window.location.href = 'https://mail.google.com/';
     } catch (error) {
       toast.error('Email not found. Please enter a valid email.');
     }
