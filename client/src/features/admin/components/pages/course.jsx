@@ -157,29 +157,31 @@ const Course = ({
                 <th>Action</th>
               </tr>
             </thead>
-            {students.map((student) => (
-              <tbody key={student._id}>
-                <tr>
-                  <td>{student?.name}</td>
-                  <td>{student?.fatherName}</td>
-                  <td>{student.email}</td>
-                  <td>
-                    {loading ? (
-                      <span>Loading...</span>
-                    ) : (
-                      <Button
-                        variant="danger"
-                        onClick={() => {
-                          deleteStudentCourse(id, student._id);
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            ))}
+            { students.length > 0
+              ? students.map((student) => (
+                  <tbody key={student._id}>
+                    <tr>
+                      <td>{student?.name}</td>
+                      <td>{student?.fatherName}</td>
+                      <td>{student.email}</td>
+                      <td>
+                        {loading ? (
+                          <span>Loading...</span>
+                        ) : (
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              deleteStudentCourse(id, student._id);
+                            }}
+                          >
+                            Remove
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                ))
+              : ''}
           </Table>
         </Modal.Body>
         <Modal.Footer>
@@ -206,25 +208,27 @@ const Course = ({
                 <th>Action</th>
               </tr>
             </thead>
-            {studensThatCanBeAddToCourse.map((student) => (
-              <tbody key={student._id}>
-                <tr>
-                  <td>{student.name}</td>
-                  <td>{student.fatherName}</td>
-                  <td>{student.email}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        addStudentInCourse(student._id, id);
-                      }}
-                    >
-                      Add
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            ))}
+            {studensThatCanBeAddToCourse.length > 0
+              ? studensThatCanBeAddToCourse.map((student) => (
+                  <tbody key={student._id}>
+                    <tr>
+                      <td>{student.name}</td>
+                      <td>{student.fatherName}</td>
+                      <td>{student.email}</td>
+                      <td>
+                        <Button
+                          variant="danger"
+                          onClick={() => {
+                            addStudentInCourse(student._id, id);
+                          }}
+                        >
+                          Add
+                        </Button>
+                      </td>
+                    </tr>
+                  </tbody>
+                ))
+              : ''}
           </Table>
         </Modal.Body>
         <Modal.Footer>
@@ -306,26 +310,28 @@ const Course = ({
               </tr>
             </thead>
             <tbody>
-              {materials.map((material) => (
-                <tr key={material._id}>
-                  <td>{material.title}</td>
-                  <td>{material.date}</td>
-                  <td>
-                    {material.attachment ? (
-                      <a
-                        href={material.attachment}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View Attachment
-                      </a>
-                    ) : (
-                      'No attachment'
-                    )}
-                  </td>
-                  <td>{material.tutorialLink}</td>
-                </tr>
-              ))}
+              {materials.length > 0
+                ? materials.map((material) => (
+                    <tr key={material._id}>
+                      <td>{material.title}</td>
+                      <td>{material.date}</td>
+                      <td>
+                        {material.attachment ? (
+                          <a
+                            href={material.attachment}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            View Attachment
+                          </a>
+                        ) : (
+                          'No attachment'
+                        )}
+                      </td>
+                      <td>{material.tutorialLink}</td>
+                    </tr>
+                  ))
+                : ''}
             </tbody>
           </Table>
         </Modal.Body>

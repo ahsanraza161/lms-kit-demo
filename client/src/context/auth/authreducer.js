@@ -94,6 +94,12 @@ const Authreducer = (state, action) => {
         ...state,
         studentcourses: action.payload,
       };
+    case 'setteacherdata':
+      return {
+        ...state,
+        data:action.payload.user,
+        teacher_course:action.payload.course
+      }
     default:
       return { state };
   }

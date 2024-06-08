@@ -36,8 +36,6 @@ import AllNotes from './allNotes';
 // }
 
 function Dashboard() {
-  
-
   // const { getNumbers, cardData } = useContext(AdminContext);
 
   // useEffect(() => {
@@ -46,7 +44,7 @@ function Dashboard() {
 
   return (
     <div>
-    {/* <Grid className='cardDAsh' container mt={1} justifyContent={'space-around'} spacing={5}>
+      {/* <Grid className='cardDAsh' container mt={1} justifyContent={'space-around'} spacing={5}>
       <DashboardCard
         title="Students"
         count={cardData?.students}
@@ -59,21 +57,17 @@ function Dashboard() {
         path="/teacher/courses"
       />
     </Grid> */}
-    <div className="importingNoteToDash">
-    <AllNotes/>
+      <div className="importingNoteToDash">
+        <AllNotes />
+      </div>
+      <div>
+        <Button className="btnForViewNote" variant="contained" color="success">
+          <Link to={'/user/allNotes'} style={{ textDecoration: 'none' }}>
+            View All Notifications
+          </Link>
+        </Button>
+      </div>
     </div>
-    <div>
-          <Button className='btnForViewNote'
-                  variant="contained"
-                  color="success"
-                >
-                  <Link to={"/user/allNotes"} style={{ textDecoration: 'none' }}>
-                  View All Notifications
-                  </Link>
-                </Button>
-                </div>
-     
-        </div>
   );
 }
 
