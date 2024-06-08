@@ -24,7 +24,7 @@ const Adminstate = ({ children }) => {
     // Accept id as a parameter
     try {
       setAuthToken(localStorage.token);
-      console.log('context is working');
+      // console.log('context is working');
       const response = await axios.post(
         `https://lms2-two.vercel.app/api/materials/${id}/upload`, // Use id in the URL
         data,
@@ -51,8 +51,8 @@ const Adminstate = ({ children }) => {
       const response = await axios.get(
         `https://lms2-two.vercel.app/api/materials/${id}` // Use id in the URL
       );
-      console.log(id);
-      console.log('Materials data:', response.data);
+      // console.log(id);
+      // console.log('Materials data:', response.data);
       return response.data; // Return the materials data
     } catch (error) {
       console.error('Error:', error.message);
@@ -95,7 +95,7 @@ const Adminstate = ({ children }) => {
         type: 'ADD_NOTE',
         payload: response.data,
       });
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       dispatch({ type: 'SET_ERROR', payload: error.message });
     }
@@ -104,7 +104,7 @@ const Adminstate = ({ children }) => {
   const editNote = async (id, updatedNote) => {
     try {
       setAuthToken(localStorage.token);
-      console.log('Note ID:', id);
+      // console.log('Note ID:', id);
       const res = await axios.put(
         `https://lms2-two.vercel.app/api/note/${id}`,
         updatedNote
@@ -181,7 +181,7 @@ const Adminstate = ({ children }) => {
         'https://lms2-two.vercel.app/api/courses/addcourse',
         { studentId, courseId }
       );
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -290,7 +290,7 @@ const Adminstate = ({ children }) => {
         payload: res.data,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   // get all courses
@@ -311,7 +311,7 @@ const Adminstate = ({ children }) => {
         payload: res.data,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -323,7 +323,7 @@ const Adminstate = ({ children }) => {
         `https://lms2-two.vercel.app/api/courses/deletestudent/${courseId}/${studentId}`
       );
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   // Delete Course
@@ -333,13 +333,13 @@ const Adminstate = ({ children }) => {
       const res = await axios.delete(
         `https://lms2-two.vercel.app/api/courses/${id}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: 'deletecourse',
         payload: id,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -352,9 +352,9 @@ const Adminstate = ({ children }) => {
         type: 'addcourse',
         payload: res.data,
       });
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
-      console.log(err.response.data);
+      // console.log(err.response.data);
     }
   };
 
@@ -381,7 +381,7 @@ const Adminstate = ({ children }) => {
       const res = await axios.post('https://lms2-two.vercel.app/api/attendance', {
         attendanceList,
       });
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }

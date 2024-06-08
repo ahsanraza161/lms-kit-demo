@@ -9,7 +9,6 @@ const router = express.Router();
 // @access private
 router.post('/', async (req, res) => {
   try {
-    console.log('api hits')
     const { userId, action, details = {} } = req.body;
     const activityLog = new Activity({
       userId,
@@ -18,7 +17,7 @@ router.post('/', async (req, res) => {
       ...details,
     });
     await activityLog.save();
-    console.log(`Activity captured: ${userId} performed ${action}`);
+    // console.log(`Activity captured: ${userId} performed ${action}`);
     res.status(201).json({ message: 'Activity captured successfully' });
   } catch (err) {
     console.error('Error capturing activity:', err);

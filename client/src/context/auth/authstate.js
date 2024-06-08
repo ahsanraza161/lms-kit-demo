@@ -74,7 +74,7 @@ const Authstate = ({ children }) => {
         });
       }, 1000);
     } catch (err) {
-      console.log(err.response);
+      // console.log(err.response);
     }
   };
   const GetUserData = async () => {
@@ -86,7 +86,7 @@ const Authstate = ({ children }) => {
         payload: res.data,
       });
     } catch (err) {
-      console.log(err.response);
+      // console.log(err.response);
     }
   };
   const UpdateUser = async (data) => {
@@ -101,7 +101,7 @@ const Authstate = ({ children }) => {
         data,
         config
       );
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: 'updateuser',
         payload: res.data,
@@ -124,7 +124,7 @@ const Authstate = ({ children }) => {
         type: 'getcoursesofstudents',
         payload: res.data,
       });
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -135,7 +135,7 @@ const Authstate = ({ children }) => {
         'https://lms2-two.vercel.app/api/courses/getstudents',
         { id }
       );
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -150,7 +150,7 @@ const Authstate = ({ children }) => {
           confirmPassword,
         }
       );
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -161,14 +161,14 @@ const Authstate = ({ children }) => {
         'https://lms2-two.vercel.app/api/users/forgotpassword',
         { email }
       );
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }
   };
   const RefreshPage = () => {
     const token = localStorage.getItem('token');
-    console.log(token);
+    // console.log(token);
     return token;
   };
 
@@ -182,7 +182,7 @@ const Authstate = ({ children }) => {
         type:'setteacherdata',
         payload:res.data
       })
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(err);
     }

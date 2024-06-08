@@ -54,7 +54,7 @@ router.post('/', auth, async (req, res) => {
 // Update a note
 router.put('/:id', auth, async (req, res) => {
   const { id } = req.params;
-  console.log('Received note ID:', id); // Move this line below the 'id' declaration
+  // console.log('Received note ID:', id); // Move this line below the 'id' declaration
 
   const { title, content } = req.body;
   try {

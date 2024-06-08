@@ -44,27 +44,6 @@ const SignIn = () => {
       return { ...prevdata, [e.target.name]: e.target.value };
     });
   };
-  // useEffect(() => {
-
-  //   const fetch = async () => {
-  //   const res = await axios.get('https://lms2-two.vercel.app/api/auth');
-  //   console.log(res.data)
-  //   if(res.data.usertype=="admin"){
-  //     // isAdminAuthenticated;
-  //     // navigate('/dashboard');
-  //     dispatch({
-  //       type: "admin",
-  //       payload: res.data,
-  //     });
-
-  //   }
-  //   }
-  //   // GetUserData();
-  //   fetch(),
-  //   console.log('calling func');
-
-  // }, [isAdminAuthenticated, isStudentAuthenticated, isTeacherAuthenticated]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);

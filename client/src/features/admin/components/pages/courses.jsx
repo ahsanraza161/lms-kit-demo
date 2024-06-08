@@ -69,7 +69,7 @@ function Courses() {
 
     addCourse(course);
 
-    console.log(course);
+    // console.log(course);
   };
   return (
     <div className="container">

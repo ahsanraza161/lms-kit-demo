@@ -99,7 +99,7 @@ const AccountSettings = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     UpdateUser(formData);
   };
   return (
