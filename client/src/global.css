@@ -27,6 +27,7 @@
 body {
   background-image: url('../public/assets/bgforlms.jpg');
   background-repeat: no-repeat;
+  background-size: cover;
 }
 .home {
   background-color: #fff;
