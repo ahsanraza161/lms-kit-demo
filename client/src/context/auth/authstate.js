@@ -119,7 +119,7 @@ const Authstate = ({ children }) => {
   const GetCoursesOfStudent = async () => {
     try {
       setAuthToken(state.token);
-      const res = await axios.get(`http://localhost:8080/api/students`);
+      const res = await axios.get(`https://lms2-two.vercel.app/api/students`);
       dispatch({
         type: 'getcoursesofstudents',
         payload: res.data,
@@ -132,7 +132,7 @@ const Authstate = ({ children }) => {
   const GetStudentsOfCourses = async (id) => {
     try {
       const res = await axios.get(
-        'http://localhost:8080/api/courses/getstudents',
+        'https://lms2-two.vercel.app/api/courses/getstudents',
         { id }
       );
       console.log(res.data);
@@ -176,7 +176,7 @@ const Authstate = ({ children }) => {
     setAuthToken(localStorage.token);
     try {
       const res = await axios.get(
-        'http://localhost:8080/api/students/getteacherdata'
+        'https://lms2-two.vercel.app/api/students/getteacherdata'
       );
       dispatch({
         type:'setteacherdata',
