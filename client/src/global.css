@@ -71,7 +71,7 @@ body {
   color: #ffffff;
 }
 .containerNav {
-  width: 82%;
+  width: 80%;
 }
 .navSmart {
   background-color: #000;
@@ -81,8 +81,8 @@ body {
 }
 .navmain {
   display: flex !important;
-  margin-left: 61% !important;
   gap: 30px !important;
+  
 }
 .navbar-nav a {
   text-decoration: none;
