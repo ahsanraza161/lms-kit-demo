@@ -16,10 +16,10 @@ function Topbar() {
       >
         <Container style={{
           display: 'flex',
-          justifyContent: 'space-between'
-        }
-        }>
-          <div>
+          justifyContent: 'space-between',
+          }
+          }>
+          <div className='navcollap'>
           <Navbar.Brand href="/">LMS-KIT</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </div>
