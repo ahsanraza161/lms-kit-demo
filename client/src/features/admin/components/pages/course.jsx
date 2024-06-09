@@ -18,9 +18,9 @@ const Course = ({
     getApprovedStudents,
     addStudentInCourse,
     deleteStudentCourse,
-    // addMaterial,
-    // fetchMaterials,
-    // materials,
+    addMaterial,
+    fetchMaterials,
+    materials,
   } = useContext(AdminContext);
 
   const [showUserDataModal, setShowUserDataModal] = useState(false);
@@ -29,12 +29,12 @@ const Course = ({
   const [studensThatCanBeAddToCourse, setStudensThatCanBeAddToCourse] =
     useState([]);
   const [loading, setLoading] = useState(false);
-  // const [showAddMaterialModal, setShowAddMaterialModal] = useState(false);
-  // const [materialTitle, setMaterialTitle] = useState('');
-  // const [materialDate, setMaterialDate] = useState('');
-  // const [materialAttachment, setMaterialAttachment] = useState(null);
-  // const [tutorialLink, setTutorialLink] = useState('');
-  // const [showMaterialsModal, setShowMaterialsModal] = useState(false);
+  const [showAddMaterialModal, setShowAddMaterialModal] = useState(false);
+  const [materialTitle, setMaterialTitle] = useState('');
+  const [materialDate, setMaterialDate] = useState('');
+  const [materialAttachment, setMaterialAttachment] = useState(null);
+  const [tutorialLink, setTutorialLink] = useState('');
+  const [showMaterialsModal, setShowMaterialsModal] = useState(false);
 
   const inputDate = start_date;
   const dateObj = new Date(inputDate);
@@ -64,52 +64,52 @@ const Course = ({
 
   const handleCloseUserDataModal = () => setShowUserDataModal(false);
   const handleCloseAddStudentModal = () => setShowAddStudentModal(false);
-  // const handleCloseAddMaterialModal = () => setShowAddMaterialModal(false);
+  const handleCloseAddMaterialModal = () => setShowAddMaterialModal(false);
 
   useEffect(() => {
     getApprovedStudents();
   }, []);
 
-  // const handleMaterialSubmit = async () => {
-  //   if (!allFieldsFilled(materialTitle, materialDate, materialAttachment)) {
-  //     alert('Please fill in all required fields');
-  //     return;
-  //   }
+  const handleMaterialSubmit = async () => {
+    if (!allFieldsFilled(materialTitle, materialDate, materialAttachment)) {
+      alert('Please fill in all required fields');
+      return;
+    }
 
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('title', materialTitle);
-  //     formData.append('date', materialDate);
-  //     formData.append('attachment', materialAttachment);
-  //     formData.append('tutorialLink', tutorialLink || '');
+    try {
+      const formData = new FormData();
+      formData.append('title', materialTitle);
+      formData.append('date', materialDate);
+      formData.append('attachment', materialAttachment);
+      formData.append('tutorialLink', tutorialLink || '');
 
-  //     await addMaterial(id, formData);
-  //     clearMaterialForm();
-  //     setShowAddMaterialModal(false);
-  //     toast.success('Material uploaded successfully.');
-  //   } catch (error) {
-  //     console.error('Error uploading material:', error);
-  //   }
-  // };
+      await addMaterial(id, formData);
+      clearMaterialForm();
+      setShowAddMaterialModal(false);
+      toast.success('Material uploaded successfully.');
+    } catch (error) {
+      console.error('Error uploading material:', error);
+    }
+  };
 
   function allFieldsFilled(...fields) {
     return fields.every((field) => field);
   }
 
-  // function clearMaterialForm() {
-  //   setMaterialTitle('');
-  //   setMaterialDate('');
-  //   setMaterialAttachment(null);
-  //   setTutorialLink('');
-  // }
+  function clearMaterialForm() {
+    setMaterialTitle('');
+    setMaterialDate('');
+    setMaterialAttachment(null);
+    setTutorialLink('');
+  }
 
-  // Function to handle viewing materials
-  // const handleCloseMaterialsModal = () => setShowMaterialsModal(false);
+  Function to handle viewing materials
+  const handleCloseMaterialsModal = () => setShowMaterialsModal(false);
 
-  // const handleViewMaterials = () => {
-  //   fetchMaterials(id); // Pass the id to fetchMaterials
-  //   setShowMaterialsModal(true);
-  // };
+  const handleViewMaterials = () => {
+    fetchMaterials(id); // Pass the id to fetchMaterials
+    setShowMaterialsModal(true);
+  };
   return (
     <>
       <tr>
@@ -125,7 +125,7 @@ const Course = ({
           <Button variant="success" onClick={handleAddStudents}>
             Add Students
           </Button>
-          {/* <Button
+          <Button
             variant="success"
             onClick={() => setShowAddMaterialModal(true)}
           >
@@ -133,7 +133,7 @@ const Course = ({
           </Button>
           <Button variant="info" onClick={handleViewMaterials}>
             View Materials
-          </Button> */}
+          </Button>
           <Button variant="danger" onClick={deleteHandler}>
             Delete
           </Button>
