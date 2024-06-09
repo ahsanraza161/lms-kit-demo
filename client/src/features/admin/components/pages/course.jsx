@@ -103,7 +103,7 @@ const Course = ({
     setTutorialLink('');
   }
 
-  Function to handle viewing materials
+  // Function to handle viewing materials
   const handleCloseMaterialsModal = () => setShowMaterialsModal(false);
 
   const handleViewMaterials = () => {
