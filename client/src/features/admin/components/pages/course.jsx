@@ -125,7 +125,7 @@ const Course = ({
           <Button variant="success" onClick={handleAddStudents}>
             Add Students
           </Button>
-          <Button
+          {/* <Button
             variant="success"
             onClick={() => setShowAddMaterialModal(true)}
           >
@@ -133,7 +133,7 @@ const Course = ({
           </Button>
           <Button variant="info" onClick={handleViewMaterials}>
             View Materials
-          </Button>
+          </Button> */}
           <Button variant="danger" onClick={deleteHandler}>
             Delete
           </Button>
@@ -237,7 +237,7 @@ const Course = ({
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
+      {/* <Modal
         show={showAddMaterialModal}
         className="modal-lg"
         onHide={handleCloseAddMaterialModal}
@@ -340,7 +340,7 @@ const Course = ({
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
       <Toaster />
     </>
   );
