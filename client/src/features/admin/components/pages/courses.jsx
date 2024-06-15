@@ -24,6 +24,7 @@ function Courses() {
     fetchData();
   }, []);
 
+
   // Add course get data
   const [course, setCourse] = useState({
     name: '',
@@ -55,21 +56,26 @@ function Courses() {
     });
   };
 
-  const onSumitCourseHandler = (e) => {
+  const onSumitCourseHandler = async (e) => {
     e.preventDefault();
 
-    // Now, you can send the request with the updated course object
-    setCourse({
-      name: '',
-      teacher: '',
-      start_date: '',
-      classes_days: '',
-      total_days: '',
-    });
+    try {
+      await addCourse(course); // Assuming this adds the course to the backend
 
-    addCourse(course);
+      // Immediately update the UI by fetching all courses again
+      await getAllCourses();
 
-    // console.log(course);
+      // Clear form fields
+      setCourse({
+        name: '',
+        teacher: '',
+        start_date: '',
+        classes_days: '',
+        total_days: '',
+      });
+    } catch (error) {
+      console.error('Error adding course:', error);
+    }
   };
   return (
     <div className="container">
@@ -82,8 +88,7 @@ function Courses() {
         <Col xs={12}>
           {loading ? (
             <div className="loading">
-              {/* Loading indicator (e.g., spinner or loading gif) */}
-              Loading...
+              <CircularProgress/>
             </div>
           ) : (
             <Table responsive striped bordered hover>
@@ -98,8 +103,8 @@ function Courses() {
                 </tr>
               </thead>
               <tbody>
-                {courses.length > 0 ? courses.map((item) => {
-                  return (
+                {courses.length > 0 ? (
+                  courses.map((item) => (
                     <Course
                       key={item._id}
                       id={item._id}
@@ -110,8 +115,12 @@ function Courses() {
                       students={item.students}
                       classes_days={item.classes_days}
                     />
-                  );
-                }) : ""}
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6">No courses found</td>
+                  </tr>
+                )}
               </tbody>
             </Table>
           )}

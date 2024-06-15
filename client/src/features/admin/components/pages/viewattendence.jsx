@@ -21,7 +21,7 @@ const ViewAttendance = () => {
     };
 
     fetchData();
-  }, [getAttendanceData]);
+  }, []);
 
   function roundToSignificantDigits(num, digits) {
     if (num === 0) return 0;
@@ -72,7 +72,7 @@ const ViewAttendance = () => {
     return Object.values(combined);
   }
 
-  const combinedAttendances = combineAttendancesByCourseAndStudent(attendances);
+  const combinedAttendances = combineAttendancesByCourseAndStudent(attendances || []);
 
   const handleShowDetails = (attendanceItem) => {
     setCurrentAttendanceDetails(attendanceItem.presentDates);

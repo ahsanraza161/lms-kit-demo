@@ -9,7 +9,7 @@ const Course = ({
   start_date,
   total_days,
   id,
-  students,
+  students = [],
   classes_days,
 }) => {
   const {
@@ -20,7 +20,7 @@ const Course = ({
     deleteStudentCourse,
     addMaterial,
     fetchMaterials,
-    materials,
+    materials = [],
   } = useContext(AdminContext);
 
   const [showUserDataModal, setShowUserDataModal] = useState(false);
@@ -110,6 +110,7 @@ const Course = ({
     fetchMaterials(id); // Pass the id to fetchMaterials
     setShowMaterialsModal(true);
   };
+
   return (
     <>
       <tr>
@@ -157,7 +158,7 @@ const Course = ({
                 <th>Action</th>
               </tr>
             </thead>
-            { students.length > 0
+            {students.length > 0
               ? students.map((student) => (
                   <tbody key={student._id}>
                     <tr>
@@ -181,7 +182,13 @@ const Course = ({
                     </tr>
                   </tbody>
                 ))
-              : ''}
+              : (
+                  <tbody>
+                    <tr>
+                      <td colSpan="4" style={{ textAlign: 'center' }}>No students found</td>
+                    </tr>
+                  </tbody>
+                )}
           </Table>
         </Modal.Body>
         <Modal.Footer>
@@ -228,7 +235,13 @@ const Course = ({
                     </tr>
                   </tbody>
                 ))
-              : ''}
+              : (
+                  <tbody>
+                    <tr>
+                      <td colSpan="4" style={{ textAlign: 'center' }}>No students available to add</td>
+                    </tr>
+                  </tbody>
+                )}
           </Table>
         </Modal.Body>
         <Modal.Footer>
@@ -331,7 +344,11 @@ const Course = ({
                       <td>{material.tutorialLink}</td>
                     </tr>
                   ))
-                : ''}
+                : (
+                    <tr>
+                      <td colSpan="4" style={{ textAlign: 'center' }}>No materials found</td>
+                    </tr>
+                  )}
             </tbody>
           </Table>
         </Modal.Body>

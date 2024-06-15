@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 // @route POST api/admin
 // @description Mark an attendance
 // @access Private (requires authentication) Only admin can mark attendance
-router.get('/', auth, async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const adminid = req.user.id;
     const { attendanceList } = req.body;

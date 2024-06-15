@@ -52,7 +52,7 @@ const AttendanceForm = () => {
     };
 
     fetchData();
-  }, [getAttendanceData]);
+  }, []);
 
   useEffect(() => {
     // Check if all fields are selected
