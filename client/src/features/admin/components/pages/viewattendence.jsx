@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
 import CircularProgress from '@mui/material/CircularProgress';
+import { utils, writeFile } from 'xlsx';
 import AdminContext from '../../../../context/admin/admincontext';
 
 const ViewAttendance = () => {
@@ -84,6 +85,25 @@ const ViewAttendance = () => {
     setCurrentAttendanceDetails([]);
   };
 
+  const handleDownload = () => {
+    const data = combinedAttendances.map((item) => ({
+      Student: item.student.name,
+      Course: item.course.name,
+      'Total Classes': item.totalClasses,
+      'Total Present': item.totalPresent,
+      'Attendance Percentage': roundToSignificantDigits(
+        (item.totalPresent / item.totalClasses) * 100,
+        2
+      ),
+      'Present Dates': item.presentDates.map(formatDate).join(', '), // Concatenate the present dates
+    }));
+
+    const ws = utils.json_to_sheet(data);
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, 'Attendance');
+    writeFile(wb, 'attendance_data.xlsx');
+  };
+
   if (loading) {
     return (
       <div className="container mt-5 d-flex justify-content-center">
@@ -94,6 +114,11 @@ const ViewAttendance = () => {
 
   return (
     <div className="container mt-5">
+      <div className="d-flex justify-content-end mb-3">
+        <Button variant="success" onClick={handleDownload}>
+          Download as Excel
+        </Button>
+      </div>
       <Table striped bordered hover>
         <thead style={{ textAlign: 'center' }}>
           <tr>

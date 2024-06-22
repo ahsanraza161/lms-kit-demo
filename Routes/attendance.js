@@ -40,6 +40,8 @@ router.post('/', auth, async (req, res) => {
     }
 
     const newAttendances = [];
+    const activities = [];
+    
     for (const attendance of attendanceList) {
       const { courseId, studentId, date, status } = attendance;
 
@@ -51,7 +53,6 @@ router.post('/', auth, async (req, res) => {
       }
 
       const student = await Student.findById(studentId);
-
       if (!student) {
         return res
           .status(404)
@@ -66,17 +67,16 @@ router.post('/', auth, async (req, res) => {
       });
 
       newAttendances.push(newAttendance);
+
+      // Capture Activity with student name
+      activities.push({
+        name: admin.name,
+        action: 'marked attendance of',
+        object: student.name, // Use student name here
+      });
     }
 
     await Attendance.insertMany(newAttendances);
-
-    // Capture Activity for each attendance
-    const activities = newAttendances.map((attendance) => ({
-      name: admin.name,
-      action: 'marked attendance of',
-      object: attendance.student,
-    }));
-
     await Activity.insertMany(activities);
 
     res.status(201).json({ message: 'Attendance marked successfully' });

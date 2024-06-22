@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import {
   Form,
   FormGroup,
@@ -9,12 +8,15 @@ import {
   Table,
   Modal,
 } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import AdminContext from '../../../../context/admin/admincontext';
 import toast, { Toaster } from 'react-hot-toast';
 
 const AttendanceForm = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const { courses, markAttendance, getAttendanceData } = useContext(AdminContext);
+
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     course: '',
@@ -114,9 +116,8 @@ const AttendanceForm = () => {
   };
 
   const handleViewAttendance = () => {
-    // Handle view attendance
+    navigate('/dashboard/viewattendence');
   };
-
   return (
     <div className="container mt-5">
       <Form onSubmit={handleSubmit}>
