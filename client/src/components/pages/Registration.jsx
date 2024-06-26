@@ -31,6 +31,7 @@ import {
 const defaultTheme = createTheme();
 const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
 const usertype = ['Student', 'Faculty'];
+const branch = ['Main Branch - FB Area, Gulberg', 'Orangi Branch'];
 
 const subjects = [
   'Computer Science',
@@ -67,6 +68,7 @@ const RegistrationForm = () => {
 
   const [formData, setFormData] = useState({
     usertype: '',
+    branch: '',
     name: '',
     fatherName: '',
     dateOfBirth: '',
@@ -95,6 +97,7 @@ const RegistrationForm = () => {
     setLoading(false);
     setFormData({
       usertype: '',
+      branch: '',
       name: '',
       fatherName: '',
       dateOfBirth: '',
@@ -162,6 +165,23 @@ const RegistrationForm = () => {
                       {usertype.map((usertype) => (
                         <MenuItem key={usertype} value={usertype}>
                           {usertype}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  </Grid>
+                <Grid item xs={12} sm={12}>
+                  <FormControl variant="filled" required style={{ width: '100%' }}>
+                    <InputLabel id="branch-label">Select our Branch</InputLabel>
+                    <Select
+                      labelId="branch-label"
+                      name="branch"
+                      value={formData.branch}
+                      onChange={handleChange}
+                    >
+                      {branch.map((branch) => (
+                        <MenuItem key={branch} value={branch}>
+                          {branch}
                         </MenuItem>
                       ))}
                     </Select>

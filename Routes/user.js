@@ -12,6 +12,7 @@ const { requestSentEmail, forgotPasswordEmail } = require('../utils/emails');
 router.post('/', async (req, res) => {
   const {
     usertype,
+    branch,
     name,
     fatherName,
     dateOfBirth,
@@ -39,6 +40,7 @@ router.post('/', async (req, res) => {
     // Create and save new user
     const newStudent = new Student({
       usertype,
+      branch,
       name,
       fatherName,
       dateOfBirth,

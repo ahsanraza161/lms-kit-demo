@@ -22,6 +22,7 @@ const getTeachers = ({ item }) => {
         <td>{item.subject}</td>
         <td>{item.completionYear}</td>
         <td>{item.universityCollege}</td>
+        <td>{item.branch}</td>
         <td>{item.email}</td>
         <td>
           <Button

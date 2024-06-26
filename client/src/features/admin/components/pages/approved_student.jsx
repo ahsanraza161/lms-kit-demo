@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './students.css'
+import './students.css';
 import { Button } from 'react-bootstrap';
 import AdminContext from '../../../../context/admin/admincontext';
 
@@ -16,7 +16,7 @@ const Approved_Student = ({ item }) => {
 
   return (
     <>
-      <tr key={item._id}> 
+      <tr key={item._id}>
         <td>{item.name}</td>
         <td>{item.fatherName}</td>
         <td>{new Date(item.dateOfBirth).toLocaleDateString()}</td>
@@ -28,12 +28,12 @@ const Approved_Student = ({ item }) => {
         <td>{item.subject}</td>
         <td>{item.completionYear}</td>
         <td>{item.universityCollege}</td>
+        <td>{item.branch}</td>
         <td>{item.email}</td>
         <td>
           <Button variant="danger" size="sm" onClick={deleteStudentHandler}>
-            Delete {/* Replace with actual delete functionality */}
+            Delete
           </Button>
-         
         </td>
       </tr>
     </>

@@ -149,7 +149,7 @@ const AttendanceForm = () => {
         {data.students.length > 0 && (
           <Table striped bordered hover>
             <thead>
-              <tr>
+              <tr className='sHeading'>
                 <th>Student Name</th>
                 <th>Present</th>
                 <th>Absent</th>

@@ -34,6 +34,8 @@ import {
 import AuthContext from '../../../context/auth/authcontext';
 
 const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
+const branch = ['Main Branch - FB Area, Gulberg', 'Orangi Branch'];
+
 
 const subjects = [
   'Computer Science',
@@ -109,8 +111,26 @@ const AccountSettings = () => {
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <FormControl variant="filled" required style={{ width: '100%' }}>
+              <InputLabel id="branch-label">Select our Branch</InputLabel>
+              <Select
+                labelId="branch-label"
+                name="branch"
+                value={formData.branch}
+                onChange={handleChange}
+              >
+                {branch.map((branch) => (
+                  <MenuItem key={branch} value={branch}>
+                    {branch}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               style={{ width: '100%' }}
               label="Name"
               required
@@ -122,6 +142,7 @@ const AccountSettings = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               label="Father's Name"
               style={{ width: '100%' }}
               sx={{ bgcolor: 'none', color: 'text.primary' }}
@@ -133,6 +154,7 @@ const AccountSettings = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               style={{ width: '100%' }}
               label="Date of Birth"
               type="date"
@@ -167,6 +189,7 @@ const AccountSettings = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               label="CNIC"
               style={{ width: '100%' }}
               required
@@ -177,6 +200,7 @@ const AccountSettings = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               label="Address"
               style={{ width: '100%' }}
               required
@@ -187,12 +211,13 @@ const AccountSettings = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} lg={6}>
             <FormControl required style={{ width: '100%' }}>
               <InputLabel id="qualification-label">
                 Highest Qualification
               </InputLabel>
               <Select
+                variant="filled"
                 labelId="qualification-label"
                 name="qualification"
                 value={formData.qualification}
@@ -210,6 +235,7 @@ const AccountSettings = () => {
             <FormControl style={{ width: '100%' }} required>
               <InputLabel id="subject-label">Subject of Studies</InputLabel>
               <Select
+                variant="filled"
                 labelId="subject-label"
                 name="subject"
                 value={formData.subject}
@@ -225,6 +251,7 @@ const AccountSettings = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               id="filled-basic"
               label="Completion Year"
               style={{ width: '100%' }}
@@ -237,6 +264,7 @@ const AccountSettings = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               id="filled-basic"
               label="University/College Name"
               style={{ width: '100%' }}
@@ -248,6 +276,7 @@ const AccountSettings = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              variant="filled"
               id="filled-basic"
               label="email"
               style={{ width: '100%' }}

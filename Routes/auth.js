@@ -75,6 +75,7 @@ router.put('/', auth, async (req, res) => {
   const id = req.user.id;
   const {
     name,
+    branch,
     fatherName,
     dateOfBirth,
     gender,
@@ -89,6 +90,7 @@ router.put('/', auth, async (req, res) => {
   try {
     const userFields = {
       name,
+      branch,
       fatherName,
       dateOfBirth,
       gender,

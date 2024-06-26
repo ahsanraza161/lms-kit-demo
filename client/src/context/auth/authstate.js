@@ -61,7 +61,7 @@ const Authstate = ({ children }) => {
   const RegisterHandler = async (formData) => {
     try {
       const response = await axios.post(
-        'https://lms2-two.vercel.app/api/users',
+        'http://localhost:8080/api/users',
         formData
       );
       dispatch({
@@ -74,7 +74,7 @@ const Authstate = ({ children }) => {
         });
       }, 1000);
     } catch (err) {
-      // console.log(err.response);
+      console.log(err.response);
     }
   };
   const GetUserData = async () => {

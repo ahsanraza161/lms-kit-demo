@@ -58,25 +58,24 @@ function Courses() {
 
   const onSumitCourseHandler = async (e) => {
     e.preventDefault();
-
+  
     try {
-      await addCourse(course); // Assuming this adds the course to the backend
-
-      // Immediately update the UI by fetching all courses again
+      await addCourse(course); 
       await getAllCourses();
 
-      // Clear form fields
       setCourse({
         name: '',
         teacher: '',
         start_date: '',
-        classes_days: '',
         total_days: '',
+        classes_days: '',
       });
+      setShowAddCourseModal(false); // Close the modal
     } catch (error) {
       console.error('Error adding course:', error);
     }
   };
+  
   return (
     <div className="container">
       <div className="addCoursebtn">

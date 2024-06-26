@@ -249,10 +249,11 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const response = await axios.get(
-        `https://lms2-two.vercel.app/api/user/${id}`
+        `http://localhost:8080/api/users/${id}`
       );
 
       if (response.status === 200) {
+        console.log(res.data)
         return response.data;
       } else {
         throw new Error(`Failed to fetch user data: ${response.statusText}`);

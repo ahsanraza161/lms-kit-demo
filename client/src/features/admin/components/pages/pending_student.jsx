@@ -6,6 +6,7 @@ import AdminContext from '../../../../context/admin/admincontext';
 const Pending_student = ({
   name,
   usertype,
+  branch,
   id,
   email,
   fatherName,
@@ -47,6 +48,7 @@ const Pending_student = ({
               <td>{name}</td>
               <td>{email}</td>
               <td>{usertype}</td>
+              <td>{branch}</td>
               <td>{id}</td>
               <td className='btnTD'>
                 <Button variant="success" onClick={onApproveHandler}>
@@ -66,6 +68,7 @@ const Pending_student = ({
             <p>Name: {name}</p>
             <p>Email: {email}</p>
             <p>Usertype: {usertype}</p>
+            <p>Branch: {branch}</p>
             <p>Father's Name: {fatherName}</p>
             <p>Date of Birth: {dateOfBirth}</p>
             <p>Gender: {gender}</p>

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const StudentSchema = new mongoose.Schema({
   usertype: String,
+  branch: String,
   name: String,
   fatherName: String,
   dateOfBirth: String,

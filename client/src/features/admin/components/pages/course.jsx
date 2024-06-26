@@ -21,6 +21,7 @@ const Course = ({
     addMaterial,
     fetchMaterials,
     materials = [],
+    getAllCourses,
   } = useContext(AdminContext);
 
   const [showUserDataModal, setShowUserDataModal] = useState(false);
@@ -45,6 +46,7 @@ const Course = ({
     try {
       await deleteCourse(id);
       setStudentList([]);
+      await getAllCourses();
     } catch (error) {
       console.error('Error deleting course:', error);
     }
@@ -103,6 +105,33 @@ const Course = ({
     setTutorialLink('');
   }
 
+  const handleAddStudentToCourse = async (studentId) => {
+    try {
+      await addStudentInCourse(studentId, id);
+      await getAllCourses();
+      setShowAddStudentModal(false);
+      const student = approvedStudents.find((s) => s._id === studentId);
+      toast.success(`${student.name} added successfully.`, {
+        position: 'center-center', // Position at the center
+      });
+    } catch (error) {
+      console.error('Error adding student:', error);
+    }
+  };
+
+  const handleRemoveStudentFromCourse = async (studentId) => {
+    try {
+      await deleteStudentCourse(id, studentId);
+      await getAllCourses();
+      const student = students.find((s) => s._id === studentId);
+      toast.success(`${student.name} removed successfully.`, {
+        position: 'center-center', // Position at the center
+      });
+    } catch (error) {
+      console.error('Error removing student:', error);
+    }
+  };
+
   // Function to handle viewing materials
   const handleCloseMaterialsModal = () => setShowMaterialsModal(false);
 
@@ -126,15 +155,6 @@ const Course = ({
           <Button variant="success" onClick={handleAddStudents}>
             Add Students
           </Button>
-          {/* <Button
-            variant="success"
-            onClick={() => setShowAddMaterialModal(true)}
-          >
-            Add Material
-          </Button>
-          <Button variant="info" onClick={handleViewMaterials}>
-            View Materials
-          </Button> */}
           <Button variant="danger" onClick={deleteHandler}>
             Delete
           </Button>
@@ -171,9 +191,7 @@ const Course = ({
                         ) : (
                           <Button
                             variant="danger"
-                            onClick={() => {
-                              deleteStudentCourse(id, student._id);
-                            }}
+                            onClick={() => handleRemoveStudentFromCourse(student._id)}
                           >
                             Remove
                           </Button>
@@ -225,9 +243,7 @@ const Course = ({
                       <td>
                         <Button
                           variant="danger"
-                          onClick={() => {
-                            addStudentInCourse(student._id, id);
-                          }}
+                          onClick={() => handleAddStudentToCourse(student._id)}
                         >
                           Add
                         </Button>
@@ -250,115 +266,7 @@ const Course = ({
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* <Modal
-        show={showAddMaterialModal}
-        className="modal-lg"
-        onHide={handleCloseAddMaterialModal}
-      >
-        <Modal.Header>
-          <Modal.Title>Add Material</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="materialTitle">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter material title"
-                value={materialTitle}
-                onChange={(e) => setMaterialTitle(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="materialDate">
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                type="date"
-                value={materialDate}
-                onChange={(e) => setMaterialDate(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="materialAttachment">
-              <Form.Label>Attachment</Form.Label>
-              <Form.Control
-                type="file"
-                onChange={(e) => setMaterialAttachment(e.target.files[0])}
-              />
-            </Form.Group>
-            <Form.Group controlId="tutorialLink">
-              <Form.Label>Tutorial Link (Optional)</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter tutorial link"
-                value={tutorialLink || ''}
-                onChange={(e) => setTutorialLink(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAddMaterialModal}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleMaterialSubmit}>
-            Add
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal
-        show={showMaterialsModal}
-        className="modal-lg"
-        onHide={handleCloseMaterialsModal}
-      >
-        <Modal.Header>
-          <Modal.Title>Materials for {name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Table responsive striped bordered hover>
-            <thead style={{ textAlign: 'center' }}>
-              <tr>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Attachment</th>
-                <th>Tutorial Link</th>
-              </tr>
-            </thead>
-            <tbody>
-              {materials.length > 0
-                ? materials.map((material) => (
-                    <tr key={material._id}>
-                      <td>{material.title}</td>
-                      <td>{material.date}</td>
-                      <td>
-                        {material.attachment ? (
-                          <a
-                            href={material.attachment}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            View Attachment
-                          </a>
-                        ) : (
-                          'No attachment'
-                        )}
-                      </td>
-                      <td>{material.tutorialLink}</td>
-                    </tr>
-                  ))
-                : (
-                    <tr>
-                      <td colSpan="4" style={{ textAlign: 'center' }}>No materials found</td>
-                    </tr>
-                  )}
-            </tbody>
-          </Table>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseMaterialsModal}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
-      <Toaster />
+      <Toaster position="center-center" />
     </>
   );
 };

@@ -12,7 +12,7 @@
 .admin {
   background-color: var(--primary-text-color);
   overflow: scroll;
-  height: 100vh;
+  height: 100vh !important;
 }
 a {
   color: var(--primary-text-color);
@@ -185,12 +185,39 @@ main {
 .loading{
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-tr{
+/* tr{
   font-size: medium;
 }
 td{
   font-size: small;
+} */
+.tableContainer{
+  width: 100%; /* Adjust the width as needed */
+  /* margin: 0% auto; */
+  /* margin-left: 220px; Space for the sidebar */
+  overflow-x: auto;
+}
+.studentTable {
+  width: 100%; /* Ensure the table takes full width of the container */
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.studentTable th, .studentTable td {
+  padding: 8px;
+  text-align: center;
+  font-size: smaller;
+  border: 1px solid #ddd;
+  /* text-align: left; */
+}
+
+.paginationBtn {
+  /* background-color: #f4f4f4; */
+  display: flex;
+  justify-content: space-between;
 }
 @media only screen and (max-width: 2560px) {
   .sidebar {
