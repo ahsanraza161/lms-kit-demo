@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const router = express.Router();
-const auth = require('../middlewares/auth');
+const auth = require('../Middlewares/auth');
 const Activity = require('../models/Activity');
 const Student = require('../models/Student');
 const Course = require('../models/Course');

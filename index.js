@@ -23,7 +23,7 @@ connectdb();
 
 // Api routes
 app.use('/api/users', require('./Routes/user'));
-// app.use('/api/appliedCourse', require('./Routes/appliedCourse'));
+app.use('/api/appliedCourse', require('./Routes/appliedCourse'));
 app.use('/api/auth', require('./Routes/auth'));
 app.use('/api/admin', require('./Routes/admin'));
 app.use('/api/courses', require('./Routes/course'));
