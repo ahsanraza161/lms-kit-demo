@@ -1,15 +1,16 @@
 const express = require('express');
 require('dotenv').config();
 const router = express.Router();
-const auth = require('../Middlewares/auth');
-const Activity = require('../models/Activity.js');
+const auth = require('../middlewares/auth');
+const Activity = require('../models/Activity');
 const Student = require('../models/Student');
 const Course = require('../models/Course');
 const Attendance = require('../models/Attendance');
+
 // @route GET api/attendance
-// @description View an attendance
-// @access Private (requires authentication) Only admin can mark attendance
-router.get('/', async (req, res) => {
+// @description View all attendance records
+// @access Private (requires authentication)
+router.get('/', auth, async (req, res) => {
   try {
     const attendances = await Attendance.find({})
       .populate('student', 'name')
@@ -26,22 +27,22 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route POST api/admin
-// @description Mark an attendance
+// @route POST api/attendance
+// @description Mark attendance
 // @access Private (requires authentication) Only admin can mark attendance
 router.post('/', auth, async (req, res) => {
   try {
-    const adminid = req.user.id;
+    const adminId = req.user.id;
     const { attendanceList } = req.body;
 
-    const admin = await Student.findById(adminid).select('-password');
+    const admin = await Student.findById(adminId).select('-password');
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
 
     const newAttendances = [];
     const activities = [];
-    
+
     for (const attendance of attendanceList) {
       const { courseId, studentId, date, status } = attendance;
 
@@ -72,7 +73,7 @@ router.post('/', auth, async (req, res) => {
       activities.push({
         name: admin.name,
         action: 'marked attendance of',
-        object: student.name, // Use student name here
+        object: student.name,
       });
     }
 
@@ -81,10 +82,29 @@ router.post('/', auth, async (req, res) => {
 
     res.status(201).json({ message: 'Attendance marked successfully' });
   } catch (err) {
+    console.error('Error marking attendance:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// @route GET api/attendance/student
+// @description View own attendance
+// @access Private (requires authentication)
+router.get('/student', auth, async (req, res) => {
+  try {
+    const studentId = req.user.id;
+    const attendances = await Attendance.find({ student: studentId })
+      .populate('course', 'name total_days');
+
+    if (!attendances.length) {
+      return res.status(404).json({ message: 'No attendance records found' });
+    }
+
+    res.status(200).json(attendances);
+  } catch (err) {
     console.error('Error fetching attendance records:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 module.exports = router;
-

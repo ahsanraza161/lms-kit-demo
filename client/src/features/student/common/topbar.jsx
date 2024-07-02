@@ -22,6 +22,7 @@ function Topbar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+    navigate('/user/accountsettings');
   };
 
   const LogoutHandler = () => {
@@ -44,7 +45,6 @@ function Topbar() {
           onClick={handleClick}
           startIcon={<KeyboardArrowDownIcon />}
           sx={{
-            // Using the 'sx' prop for styling
             '& .MuiAvatar-root': {
               width: 50,
               height: 50,
@@ -65,7 +65,6 @@ function Topbar() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={LogoutHandler}>Logout</MenuItem>
       </Menu>

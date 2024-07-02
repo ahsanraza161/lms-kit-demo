@@ -6,7 +6,6 @@ import {
   FormSelect,
   Button,
   Table,
-  Modal,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AdminContext from '../../../../context/admin/admincontext';
@@ -15,7 +14,6 @@ import toast, { Toaster } from 'react-hot-toast';
 const AttendanceForm = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const { courses, markAttendance, getAttendanceData } = useContext(AdminContext);
-
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -26,8 +24,6 @@ const AttendanceForm = () => {
     attendance: {},
   });
 
-  const [allFieldsSelected, setAllFieldsSelected] = useState(false); // State to track if all fields are selected
-
   useEffect(() => {
     if (courses.length > 0) {
       setData((prevData) => ({
@@ -36,7 +32,7 @@ const AttendanceForm = () => {
         courseId: courses[0]._id,
         students: courses[0].students,
         attendance: courses[0].students.reduce((acc, student) => {
-          acc[student._id] = { present: false, absent: false };
+          acc[student._id] = { present: false, absent: false, cancelled: false };
           return acc;
         }, {}),
       }));
@@ -56,31 +52,28 @@ const AttendanceForm = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // Check if all fields are selected
-    const allSelected =
-      data.course !== '' &&
-      data.date !== '' &&
-      data.students.length > 0 &&
-      data.students.every(
-        (student) =>
-          data.attendance[student._id]?.present || data.attendance[student._id]?.absent
-      );
-    setAllFieldsSelected(allSelected);
-  }, [data]);
-
-  const successMsg = 'Attendance marked successfully' 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const attendanceList = Object.entries(data.attendance).map(([studentId, status]) => ({
-      courseId: data.courseId,
-      studentId,
-      studentName: data.students.find((student) => student._id === studentId)?.name, // Get student name
-      date: data.date,
-      status: status.present ? 'present' : 'absent',
-    }));
-    markAttendance(attendanceList);
-    toast.success(successMsg, { duration: 5000 });
+    if (!data.date) {
+      toast.error('Please select a date', { duration: 5000 });
+      return;
+    }
+    const attendanceList = Object.entries(data.attendance)
+      .filter(([, status]) => status.present || status.absent || status.cancelled)
+      .map(([studentId, status]) => ({
+        courseId: data.courseId,
+        studentId,
+        studentName: data.students.find((student) => student._id === studentId)?.name, // Get student name
+        date: data.date,
+        status: status.present ? 'present' : status.absent ? 'absent' : 'cancelled',
+      }));
+
+    if (attendanceList.length > 0) {
+      markAttendance(attendanceList);
+      toast.success('Attendance marked successfully', { duration: 5000 });
+    } else {
+      toast.error('Please mark attendance for at least one student', { duration: 5000 });
+    }
   };
 
   const onChangeHandler = (e) => {
@@ -93,7 +86,7 @@ const AttendanceForm = () => {
         courseId: selectedCourse._id,
         students: selectedCourse.students,
         attendance: selectedCourse.students.reduce((acc, student) => {
-          acc[student._id] = { present: false, absent: false };
+          acc[student._id] = { present: false, absent: false, cancelled: false };
           return acc;
         }, {}),
       });
@@ -110,6 +103,7 @@ const AttendanceForm = () => {
         [studentId]: {
           present: type === 'present' ? !prevData.attendance[studentId].present : false,
           absent: type === 'absent' ? !prevData.attendance[studentId].absent : false,
+          cancelled: type === 'cancelled' ? !prevData.attendance[studentId].cancelled : false,
         },
       },
     }));
@@ -118,6 +112,7 @@ const AttendanceForm = () => {
   const handleViewAttendance = () => {
     navigate('/dashboard/viewattendence');
   };
+
   return (
     <div className="container mt-5">
       <Form onSubmit={handleSubmit}>
@@ -137,7 +132,7 @@ const AttendanceForm = () => {
           </FormSelect>
         </FormGroup>
         <FormGroup className="mb-3">
-          <FormLabel htmlFor="dateTime">Date and Time</FormLabel>
+          <FormLabel htmlFor="dateTime">Date</FormLabel>
           <Form.Control
             type="date"
             id="dateTime"
@@ -153,6 +148,7 @@ const AttendanceForm = () => {
                 <th>Student Name</th>
                 <th>Present</th>
                 <th>Absent</th>
+                <th>Class Cancelled</th>
               </tr>
             </thead>
             <tbody>
@@ -173,13 +169,20 @@ const AttendanceForm = () => {
                       onChange={() => handleAttendanceChange(student._id, 'absent')}
                     />
                   </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={data.attendance[student._id]?.cancelled}
+                      onChange={() => handleAttendanceChange(student._id, 'cancelled')}
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
-            </Table>
+          </Table>
         )}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button variant="primary" type="submit" disabled={!allFieldsSelected}>
+          <Button variant="primary" type="submit" disabled={!data.date}>
             Mark Attendance
           </Button>
           <Button variant="success" onClick={handleViewAttendance}>

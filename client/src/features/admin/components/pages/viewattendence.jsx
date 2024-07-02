@@ -8,7 +8,11 @@ const ViewAttendance = () => {
   const { getAttendanceData, attendances } = useContext(AdminContext);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [currentAttendanceDetails, setCurrentAttendanceDetails] = useState([]);
+  const [currentAttendanceDetails, setCurrentAttendanceDetails] = useState({
+    present: [],
+    absent: [],
+    cancelled: [],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,12 +65,18 @@ const ViewAttendance = () => {
           totalClasses: attendance.course.total_days, // Use total days from course
           totalPresent: 0,
           presentDates: [],
+          absentDates: [],
+          cancelledDates: [],
         };
       }
 
       if (attendance.status === 'present') {
         combined[key].totalPresent += 1;
         combined[key].presentDates.push(attendance.date);
+      } else if (attendance.status === 'absent') {
+        combined[key].absentDates.push(attendance.date);
+      } else if (attendance.status === 'cancelled') {
+        combined[key].cancelledDates.push(attendance.date);
       }
     });
 
@@ -76,13 +86,21 @@ const ViewAttendance = () => {
   const combinedAttendances = combineAttendancesByCourseAndStudent(attendances || []);
 
   const handleShowDetails = (attendanceItem) => {
-    setCurrentAttendanceDetails(attendanceItem.presentDates);
+    setCurrentAttendanceDetails({
+      present: attendanceItem.presentDates,
+      absent: attendanceItem.absentDates,
+      cancelled: attendanceItem.cancelledDates,
+    });
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setCurrentAttendanceDetails([]);
+    setCurrentAttendanceDetails({
+      present: [],
+      absent: [],
+      cancelled: [],
+    });
   };
 
   const handleDownload = () => {
@@ -95,7 +113,9 @@ const ViewAttendance = () => {
         (item.totalPresent / item.totalClasses) * 100,
         2
       ),
-      'Present Dates': item.presentDates.map(formatDate).join(', '), // Concatenate the present dates
+      'Present Dates': item.presentDates.map(formatDate).join(', '),
+      'Absent Dates': item.absentDates.map(formatDate).join(', '),
+      'Cancelled Dates': item.cancelledDates.map(formatDate).join(', '),
     }));
 
     const ws = utils.json_to_sheet(data);
@@ -163,12 +183,26 @@ const ViewAttendance = () => {
             <thead>
               <tr>
                 <th>Date and Time</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {currentAttendanceDetails.map((date, index) => (
-                <tr key={index}>
+              {currentAttendanceDetails.present.map((date, index) => (
+                <tr key={`present-${index}`}>
                   <td>{formatDate(date)}</td>
+                  <td>Present</td>
+                </tr>
+              ))}
+              {currentAttendanceDetails.absent.map((date, index) => (
+                <tr key={`absent-${index}`}>
+                  <td>{formatDate(date)}</td>
+                  <td>Absent</td>
+                </tr>
+              ))}
+              {currentAttendanceDetails.cancelled.map((date, index) => (
+                <tr key={`cancelled-${index}`}>
+                  <td>{formatDate(date)}</td>
+                  <td>Class Cancelled</td>
                 </tr>
               ))}
             </tbody>

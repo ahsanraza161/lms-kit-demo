@@ -249,7 +249,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const response = await axios.get(
-        `http://localhost:8080/api/users/${id}`
+        `https://lms2-two.vercel.app/api/users/${id}`
       );
 
       if (response.status === 200) {

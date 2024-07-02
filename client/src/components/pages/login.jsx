@@ -104,6 +104,7 @@ const SignIn = () => {
                 sx={{ mt: 1 }}
               >
                 <TextField
+                variant="filled"
                   margin="normal"
                   required
                   fullWidth
@@ -116,6 +117,7 @@ const SignIn = () => {
                   onChange={handleChange}
                 />
                 <TextField
+                variant='filled'
                   margin="normal"
                   required
                   fullWidth

@@ -1,41 +1,16 @@
-// import React from 'react';
 import './AccountSettings.css';
-// import '../../../global.css';
-// import { Button } from '@coreui/coreui';
 import { useContext, useState, useEffect } from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-// import Topbar from '../common/navbar/navbar';
-// import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-// import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import AuthContext from '../../context/auth/authcontext';
-// import toast, { Toaster } from 'react-hot-toast';
-
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import AuthContext from '../../../context/auth/authcontext';
+import toast, { Toaster } from 'react-hot-toast';
 
 const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
 const branch = ['Main Branch - FB Area, Gulberg', 'Orangi Branch'];
-
 
 const subjects = [
   'Computer Science',
@@ -57,9 +32,11 @@ const genders = [
   { value: 'female', label: 'Female' },
   { value: 'other', label: 'Other' },
 ];
+
 const AccountSettings = () => {
   const [formData, setFormData] = useState({
     name: '',
+    branch: '',
     fatherName: '',
     dateOfBirth: '',
     gender: '',
@@ -71,12 +48,15 @@ const AccountSettings = () => {
     universityCollege: '',
     email: '',
   });
+
   const { GetUserData, data, UpdateUser } = useContext(AuthContext);
+
   useEffect(() => {
     GetUserData().then(() => {
       if (data) {
         setFormData({
           name: data.name,
+          branch: data.branch,
           fatherName: data.fatherName,
           dateOfBirth: data.dateOfBirth,
           gender: data.gender,
@@ -101,9 +81,19 @@ const AccountSettings = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log(formData);
-    UpdateUser(formData);
+    try {
+      await UpdateUser(formData);
+      toast.success('Profile updated successfully', {
+        position: 'top-center', // Center position
+      });
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast.error('Failed to update profile', {
+        position: 'top-center', // Center position
+      });
+    }
   };
+
   return (
     <div className="accountSettings">
       <Typography component="h1" variant="h5">
@@ -295,7 +285,8 @@ const AccountSettings = () => {
         >
           Save Changes
         </Button>
-      </Box>{' '}
+      </Box>
+      <Toaster position="top-center" /> {/* Ensure toaster is centered */}
     </div>
   );
 };

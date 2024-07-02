@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, Button, Modal } from 'react-bootstrap';
+import { Table, Spinner, Button, Modal } from 'react-bootstrap';
 import AuthContext from '../../../context/auth/authcontext';
 import AdminContext from '../../../context/admin/admincontext'; // Import AdminContext
 import { Toaster } from 'react-hot-toast';
@@ -9,6 +9,8 @@ function YourCourses() {
   const { fetchMaterials, materials } = useContext(AdminContext); // Access fetchMaterials and materials from AdminContext
   const [selectedCourseMaterials, setSelectedCourseMaterials] = useState([]);
   const [showMaterialModal, setShowMaterialModal] = useState(false);
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     GetCoursesOfStudent();
@@ -96,12 +98,41 @@ function YourCourses() {
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowMaterialModal(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowMaterialModal(false)}
+          >
             Close
           </Button>
         </Modal.Footer>
       </Modal>
       <Toaster />
+      <div className="container mt-5">
+        {loading ? (
+          <div className="d-flex justify-content-center">
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {attendanceData.map((attendance) => (
+                <tr key={attendance._id}>
+                  <td>{attendance.course.name}</td>
+                  <td>{formatDate(attendance.date)}</td>
+                  <td>{attendance.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </div>
     </div>
   );
 }
