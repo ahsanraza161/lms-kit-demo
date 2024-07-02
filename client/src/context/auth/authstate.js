@@ -37,7 +37,7 @@ const Authstate = ({ children }) => {
         },
       };
       const res = await axios.post(
-        'https://lms2-two.vercel.app/api/auth',
+        'http://localhost:8080/api/auth',
         formData,
         config
       );
@@ -61,7 +61,7 @@ const Authstate = ({ children }) => {
   const RegisterHandler = async (formData) => {
     try {
       const response = await axios.post(
-        'https://lms2-two.vercel.app/api/users',
+        'http://localhost:8080/api/users',
         formData
       );
       dispatch({
@@ -80,7 +80,7 @@ const Authstate = ({ children }) => {
   const GetUserData = async () => {
     try {
       setAuthToken(state.token);
-      const res = await axios.get('https://lms2-two.vercel.app/api/auth');
+      const res = await axios.get('http://localhost:8080/api/auth');
       dispatch({
         type: 'getuserdata',
         payload: res.data,
@@ -97,7 +97,7 @@ const Authstate = ({ children }) => {
         },
       };
       const res = axios.put(
-        'https://lms2-two.vercel.app/api/auth',
+        'http://localhost:8080/api/auth',
         data,
         config
       );
@@ -119,7 +119,7 @@ const Authstate = ({ children }) => {
   const GetCoursesOfStudent = async () => {
     try {
       setAuthToken(state.token);
-      const res = await axios.get(`https://lms2-two.vercel.app/api/students`);
+      const res = await axios.get(`http://localhost:8080/api/students`);
       dispatch({
         type: 'getcoursesofstudents',
         payload: res.data,
@@ -132,7 +132,7 @@ const Authstate = ({ children }) => {
   const GetStudentsOfCourses = async (id) => {
     try {
       const res = await axios.get(
-        'https://lms2-two.vercel.app/api/courses/getstudents',
+        'http://localhost:8080/api/courses/getstudents',
         { id }
       );
       // console.log(res.data);
@@ -144,7 +144,7 @@ const Authstate = ({ children }) => {
   const ResetPassword = async (password, confirmPassword, token) => {
     try {
       const res = await axios.put(
-        `https://lms2-two.vercel.app/api/users/${token}`,
+        `http://localhost:8080/api/users/${token}`,
         {
           password,
           confirmPassword,
@@ -158,7 +158,7 @@ const Authstate = ({ children }) => {
   const ForgetPassword = async (email) => {
     try {
       const res = await axios.post(
-        'https://lms2-two.vercel.app/api/users/forgotpassword',
+        'http://localhost:8080/api/users/forgotpassword',
         { email }
       );
       // console.log(res.data);
@@ -176,7 +176,7 @@ const Authstate = ({ children }) => {
     setAuthToken(localStorage.token);
     try {
       const res = await axios.get(
-        'https://lms2-two.vercel.app/api/students/getteacherdata'
+        'http://localhost:8080/api/students/getteacherdata'
       );
       dispatch({
         type:'setteacherdata',

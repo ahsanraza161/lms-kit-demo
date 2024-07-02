@@ -19,7 +19,7 @@ app.options('*', cors(corsOptions)); // Enable pre-flight
 connectdb();
 
 // Serve static files from the "uploads" directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Api routes
 app.use('/api/users', require('./Routes/user'));
