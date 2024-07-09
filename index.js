@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path'); // Include path module to handle file paths
+// const path = require('path'); // Include path module to handle file paths
 const connectdb = require('./db/db');
 
 const app = express();
@@ -24,10 +24,11 @@ connectdb();
 // Api routes
 app.use('/api/users', require('./Routes/user'));
 app.use('/api/appliedCourse', require('./Routes/appliedCourse'));
+app.use('/api/appliedCourse/getallappliedcoursedata', require('./Routes/appliedCourse'));
 app.use('/api/auth', require('./Routes/auth'));
 app.use('/api/admin', require('./Routes/admin'));
 app.use('/api/courses', require('./Routes/course'));
-app.use('/api/materials', require('./Routes/material'));
+// app.use('/api/materials', require('./Routes/material'));
 app.use('/api/students', require('./Routes/student'));
 app.use('/api/attendance', require('./Routes/attendance'));
 app.use('/api/note', require('./Routes/note'));

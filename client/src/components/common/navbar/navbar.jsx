@@ -52,6 +52,14 @@ function Topbar() {
               >
                 Register
               </Link>
+              <Link
+                className={
+                  location.pathname === '/apply-now' ? 'regnavitem ' : ''
+                }
+                to="/apply-now"
+              >
+                Apply Now
+              </Link>
               <Link className="regnavitem navitem" to="https://karachi-it-educators.org/">
                 Visit Website
               </Link>

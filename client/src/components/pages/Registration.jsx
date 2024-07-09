@@ -189,6 +189,7 @@ const RegistrationForm = () => {
                   </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     style={{ width: '100%' }}
                     label="Name"
                     required
@@ -200,6 +201,7 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     label="Father's Name"
                     style={{ width: '100%' }}
                     sx={{ bgcolor: 'none', color: 'text.primary' }}
@@ -211,6 +213,7 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     style={{ width: '100%' }}
                     label="Date of Birth"
                     type="date"
@@ -245,6 +248,7 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     label="CNIC"
                     style={{ width: '100%' }}
                     required
@@ -255,6 +259,7 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     label="Address"
                     style={{ width: '100%' }}
                     required
@@ -305,6 +310,7 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     id="filled-basic"
                     label="Completion Year"
                     style={{ width: '100%' }}
@@ -317,6 +323,7 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     id="filled-basic"
                     label="University/College Name"
                     style={{ width: '100%' }}
@@ -328,6 +335,7 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                  variant="filled"
                     id="filled-basic"
                     label="email"
                     style={{ width: '100%' }}
@@ -338,7 +346,7 @@ const RegistrationForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <FormControl sx={{ width: '100%' }} variant="outlined">
+                  <FormControl sx={{ width: '100%' }} variant="outlined" >
                     <InputLabel htmlFor="outlined-adornment-password">
                       Password
                     </InputLabel>

@@ -1,64 +1,54 @@
-// import { React, useContext, useEffect, useReducer, useState } from 'react';
 import { React, useContext, useEffect, useState } from 'react';
-
-import Topbar from '../common/navbar/navbar';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  IconButton,
+  InputAdornment
+} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AuthContext from '../../context/auth/authcontext';
-import Authreducer from '../../context/auth/authreducer';
-import toast, { Toaster } from 'react-hot-toast';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-// import  axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import AuthContext from '../../context/auth/authcontext';
+import Topbar from '../common/navbar/navbar';
 
 const defaultTheme = createTheme();
+
 const SignIn = () => {
-  // const [state, dispatch] = useReducer(Authreducer, initstate);
-
-  const {
-    LoginHandler,
-    error,
-    isStudentAuthenticated,
-    // GetUserData,
-    isTeacherAuthenticated,
-    isAdminAuthenticated,
-  } = useContext(AuthContext);
-
+  const { LoginHandler, error, isStudentAuthenticated, isTeacherAuthenticated, isAdminAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-  const [loading, setLoading] = useState(false); // State to track loading
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prevdata) => {
       return { ...prevdata, [e.target.name]: e.target.value };
     });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setFormData((prevdata) => {
-      return { email: '', password: '' };
-    });
     await LoginHandler(formData);
     setLoading(false);
   };
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   useEffect(() => {
     if (error !== null && error !== undefined) {
       toast.error(error);
     }
-
     if (isAdminAuthenticated) {
       navigate('/dashboard');
     }
@@ -68,12 +58,7 @@ const SignIn = () => {
     if (isTeacherAuthenticated) {
       navigate('/teacher/allnotes');
     }
-  }, [
-    error,
-    isStudentAuthenticated,
-    isTeacherAuthenticated,
-    isAdminAuthenticated,
-  ]);
+  }, [error, isStudentAuthenticated, isTeacherAuthenticated, isAdminAuthenticated]);
 
   return (
     <>
@@ -89,22 +74,15 @@ const SignIn = () => {
                 alignItems: 'center',
               }}
             >
-              <Avatar
-                sx={{ m: 1, alignItems: 'center', bgcolor: 'secondary.main' }}
-              >
+              <Avatar sx={{ m: 1, alignItems: 'center', bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
                 Log In
               </Typography>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-                sx={{ mt: 1 }}
-              >
+              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField
-                variant="filled"
+                  variant="filled"
                   margin="normal"
                   required
                   fullWidth
@@ -117,26 +95,39 @@ const SignIn = () => {
                   onChange={handleChange}
                 />
                 <TextField
-                variant='filled'
+                  variant="filled"
                   margin="normal"
                   required
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   autoComplete="current-password"
                   value={formData.password}
                   onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
                 />
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  disabled={loading} // Disable button when loading
+                  disabled={loading}
                 >
-                  {loading ? 'Loading...' : 'Log in'} {/* Show loading text */}
+                  {loading ? 'Loading...' : 'Log in'}
                 </Button>
                 <Grid container>
                   <Grid item xs>

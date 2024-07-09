@@ -61,7 +61,7 @@ const Authstate = ({ children }) => {
   const RegisterHandler = async (formData) => {
     try {
       const response = await axios.post(
-        'https://lms2-two.vercel.app/api/users',
+        'http://localhost:8080/api/users',
         formData
       );
       dispatch({
@@ -70,7 +70,7 @@ const Authstate = ({ children }) => {
       });
       setTimeout(() => {
         dispatch({
-          type: CLEAR_MSG,
+          type: CLEAR_MSG, 
         });
       }, 1000);
     } catch (err) {
@@ -97,7 +97,7 @@ const Authstate = ({ children }) => {
         },
       };
       const res = axios.put(
-        'https://lms2-two.vercel.app/api/auth',
+        'http://localhost:8080/api/auth',
         data,
         config
       );
@@ -150,7 +150,7 @@ const Authstate = ({ children }) => {
           confirmPassword,
         }
       );
-      // console.log(res.data);
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }

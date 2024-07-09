@@ -4,6 +4,7 @@ import Home from '../components/pages/home';
 import About from '../components/pages/about';
 import Forgetpassword from '../components/pages/forgetpassword';
 import Resetpassword from '../components/pages/resetpassword';
+import ApplyCourseForm from '../components/pages/applyForCourse';
 import Dashboard from '../features/admin/components/pages/dashboard';
 import StudentPanel from '../features/student';
 import TeacherPanel from '../features/teacher';
@@ -16,6 +17,10 @@ const routes = {
   register: {
     path: '/registration',
     component: <Register />,
+  },
+  ApplyCourse: {
+    path: '/apply-now',
+    component: <ApplyCourseForm />,
   },
   login: {
     path: '/login',
@@ -51,6 +56,7 @@ const defaultRoutes = {
   publicRoutes: [
     routes.login,
     routes.register,
+    routes.ApplyCourse,
     routes.homePage,
     routes.about,
     routes.ForgetPassword,

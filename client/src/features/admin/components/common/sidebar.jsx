@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import '../../mainadmin.css';
-import { RxActivityLog } from "react-icons/rx";
-import { BsCalendar2Check } from "react-icons/bs";
+import { RxActivityLog } from 'react-icons/rx';
+import { BsCalendar2Check } from 'react-icons/bs';
+
 import {
   FaTh,
   FaBars,
@@ -9,11 +10,12 @@ import {
   FaRegAddressCard,
   FaUsersCog,
   FaNotesMedical,
-  
 } from 'react-icons/fa';
-import { SlCalender } from "react-icons/sl";
+import { SlCalender } from 'react-icons/sl';
+import { IoMdMailUnread } from "react-icons/io";
+
 import { PiStudent } from 'react-icons/pi';
-import { BsCalendar2Week } from "react-icons/bs";
+import { BsCalendar2Week } from 'react-icons/bs';
 import { HiClipboardList } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
@@ -47,6 +49,11 @@ const Sidebar = ({ children }) => {
       icon: <FaUsersCog />,
     },
     {
+      path: 'applied-for-a-course',
+      name: 'Applied Course',
+      icon: <IoMdMailUnread />,
+    },
+    {
       path: 'courses',
       name: 'Courses',
       icon: <HiClipboardList />,
@@ -59,7 +66,7 @@ const Sidebar = ({ children }) => {
     {
       path: 'attendence',
       name: 'Attendence',
-      icon: <BsCalendar2Check />
+      icon: <BsCalendar2Check />,
     },
     {
       path: 'viewattendence',
@@ -74,8 +81,7 @@ const Sidebar = ({ children }) => {
     {
       path: 'activity',
       name: 'activity',
-      icon: <RxActivityLog />
-      ,
+      icon: <RxActivityLog />,
     },
   ];
   return (

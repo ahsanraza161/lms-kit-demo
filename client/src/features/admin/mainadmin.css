@@ -85,7 +85,7 @@ main {
   background: var(--secondary-color);
   color: var(--primary-text-color);
   height: 100vh;
-  width: 10%;
+  width: 6%;
   /* border-radius: 30px; */
   /* margin: 20px 0px 0px 10px; */
   transition: all 0.5s;
@@ -94,7 +94,7 @@ main {
   background: var(--secondary-color);
   color: var(--primary-text-color);
   height: 95vh;
-  width: 20%;
+  width: 25%;
   border-radius: 30px;
   margin: 20px 0px 0px 10px;
   transition: all 0.5s;
@@ -105,7 +105,7 @@ main {
 .top_section {
   display: flex;
   align-items: center;
-  padding: 20px 15px;
+  padding: 20px 20px ;
 }
 
 .bars {
@@ -121,7 +121,7 @@ main {
   text-decoration: none;
   align-items: center;
   color: #fff;
-  padding: 10px 15px;
+  padding: 7px 10px 6px 20px;
   gap: 10%;
   transition: all 0.5s;
 }
@@ -195,13 +195,11 @@ td{
   font-size: small;
 } */
 .tableContainer{
-  width: 100%; /* Adjust the width as needed */
-  /* margin: 0% auto; */
-  /* margin-left: 220px; Space for the sidebar */
+  width: 100%; 
   overflow-x: auto;
 }
 .studentTable {
-  width: 100%; /* Ensure the table takes full width of the container */
+  width: 100%;
   border-collapse: collapse;
   white-space: nowrap;
 }
@@ -236,7 +234,7 @@ td{
 }
 @media only screen and (max-width: 1440px) {
   .sidebar {
-    width: 4.5% !important;
+    width: 6% !important;
   }
   .sidebar2 {
     width: 14%;
@@ -250,10 +248,10 @@ td{
 }
 @media only screen and (max-width: 1024px) {
   .sidebar {
-    width: 6% !important;
+    width: 7.5% !important;
   }
   .sidebar2 {
-    width: 15% !important;
+    width: 18% !important;
   }
   .container {
     width: 90vw;
@@ -261,6 +259,9 @@ td{
   .topBar {
     width: 90% !important;
   }
+/* .link {
+  padding: 7px 0px 0px 7px;
+} */
 }
 @media only screen and (max-width: 768px) {
   .sidebar {

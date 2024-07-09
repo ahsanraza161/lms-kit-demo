@@ -1,3 +1,6 @@
+import {
+  REGISTER_SUCCESS,
+} from '../type';
 const AdminReducer = (state, action) => {
   switch (action.type) {
     case 'GET_ATTENDANCE_DATA':
@@ -107,6 +110,21 @@ const AdminReducer = (state, action) => {
       return {
         ...state,
         faculties: action.payload,
+      };
+      case 'REGISTER_SUCCESS':
+        return {
+          ...state,
+          messageServer: action.payload,
+        };
+      case 'CLEAR_MSG':
+        return {
+          ...state,
+          messageServer: null,
+        };
+    case 'getAppliedCourse':
+      return {
+        ...state,
+        applications: action.payload,
       };
     case 'getCardData':
       return {
