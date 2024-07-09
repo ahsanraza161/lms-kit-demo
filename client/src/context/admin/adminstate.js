@@ -32,7 +32,7 @@ const Adminstate = ({ children }) => {
       setAuthToken(localStorage.token);
       // console.log('context is working');
       const response = await axios.post(
-        `http://localhost:8080/api/materials/${id}/upload`, // Use id in the URL
+        `https://lms2-two.vercel.app/api/materials/${id}/upload`, // Use id in the URL
         data,
         {
           headers: {
@@ -55,7 +55,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const response = await axios.get(
-        `http://localhost:8080/api/materials/${id}` // Use id in the URL
+        `https://lms2-two.vercel.app/api/materials/${id}` // Use id in the URL
       );
       // console.log(id);
       // console.log('Materials data:', response.data);
@@ -83,7 +83,7 @@ const Adminstate = ({ children }) => {
 
   const getNotes = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/note'); // Adjust the URL based on your backend
+      const response = await axios.get('https://lms2-two.vercel.app/api/note'); // Adjust the URL based on your backend
       dispatch({
         type: 'getnotes',
         payload: response.data,
@@ -96,7 +96,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const response = await axios.post(
-        'http://localhost:8080/api/note',
+        'https://lms2-two.vercel.app/api/note',
         data
       );
 
@@ -115,7 +115,7 @@ const Adminstate = ({ children }) => {
       setAuthToken(localStorage.token);
       // console.log('Note ID:', id);
       const res = await axios.put(
-        `http://localhost:8080/api/note/${id}`,
+        `https://lms2-two.vercel.app/api/note/${id}`,
         updatedNote
       );
       dispatch({
@@ -131,7 +131,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.delete(
-        `http://localhost:8080/api/note/${id}`
+        `https://lms2-two.vercel.app/api/note/${id}`
       );
 
       dispatch({ type: 'DELETE_NOTE', payload: id });
@@ -150,7 +150,7 @@ const Adminstate = ({ children }) => {
         },
       };
       const response = await axios.get(
-        'http://localhost:8080/api/admin/pending',
+        'https://lms2-two.vercel.app/api/admin/pending',
         config
       );
       dispatch({
@@ -172,7 +172,7 @@ const Adminstate = ({ children }) => {
         },
       };
       const response = await axios.get(
-        'http://localhost:8080/api/admin/approved',
+        'https://lms2-two.vercel.app/api/admin/approved',
         config
       );
       dispatch({
@@ -189,7 +189,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.post(
-        'http://localhost:8080/api/courses/addcourse',
+        'https://lms2-two.vercel.app/api/courses/addcourse',
         { studentId, courseId }
       );
       // console.log(res.data);
@@ -208,7 +208,7 @@ const Adminstate = ({ children }) => {
         },
       };
       const res = await axios.patch(
-        `http://localhost:8080/api/admin/${id}`,
+        `https://lms2-two.vercel.app/api/admin/${id}`,
         config
       );
       dispatch({
@@ -225,7 +225,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.delete(
-        `http://localhost:8080/api/admin/${id}`
+        `https://lms2-two.vercel.app/api/admin/${id}`
       );
       dispatch({
         type: 'deletestudent',
@@ -239,7 +239,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.delete(
-        `http://localhost:8080/api/admin/teacher/${id}`
+        `https://lms2-two.vercel.app/api/admin/teacher/${id}`
       );
       dispatch({
         type: 'deletefaculty',
@@ -255,7 +255,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const response = await axios.get(
-        `http://localhost:8080/api/users/${id}`
+        `https://lms2-two.vercel.app/api/users/${id}`
       );
 
       if (response.status === 200) {
@@ -275,7 +275,7 @@ const Adminstate = ({ children }) => {
     try {
       setAuthToken(localStorage.token);
       const response = await axios.get(
-        'http://localhost:8080/api/activity'
+        'https://lms2-two.vercel.app/api/activity'
       );
       dispatch({
         type: 'setactivities',
@@ -296,7 +296,7 @@ const Adminstate = ({ children }) => {
         },
       };
       const res = await axios.get(
-        'http://localhost:8080/api/admin/getteacher',
+        'https://lms2-two.vercel.app/api/admin/getteacher',
         config
       );
       dispatch({
@@ -317,7 +317,7 @@ const getAllAppliedaCourseData = async () => {
       },
     };
     const res = await axios.get(
-      'http://localhost:8080/api/appliedCourse/getallappliedcoursedata',
+      'https://lms2-two.vercel.app/api/appliedCourse/getallappliedcoursedata',
       config
     );
   dispatch({
@@ -333,7 +333,7 @@ const getAllAppliedaCourseData = async () => {
 // post applied course
 const AppliedForaCourse = async (formData) => {
   try {
-    const res = await axios.post('http://localhost:8080/api/appliedCourse/', formData);
+    const res = await axios.post('https://lms2-two.vercel.app/api/appliedCourse/', formData);
     dispatch({
       type: 'REGISTER_SUCCESS',
       payload: res.data,
@@ -359,7 +359,7 @@ const AppliedForaCourse = async (formData) => {
         },
       };
       const res = await axios.get(
-        'http://localhost:8080/api/courses',
+        'https://lms2-two.vercel.app/api/courses',
         config
       );
       dispatch({
@@ -376,7 +376,7 @@ const AppliedForaCourse = async (formData) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.delete(
-        `http://localhost:8080/api/courses/deletestudent/${courseId}/${studentId}`
+        `https://lms2-two.vercel.app/api/courses/deletestudent/${courseId}/${studentId}`
       );
     } catch (err) {
       // console.log(err);
@@ -387,7 +387,7 @@ const AppliedForaCourse = async (formData) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.delete(
-        `http://localhost:8080/api/courses/${id}`
+        `https://lms2-two.vercel.app/api/courses/${id}`
       );
       // console.log(res.data);
       dispatch({
@@ -404,7 +404,7 @@ const AppliedForaCourse = async (formData) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.post(
-        'http://localhost:8080/api/courses',
+        'https://lms2-two.vercel.app/api/courses',
         data
       );
       dispatch({
@@ -422,7 +422,7 @@ const AppliedForaCourse = async (formData) => {
     try {
       setAuthToken(localStorage.token);
       const res = await axios.get(
-        'http://localhost:8080/api/admin/getNumbers'
+        'https://lms2-two.vercel.app/api/admin/getNumbers'
       );
       dispatch({
         type: 'getCardData',
@@ -438,7 +438,7 @@ const AppliedForaCourse = async (formData) => {
     setAuthToken(localStorage.token);
     try {
       const res = await axios.post(
-        'http://localhost:8080/api/attendance',
+        'https://lms2-two.vercel.app/api/attendance',
         {
           attendanceList,
         }
@@ -454,7 +454,7 @@ const AppliedForaCourse = async (formData) => {
     try {
       setAuthToken(localStorage.token);
       const response = await axios.get(
-        'http://localhost:8080/api/attendance'
+        'https://lms2-two.vercel.app/api/attendance'
       );
       dispatch({
         type: 'setattendances',
