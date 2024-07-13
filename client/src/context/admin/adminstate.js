@@ -341,7 +341,7 @@ const AppliedForaCourse = async (formData) => {
       },
     };
     const res = await axios.post(
-      'http://localhost:8080/api/appliedCourse/',
+      'https://lms2-two.vercel.app/api/appliedCourse/',
       formData,
       config
     );
