@@ -29,9 +29,9 @@ router.post('/', async (req, res) => {
         await newCandidate.save();
         return res.status(200).json({ msg: 'Your application has been received! Kindly join the respected groups.' });
     } catch (err) {
-        console.error('Error registering user:', err);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+        console.error(err.message);
+        res.status(500).json({ msg: 'Server error' });
+      }
 });
 
 // @route GET api/appliedCourse
@@ -48,3 +48,5 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
+
+

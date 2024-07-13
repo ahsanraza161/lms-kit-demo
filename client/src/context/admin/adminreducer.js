@@ -1,5 +1,8 @@
 import {
-  REGISTER_SUCCESS,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  CLEAR_ERROR,
+
 } from '../type';
 const AdminReducer = (state, action) => {
   switch (action.type) {
@@ -111,16 +114,44 @@ const AdminReducer = (state, action) => {
         ...state,
         faculties: action.payload,
       };
-      case 'REGISTER_SUCCESS':
-        return {
-          ...state,
-          messageServer: action.payload,
-        };
-      case 'CLEAR_MSG':
-        return {
-          ...state,
-          messageServer: null,
-        };
+      case LOGIN_SUCCESS:
+      return {
+        ...state,
+        applications: [action.payload, ...state.applications],
+        error: null,
+      };
+
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+      // case LOGIN_FAIL:
+      //   return {
+      //     ...state,
+      //     error: action.payload,
+      //   };
+      // case CLEAR_ERROR:
+      //   return {
+      //     ...state,
+      //     error: null,
+      //   };
+      // case 'REGISTER_SUCCESS':
+      //   return {
+      //     ...state,
+      //     messageServer: action.payload,
+      //   };
+      // case 'CLEAR_MSG':
+      //   return {
+      //     ...state,
+      //     messageServer: null,
+      //   };
     case 'getAppliedCourse':
       return {
         ...state,

@@ -59,7 +59,6 @@ const RegistrationForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -90,8 +89,19 @@ const RegistrationForm = () => {
     });
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!validateEmail(formData.email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+
     setLoading(true);
     await RegisterHandler(formData);
     setLoading(false);
@@ -263,8 +273,6 @@ const RegistrationForm = () => {
                     label="Address"
                     style={{ width: '100%' }}
                     required
-                    multiline
-                    rows={2}
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
@@ -272,11 +280,9 @@ const RegistrationForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <FormControl variant="filled" required style={{ width: '100%' }}>
-                    <InputLabel id="qualification-label">
-                      Highest Qualification
-                    </InputLabel>
+                    <InputLabel id="degree-label">Highest Qualification</InputLabel>
                     <Select
-                      labelId="qualification-label"
+                      labelId="degree-label"
                       name="qualification"
                       value={formData.qualification}
                       onChange={handleChange}
@@ -290,10 +296,8 @@ const RegistrationForm = () => {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <FormControl variant="filled" style={{ width: '100%' }} required>
-                    <InputLabel id="subject-label">
-                      Subject of Studies
-                    </InputLabel>
+                  <FormControl variant="filled" required style={{ width: '100%' }}>
+                    <InputLabel id="subject-label">Subject</InputLabel>
                     <Select
                       labelId="subject-label"
                       name="subject"
@@ -311,11 +315,10 @@ const RegistrationForm = () => {
                 <Grid item xs={12} sm={12}>
                   <TextField
                   variant="filled"
-                    id="filled-basic"
                     label="Completion Year"
+                    type="number"
                     style={{ width: '100%' }}
                     required
-                    type="number"
                     name="completionYear"
                     value={formData.completionYear}
                     onChange={handleChange}
@@ -324,8 +327,7 @@ const RegistrationForm = () => {
                 <Grid item xs={12} sm={12}>
                   <TextField
                   variant="filled"
-                    id="filled-basic"
-                    label="University/College Name"
+                    label="University/College"
                     style={{ width: '100%' }}
                     required
                     name="universityCollege"
@@ -336,8 +338,7 @@ const RegistrationForm = () => {
                 <Grid item xs={12} sm={12}>
                   <TextField
                   variant="filled"
-                    id="filled-basic"
-                    label="email"
+                    label="Email"
                     style={{ width: '100%' }}
                     required
                     name="email"
@@ -346,10 +347,8 @@ const RegistrationForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <FormControl sx={{ width: '100%' }} variant="outlined" >
-                    <InputLabel htmlFor="outlined-adornment-password">
-                      Password
-                    </InputLabel>
+                  <FormControl sx={{ width: '100%' }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                     <OutlinedInput
                       type={showPassword ? 'text' : 'password'}
                       endAdornment={
@@ -371,21 +370,16 @@ const RegistrationForm = () => {
                     />
                   </FormControl>
                 </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                variant="contained"
-                style={{ width: '100%' }}
-                sx={{ mt: 2 }}
-                disabled={!isFormValid || loading}
-              >
-                {loading ? 'Registering...' : 'Register'}
-              </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                    <Link href='/login' variant="body2" >
-                    Already have an account? Login
-                    </Link>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    disabled={!isFormValid || loading}
+                  >
+                    {loading ? 'Registering...' : 'Register'}
+                  </Button>
                 </Grid>
               </Grid>
             </Box>

@@ -4,8 +4,9 @@ import AdminReducer from './adminreducer';
 import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
 import {
-  REGISTER_SUCCESS,
-  CLEAR_MSG,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  CLEAR_ERROR,
 } from '../type';
 
 const Adminstate = ({ children }) => {
@@ -22,7 +23,7 @@ const Adminstate = ({ children }) => {
     activities: [],
     attendances: [],
     applications: [],
-    messageServer: null,
+    // messageServer: null,
     error: null,
   };
 
@@ -333,18 +334,32 @@ const getAllAppliedaCourseData = async () => {
 // post applied course
 const AppliedForaCourse = async (formData) => {
   try {
-    const res = await axios.post('https://lms2-two.vercel.app/api/appliedCourse/', formData);
+    setAuthToken(localStorage.token);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const res = await axios.post(
+      'http://localhost:8080/api/appliedCourse/',
+      formData,
+      config
+    );
+
     dispatch({
-      type: 'REGISTER_SUCCESS',
+      type: 'LOGIN_SUCCESS',
       payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: 'LOGIN_FAIL',
+      payload: err.response.data.msg,
     });
     setTimeout(() => {
       dispatch({
-        type: 'CLEAR_MSG',
+        type: 'CLEAR_ERROR',
       });
-    }, 3000);
-  } catch (err) {
-    console.log(err.response);
+    }, 1000);
   }
 };
 

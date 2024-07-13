@@ -68,6 +68,7 @@ const AppliedCourse = () => {
                 <tr className="sHeading">
                   <th>Name</th>
                   <th>Father's Name</th>
+                  <th>Course</th>
                   <th>Date of Birth</th>
                   <th>Gender</th>
                   <th>CNIC</th>
@@ -86,6 +87,7 @@ const AppliedCourse = () => {
                   <tr key={application._id}>
                     <td>{application.name}</td>
                     <td>{application.fatherName}</td>
+                    <td>{application.course}</td>
                     <td>{application.dateOfBirth}</td>
                     <td>{application.gender}</td>
                     <td>{application.cnic}</td>

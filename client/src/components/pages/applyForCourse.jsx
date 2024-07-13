@@ -1,44 +1,96 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  Container, Box, Avatar, Button, CssBaseline, TextField, Link, Grid,
-  Typography, Select, MenuItem, FormControl, InputLabel, RadioGroup,
-  FormControlLabel, Radio, ThemeProvider, createTheme, Dialog,
-  DialogTitle, DialogContent, DialogActions, CircularProgress
+  Container,
+  Box,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  ThemeProvider,
+  createTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  CircularProgress,
 } from '@mui/material';
-import { LockOutlined as LockOutlinedIcon } from '@mui/icons-material';
 import { Toaster, toast } from 'react-hot-toast';
 import AdminContext from '../../context/admin/admincontext';
 import Topbar from '../common/navbar/navbar';
 
 const defaultTheme = createTheme();
 
+const branches = ['Main Branch - FB Area, Gulberg'];
 const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
-const branches = ['Main Branch - FB Area, Gulberg', 'Orangi Branch'];
 const subjects = [
-  'Computer Science', 'Electrical Engineering', 'Mechanical Engineering',
-  'Mathematics', 'Physics', 'Chemistry', 'Biology', 'Economics',
-  'Business Administration', 'Law', 'Medicine', 'Other'
+  'Computer Science',
+  'Electrical Engineering',
+  'Mechanical Engineering',
+  'Mathematics',
+  'Physics',
+  'Chemistry',
+  'Biology',
+  'Economics',
+  'Business Administration',
+  'Law',
+  'Medicine',
+  'Other',
 ];
 const genders = [
   { value: 'male', label: 'Male' },
   { value: 'female', label: 'Female' },
-  { value: 'other', label: 'Other' }
+  { value: 'other', label: 'Other' },
 ];
 const courses = [
-  { value: 'Freelance Workshop', label: 'Freelance Workshop' }
+  {
+    value: 'Freelance Workshop for CS Student',
+    label: 'Freelance Workshop for CS Student',
+  },
+  {
+    value: 'Freelance Workshop for Non CS Student',
+    label: 'Freelance Workshop for Non CS Student',
+  },
 ];
 
+const whatsappLinks = {
+  'Freelance Workshop for CS Student':
+    'https://chat.whatsapp.com/BCBgeLcafow3fXxh21Md43',
+  'Freelance Workshop for Non CS Student':
+    'https://chat.whatsapp.com/IR7bZNfJAVT0dKc10Xrxpq',
+};
+
 const ApplyCourseForm = () => {
-  const { AppliedForaCourse, messageServer } = useContext(AdminContext);
+  const { AppliedForaCourse, applications, error } = useContext(AdminContext);
   const [formData, setFormData] = useState({
-    branch: '', name: '', fatherName: '', whatsappNumber: '', dateOfBirth: '',
-    gender: '', cnic: '', address: '', qualification: '', subject: '',
-    completionYear: '', universityCollege: '', course: '', email: ''
+    branch: '',
+    name: '',
+    fatherName: '',
+    whatsappNumber: '',
+    dateOfBirth: '',
+    gender: '',
+    cnic: '',
+    address: '',
+    qualification: '',
+    subject: '',
+    completionYear: '',
+    universityCollege: '',
+    course: '',
+    email: '',
   });
 
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [courseInfo, setCourseInfo] = useState(null);
+  const [whatsappLink, setWhatsappLink] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,34 +98,75 @@ const ApplyCourseForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(formData.email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+
+    // Check if the email already exists in previous submissions
+    const duplicateEmail = applications.some(
+      (app) => app.email === formData.email
+    );
+
+    if (duplicateEmail) {
+      toast.error('Email already submitted. Please use a different email.');
+      return;
+    }
+
     setLoading(true);
     await AppliedForaCourse(formData);
     setLoading(false);
   };
 
   useEffect(() => {
-    if (messageServer) {
-      if (messageServer.msg) {
-        toast.success(messageServer.msg);
-        setShowModal(true);
-        setCourseInfo({ courseName: formData.course });
-        setFormData({
-          branch: '', name: '', fatherName: '', whatsappNumber: '', dateOfBirth: '',
-          gender: '', cnic: '', address: '', qualification: '', subject: '',
-          completionYear: '', universityCollege: '', course: '', email: ''
-        });
-      } else if (messageServer.message) {
-        toast.error(messageServer.message);
-      }
+    if (applications.length > 0) {
+      toast.success('Successfully applied for the course!');
+      setShowModal(true);
+      setCourseInfo({ courseName: formData.course });
+      setWhatsappLink(whatsappLinks[formData.course]);
+      setFormData({
+        branch: '',
+        name: '',
+        fatherName: '',
+        whatsappNumber: '',
+        dateOfBirth: '',
+        gender: '',
+        cnic: '',
+        address: '',
+        qualification: '',
+        subject: '',
+        completionYear: '',
+        universityCollege: '',
+        course: '',
+        email: '',
+      });
     }
-  }, [messageServer]);
+
+    if (error) {
+      toast.error(error);
+    }
+
+    // Clean up function to reset state when component unmounts
+    return () => {
+      setShowModal(false);
+      setCourseInfo(null);
+      setWhatsappLink('');
+    };
+  }, [applications, error]);
 
   const handleCloseModal = () => {
     setShowModal(false);
     setCourseInfo(null);
+    setWhatsappLink('');
   };
 
-  const isFormValid = Object.values(formData).every((value) => value !== '') && !Object.values(formData).includes(null);
+  const isFormValid =
+    Object.values(formData).every((value) => value !== '') &&
+    !Object.values(formData).includes(null);
 
   return (
     <>
@@ -84,11 +177,23 @@ const ApplyCourseForm = () => {
         <ThemeProvider theme={defaultTheme}>
           <CssBaseline />
           <Container component="main" maxWidth="xs">
-            <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box
+              sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
               <Typography component="h1" variant="h5">
                 Apply for Course
               </Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 3 }}
+              >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <FormControl variant="filled" required fullWidth>
@@ -156,7 +261,12 @@ const ApplyCourseForm = () => {
                   <Grid item xs={12}>
                     <FormControl required component="fieldset">
                       <Typography component="legend">Gender</Typography>
-                      <RadioGroup row name="gender" value={formData.gender} onChange={handleChange}>
+                      <RadioGroup
+                        row
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                      >
                         {genders.map((gender) => (
                           <FormControlLabel
                             key={gender.value}
@@ -194,7 +304,9 @@ const ApplyCourseForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <FormControl variant="filled" required fullWidth>
-                      <InputLabel id="qualification-label">Highest Qualification</InputLabel>
+                      <InputLabel id="qualification-label">
+                        Highest Qualification
+                      </InputLabel>
                       <Select
                         labelId="qualification-label"
                         name="qualification"
@@ -211,7 +323,9 @@ const ApplyCourseForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <FormControl variant="filled" required fullWidth>
-                      <InputLabel id="subject-label">Subject of Studies</InputLabel>
+                      <InputLabel id="subject-label">
+                        Subject of Studies
+                      </InputLabel>
                       <Select
                         labelId="subject-label"
                         name="subject"
@@ -275,6 +389,12 @@ const ApplyCourseForm = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
+                      error={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)}
+                      helperText={
+                        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+                          ? 'Please enter a valid email address.'
+                          : ''
+                      }
                     />
                   </Grid>
                 </Grid>
@@ -288,14 +408,33 @@ const ApplyCourseForm = () => {
                 >
                   {loading ? <CircularProgress size={24} /> : 'Apply'}
                 </Button>
-                <Grid container justifyContent="flex-end">
+                <Grid container justifyContent="space-between">
                   <Grid item>
                     <Link href="/login" variant="body2">
                       Already have an account? Login
                     </Link>
                   </Grid>
+                  <Grid item>
+                  <Link href="mailto:ahsan.kit@gmail.com" variant="body2">
+          Facing Issue
+        </Link>
+                  </Grid>
                 </Grid>
               </Box>
+            </Box>
+            <Box
+              sx={{
+                marginTop: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}
+            >
+              <Typography>
+                If you dont see the Confirmation Massege kindly Change the Email
+                Address or Try After Some Minutes
+              </Typography>
             </Box>
           </Container>
         </ThemeProvider>
@@ -304,8 +443,17 @@ const ApplyCourseForm = () => {
         <DialogTitle>Course Information</DialogTitle>
         <DialogContent>
           <Typography variant="body1">
-            You have successfully applied for the course "{courseInfo?.courseName}".
+            You have successfully applied for the course "
+            {courseInfo?.courseName}".
           </Typography>
+          {whatsappLink && (
+            <Typography>
+              Join our WhatsApp group:{' '}
+              <Link href={whatsappLink} target="_blank">
+                {whatsappLink}
+              </Link>
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal} color="primary" autoFocus>
