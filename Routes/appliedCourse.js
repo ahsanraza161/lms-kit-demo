@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const AppliedCourse = require('../models/AppliedCourse');
+const sendMail = require('../utils/sendmail');
+const { applicationReceivedEmail } = require('../utils/emails');
 
 // @route POST api/appliedCourse
 // @describe Apply for a course
@@ -29,6 +31,14 @@ router.post('/', async (req, res) => {
         });
 
         await newCandidate.save();
+
+        // Send application received email
+        await sendMail(
+            'Application Received',
+            applicationReceivedEmail(name, course),
+            email
+        );
+
         return res.status(200).json({ msg: 'Your application has been received! Kindly join the respected groups.' });
     } catch (err) {
         console.error(err.message);
@@ -50,5 +60,3 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
-
-

@@ -214,10 +214,90 @@ const forgotPasswordEmail = (name, resetLink) => {
     `;
 };
 
+const applicationReceivedEmail = (name, courseName) => {
+    return `<!DOCTYPE html>
+      <html lang="en">
+      
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Application Received</title>
+          <style>
+              body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f4f4f4;
+                  margin: 0;
+                  padding: 0;
+              }
+      
+              .container {
+                  max-width: 600px;
+                  margin: 20px auto;
+                  padding: 20px;
+                  background-color: #fff;
+                  border-radius: 8px;
+                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+              }
+      
+              h1 {
+                  color: #333;
+                  text-align: center;
+              }
+      
+              p {
+                  color: #666;
+                  font-size: 16px;
+                  line-height: 1.6;
+                  margin-bottom: 20px;
+              }
+      
+              .btn {
+                  display: inline-block;
+                  background-color: #007bff;
+                  color: #fff;
+                  text-decoration: none;
+                  padding: 10px 20px;
+                  border-radius: 5px;
+              }
+              a.btn{
+                  color:#fff;
+              }
+      
+              .btn:hover {
+                  background-color: #0056b3;
+                  color:#fff;
+              }
+          </style>
+      </head>
+      
+      <body>
+          <div class="container">
+              <h1>Application Received</h1>
+              <p>Hello ${name},</p>
+              <p>Thank you for applying for the ${courseName}. Your application has been received successfully.</p>
+               <h3>You can Join Our WhatsApp Join</h3>
+              <h4>Freelance Workshop for CS Student</h4>
+              <p>https://chat.whatsapp.com/BCBgeLcafow3fXxh21Md43</p>
+              <h4>Freelance Workshop for Non CS Student</h4>
+              <p>https://chat.whatsapp.com/IR7bZNfJAVT0dKc10Xrxpq</p>
+              <p>We will review your application and get back to you shortly.</p>
+              <p>If you have any questions or need further assistance, feel free to contact us.</p>
+              <p>Thank you!</p>
+              <p><strong>From KIT</strong></p>
+              <p style="text-align: center;"><a href="kit-lms.vercel.app" class="btn">Visit our website</a></p>
+          </div>
+      </body>
+      
+      </html>
+      `;
+  };
+
+
 const emails = {
   requestAcceptedEmail,
   requestSentEmail,
-  forgotPasswordEmail
+  forgotPasswordEmail,
+  applicationReceivedEmail
 };
 
 module.exports = emails;
