@@ -77,7 +77,7 @@ const AppliedCourse = () => {
                   <th>Subject</th>
                   <th>Completion Year</th>
                   <th>University/College</th>
-                  <th>Branch</th>
+                  {/* <th>Branch</th> */}
                   <th>Email</th>
                   <th>WhatsApp Number</th>
                 </tr>
@@ -96,7 +96,7 @@ const AppliedCourse = () => {
                     <td>{application.subject}</td>
                     <td>{application.completionYear}</td>
                     <td>{application.universityCollege}</td>
-                    <td>{application.branch}</td>
+                    {/* <td>{application.branch}</td> */}
                     <td>{application.email}</td>
                     <td>{application.whatsappNumber}</td>
                   </tr>

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const AppliedCourseSchema = new mongoose.Schema({
-  branch: { type: String, required: true },
+  // branch: { type: String, required: true },
   name: { type: String, required: true },
   fatherName: { type: String, required: true },
   whatsappNumber: { type: String, required: true },

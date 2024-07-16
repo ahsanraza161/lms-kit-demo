@@ -71,7 +71,7 @@ const whatsappLinks = {
 const ApplyCourseForm = () => {
   const { AppliedForaCourse, applications, error } = useContext(AdminContext);
   const [formData, setFormData] = useState({
-    branch: '',
+    // branch: '',
     name: '',
     fatherName: '',
     whatsappNumber: '',
@@ -129,7 +129,7 @@ const ApplyCourseForm = () => {
       setCourseInfo({ courseName: formData.course });
       setWhatsappLink(whatsappLinks[formData.course]);
       setFormData({
-        branch: '',
+        // branch: '',
         name: '',
         fatherName: '',
         whatsappNumber: '',
@@ -195,7 +195,7 @@ const ApplyCourseForm = () => {
                 sx={{ mt: 3 }}
               >
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <FormControl variant="filled" required fullWidth>
                       <InputLabel id="branch-label">Branch</InputLabel>
                       <Select
@@ -211,7 +211,7 @@ const ApplyCourseForm = () => {
                         ))}
                       </Select>
                     </FormControl>
-                  </Grid>
+                  </Grid> */}
                   <Grid item xs={12}>
                     <TextField
                       variant="filled"

@@ -7,7 +7,8 @@ const AppliedCourse = require('../models/AppliedCourse');
 // @access Public
 router.post('/', async (req, res) => {
     const {
-        branch, name, fatherName, whatsappNumber, dateOfBirth, gender,
+        // branch,
+        name, fatherName, whatsappNumber, dateOfBirth, gender,
         cnic, address, qualification, subject, completionYear,
         universityCollege, course, email
     } = req.body;
@@ -21,7 +22,8 @@ router.post('/', async (req, res) => {
 
         // Create and save new candidate
         const newCandidate = new AppliedCourse({
-            branch, name, fatherName, whatsappNumber, dateOfBirth, gender,
+            // branch, 
+            name, fatherName, whatsappNumber, dateOfBirth, gender,
             cnic, address, qualification, subject, completionYear,
             universityCollege, course, email
         });
