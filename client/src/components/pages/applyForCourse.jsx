@@ -432,8 +432,7 @@ const ApplyCourseForm = () => {
               }}
             >
               <Typography>
-                If you dont see the Confirmation Massege kindly Change the Email
-                Address or Try After Some Minutes
+              A confrmation email is send to your email id If you dont receive the confirmation Massege kindly check/Change the Email Address or/and try again after few minutes
               </Typography>
             </Box>
           </Container>
