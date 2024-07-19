@@ -9,7 +9,7 @@ const AppliedCourse = () => {
   const { getAllAppliedaCourseData, applications } = useContext(AdminContext);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7;
+  const itemsPerPage = 20;
 
   // Call API
   useEffect(() => {

@@ -1,62 +1,53 @@
 const express = require('express');
 const router = express.Router();
 const AppliedCourse = require('../models/AppliedCourse');
-const sendMail = require('../utils/sendmail');
+const emailQueue = require('../utils/emailQueue');
 const { applicationReceivedEmail } = require('../utils/emails');
 
-// @route POST api/appliedCourse
-// @describe Apply for a course
-// @access Public
 router.post('/', async (req, res) => {
-    const {
-        // branch,
-        name, fatherName, whatsappNumber, dateOfBirth, gender,
-        cnic, address, qualification, subject, completionYear,
-        universityCollege, course, email
-    } = req.body;
+  const {
+    name, fatherName, whatsappNumber, dateOfBirth, gender,
+    cnic, address, qualification, subject, completionYear,
+    universityCollege, course, email
+  } = req.body;
 
-    try {
-        // Check for existing student with email
-        const student = await AppliedCourse.findOne({ email });
-        if (student) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
+  try {
+    const student = await AppliedCourse.findOne({ email });
+    if (student) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
-        // Create and save new candidate
-        const newCandidate = new AppliedCourse({
-            // branch, 
-            name, fatherName, whatsappNumber, dateOfBirth, gender,
-            cnic, address, qualification, subject, completionYear,
-            universityCollege, course, email
-        });
+    const newCandidate = new AppliedCourse({
+      name, fatherName, whatsappNumber, dateOfBirth, gender,
+      cnic, address, qualification, subject, completionYear,
+      universityCollege, course, email
+    });
 
-        await newCandidate.save();
+    await newCandidate.save();
 
-        // Send application received email
-        await sendMail(
-            'Application Received',
-            applicationReceivedEmail(name, course),
-            email
-        );
+    const emailData = {
+      subject: 'Application Received',
+      text: applicationReceivedEmail(name, course),
+      to: email,
+    };
 
-        return res.status(200).json({ msg: 'Your application has been received! Kindly join the respected groups.' });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ msg: 'Server error' });
-      }
+    emailQueue.add(emailData);
+
+    return res.status(200).json({ msg: 'Your application has been received! Kindly join the respected groups.' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
-// @route GET api/appliedCourse
-// @description Get all applied courses
-// @access Public
 router.get('/', async (req, res) => {
-    try {
-        const appliedCourses = await AppliedCourse.find();
-        res.json(appliedCourses);
-    } catch (err) {
-        console.error('Error retrieving applied courses:', err);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+  try {
+    const appliedCourses = await AppliedCourse.find();
+    res.json(appliedCourses);
+  } catch (err) {
+    console.error('Error retrieving applied courses:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 module.exports = router;

@@ -113,7 +113,7 @@ const ApplyCourseForm = () => {
     );
 
     if (duplicateEmail) {
-      toast.error('Email already submitted. Please use a different email.');
+      toast.error('Email already used. Please use a different email.');
       return;
     }
 
