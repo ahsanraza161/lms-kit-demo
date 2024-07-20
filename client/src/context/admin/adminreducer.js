@@ -115,23 +115,23 @@ const AdminReducer = (state, action) => {
         faculties: action.payload,
       };
       case LOGIN_SUCCESS:
-      return {
-        ...state,
-        applications: [action.payload, ...state.applications],
-        error: null,
-      };
-
-    case LOGIN_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      };
-
-    case CLEAR_ERROR:
-      return {
-        ...state,
-        error: null,
-      };
+        return {
+          ...state,
+          applications: [action.payload, ...state.applications],
+          error: null,
+        };
+      
+      case LOGIN_FAIL:
+        return {
+          ...state,
+          error: action.payload,
+        };
+      
+      case CLEAR_ERROR:
+        return {
+          ...state,
+          error: null,
+        };
       // case LOGIN_FAIL:
       //   return {
       //     ...state,

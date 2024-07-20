@@ -29,7 +29,6 @@ import Topbar from '../common/navbar/navbar';
 
 const defaultTheme = createTheme();
 
-const branches = ['Main Branch - FB Area, Gulberg'];
 const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
 const subjects = [
   'Computer Science',
@@ -71,7 +70,6 @@ const whatsappLinks = {
 const ApplyCourseForm = () => {
   const { AppliedForaCourse, applications, error } = useContext(AdminContext);
   const [formData, setFormData] = useState({
-    // branch: '',
     name: '',
     fatherName: '',
     whatsappNumber: '',
@@ -129,7 +127,6 @@ const ApplyCourseForm = () => {
       setCourseInfo({ courseName: formData.course });
       setWhatsappLink(whatsappLinks[formData.course]);
       setFormData({
-        // branch: '',
         name: '',
         fatherName: '',
         whatsappNumber: '',
@@ -147,7 +144,9 @@ const ApplyCourseForm = () => {
     }
 
     if (error) {
-      toast.error(error);
+      toast.error(
+        'Form submission failed. Please try again or contact us for assistance.'
+      );
     }
 
     // Clean up function to reset state when component unmounts
@@ -415,9 +414,9 @@ const ApplyCourseForm = () => {
                     </Link>
                   </Grid>
                   <Grid item>
-                  <Link href="mailto:ahsan.kit@gmail.com" variant="body2">
-          Facing Issue
-        </Link>
+                    <Link href="mailto:ahsan.kit@gmail.com" variant="body2">
+                      Facing Issue
+                    </Link>
                   </Grid>
                 </Grid>
               </Box>
@@ -432,7 +431,9 @@ const ApplyCourseForm = () => {
               }}
             >
               <Typography>
-              A confrmation email is send to your email id If you dont receive the confirmation Massege kindly check/Change the Email Address or/and try again after few minutes
+                A confrmation email is send to your email id If you dont receive
+                the confirmation Massege kindly check/Change the Email Address
+                or/and try again after few minutes
               </Typography>
             </Box>
           </Container>
