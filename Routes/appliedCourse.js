@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AppliedCourse = require('../models/AppliedCourse');
-const sendMail = require('../utils/sendmail');
+const sendMail = require('../utils/sendMail');
 const { applicationReceivedEmail } = require('../utils/emails');
 
 // @route POST api/appliedCourse
@@ -44,7 +44,6 @@ router.post('/', async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 });
-
 
 // @route GET api/appliedCourse
 // @description Get all applied courses

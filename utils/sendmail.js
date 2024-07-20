@@ -9,16 +9,15 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendMail(subject, text, to) {
+async function sendMail({ subject, text, to }) {
   if (!subject || !text) {
     console.error('Subject and text are required to send an email');
     return; // Do not proceed if subject or text is missing
   }
 
-  var mailOptions = {
+  const mailOptions = {
     from: process.env.sender,
-    //! Change
-    to: to || 'eyecatchywebsolutions@gmail.com',
+    to: to || 'ahsanraza.kit@gmail.com',
     subject: subject,
     html: text,
   };

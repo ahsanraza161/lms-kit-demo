@@ -340,6 +340,7 @@ const AppliedForaCourse = async (formData) => {
         'Content-Type': 'application/json',
       },
     };
+    // http://localhost:8080/
     const res = await axios.post(
       'https://lms2-two.vercel.app/api/appliedCourse/',
       formData,
