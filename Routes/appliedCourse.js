@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AppliedCourse = require('../models/AppliedCourse');
-const sendMail = require('../utils/sendMail');
+const sendMail = require('../utils/sendmail');
 const { applicationReceivedEmail } = require('../utils/emails');
 
 // @route POST api/appliedCourse
