@@ -408,13 +408,13 @@ const ApplyCourseForm = () => {
                   {loading ? <CircularProgress size={24} /> : 'Apply'}
                 </Button>
                 <Grid container justifyContent="space-between">
-                  <Grid item>
+                  {/* <Grid item>
                     <Link href="/login" variant="body2">
                       Already have an account? Login
                     </Link>
-                  </Grid>
+                  </Grid> */}
                   <Grid item>
-                    <Link href="mailto:ahsan.kit@gmail.com" variant="body2">
+                    <Link href="mailto:learningmanagmentsystem.kit@gmail.com" variant="body2">
                       Facing Issue
                     </Link>
                   </Grid>
