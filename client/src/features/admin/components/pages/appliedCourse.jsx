@@ -66,6 +66,7 @@ const AppliedCourse = () => {
             <Table striped bordered hover responsive className="studentTable">
               <thead>
                 <tr className="sHeading">
+                  <th>Sr No</th>
                   <th>Name</th>
                   <th>Father's Name</th>
                   <th>Course</th>
@@ -83,8 +84,9 @@ const AppliedCourse = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((application) => (
+                {currentItems.map((application, index) => (
                   <tr key={application._id}>
+                    <td>{indexOfFirstItem + index + 1}</td>
                     <td>{application.name}</td>
                     <td>{application.fatherName}</td>
                     <td>{application.course}</td>
@@ -107,6 +109,13 @@ const AppliedCourse = () => {
               <Button onClick={handlePreviousPage} disabled={currentPage === 1}>
                 Previous
               </Button>
+              <span>
+                Page {currentPage} of {Math.ceil(applications.length / itemsPerPage)}
+              </span>
+              
+              <span>
+                Total Items: {applications.length}
+              </span>
               <Button
                 onClick={handleNextPage}
                 disabled={

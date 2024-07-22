@@ -20,26 +20,31 @@ a {
 .logo {
   font-size: 20px;
 }
-.avatar{
+.avatar {
   font-size: 30px;
   margin-left: 20px;
 }
 .container2 {
   display: flex;
+  /* position: fixed; */
 }
-.noteItem{
+
+/* .sidebarMain{
+  position: fixed;
+} */
+.noteItem {
   font-size: 25px !important;
   /* padding: 20; */
   height: 10vh;
   text-align: center;
   align-content: center;
 }
-.importingNoteToDash{
+.importingNoteToDash {
   height: 55vh !important;
   border-bottom: 5px solid black;
   overflow: scroll;
 }
-.noteDash{
+.noteDash {
   text-align: center;
   overflow-x: scroll !important;
   border: 1px solid black !important;
@@ -50,29 +55,29 @@ a {
   border-radius: 20px;
   margin: 0px auto !important;
 }
-.contentNoteDash{
-background-color: #00000021 !important;  
-/* color: #fff !important; */
-display: flex;
-justify-content: space-between;
-text-align: left;
-padding: 10px;
-/* font: 900; */
-font-size: 35px;
-/* height: 10vh; */
+.contentNoteDash {
+  background-color: #00000021 !important;
+  /* color: #fff !important; */
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  padding: 10px;
+  /* font: 900; */
+  font-size: 35px;
+  /* height: 10vh; */
 }
 .contentNoteDash .noteTitle {
   text-transform: uppercase;
-  font-weight: 700;       
+  font-weight: 700;
   margin: 10px 0;
   color: #fff;
 }
-.contentNoteDash .noteContent{
+.contentNoteDash .noteContent {
   font-size: medium;
   color: #fff;
 }
-.btnForViewNote{
-  display: block ;
+.btnForViewNote {
+  display: block;
   top: -70px;
   margin-right: 50px !important;
   float: right;
@@ -80,6 +85,7 @@ font-size: 35px;
 main {
   width: 100%;
   padding: 10px;
+  margin-left: 6%;
 }
 .sidebar {
   background: var(--secondary-color);
@@ -89,8 +95,10 @@ main {
   /* border-radius: 30px; */
   /* margin: 20px 0px 0px 10px; */
   transition: all 0.5s;
+  position: fixed;
 }
 .sidebar2 {
+  position: fixed;
   background: var(--secondary-color);
   color: var(--primary-text-color);
   height: 95vh;
@@ -105,7 +113,7 @@ main {
 .top_section {
   display: flex;
   align-items: center;
-  padding: 20px 20px ;
+  padding: 20px 20px;
 }
 
 .bars {
@@ -178,11 +186,11 @@ main {
   justify-content: space-around;
   display: flex;
 }
-.btnTD{
+.btnTD {
   display: flex;
-  justify-content: space-evenly
+  justify-content: space-evenly;
 }
-.loading{
+.loading {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -194,9 +202,11 @@ main {
 td{
   font-size: small;
 } */
-.tableContainer{
-  width: 100%; 
-  overflow-x: auto;
+.tableContainer {
+  width: 100%;
+  overflow-x: auto !important;
+  scrollbar-width: 22px !important;
+  scroll-behavior: smooth !important;
 }
 .studentTable {
   width: 100%;
@@ -204,7 +214,8 @@ td{
   white-space: nowrap;
 }
 
-.studentTable th, .studentTable td {
+.studentTable th,
+.studentTable td {
   padding: 8px;
   text-align: center;
   font-size: smaller;
@@ -259,7 +270,7 @@ td{
   .topBar {
     width: 90% !important;
   }
-/* .link {
+  /* .link {
   padding: 7px 0px 0px 7px;
 } */
 }
