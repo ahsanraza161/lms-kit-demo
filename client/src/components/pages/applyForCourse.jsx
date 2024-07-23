@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
+import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import {
   Container,
   Box,
@@ -24,156 +25,168 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Toaster, toast } from 'react-hot-toast';
-import AdminContext from '../../context/admin/admincontext';
+// import AdminContext from '../../context/admin/admincontext';
 import Topbar from '../common/navbar/navbar';
 
-const defaultTheme = createTheme();
+// const defaultTheme = createTheme();
 
-const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
-const subjects = [
-  'Computer Science',
-  'Electrical Engineering',
-  'Mechanical Engineering',
-  'Mathematics',
-  'Physics',
-  'Chemistry',
-  'Biology',
-  'Economics',
-  'Business Administration',
-  'Law',
-  'Medicine',
-  'Other',
-];
-const genders = [
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' },
-  { value: 'other', label: 'Other' },
-];
-const courses = [
-  {
-    value: 'Freelance Workshop for CS Student',
-    label: 'Freelance Workshop for CS Student',
-  },
-  {
-    value: 'Freelance Workshop for Non CS Student',
-    label: 'Freelance Workshop for Non CS Student',
-  },
-];
+// const degrees = ['Masters', 'Bachelor', 'Intermediate', 'Matric', 'Other'];
+// const subjects = [
+//   'Computer Science',
+//   'Electrical Engineering',
+//   'Mechanical Engineering',
+//   'Mathematics',
+//   'Physics',
+//   'Chemistry',
+//   'Biology',
+//   'Economics',
+//   'Business Administration',
+//   'Law',
+//   'Medicine',
+//   'Other',
+// ];
+// const genders = [
+//   { value: 'male', label: 'Male' },
+//   { value: 'female', label: 'Female' },
+//   { value: 'other', label: 'Other' },
+// ];
+// const courses = [
+//   {
+//     value: 'Freelance Workshop for CS Student',
+//     label: 'Freelance Workshop for CS Student',
+//   },
+//   {
+//     value: 'Freelance Workshop for Non CS Student',
+//     label: 'Freelance Workshop for Non CS Student',
+//   },
+// ];
 
-const whatsappLinks = {
-  'Freelance Workshop for CS Student':
-    'https://chat.whatsapp.com/BCBgeLcafow3fXxh21Md43',
-  'Freelance Workshop for Non CS Student':
-    'https://chat.whatsapp.com/IR7bZNfJAVT0dKc10Xrxpq',
-};
+// const whatsappLinks = {
+//   'Freelance Workshop for CS Student':
+//     'https://chat.whatsapp.com/BCBgeLcafow3fXxh21Md43',
+//   'Freelance Workshop for Non CS Student':
+//     'https://chat.whatsapp.com/IR7bZNfJAVT0dKc10Xrxpq',
+// };
 
 const ApplyCourseForm = () => {
-  const { AppliedForaCourse, applications, error } = useContext(AdminContext);
-  const [formData, setFormData] = useState({
-    name: '',
-    fatherName: '',
-    whatsappNumber: '',
-    dateOfBirth: '',
-    gender: '',
-    cnic: '',
-    address: '',
-    qualification: '',
-    subject: '',
-    completionYear: '',
-    universityCollege: '',
-    course: '',
-    email: '',
-  });
+  // const { AppliedForaCourse, applications, error } = useContext(AdminContext);
+  // const [formData, setFormData] = useState({
+  //   name: '',
+  //   fatherName: '',
+  //   whatsappNumber: '',
+  //   dateOfBirth: '',
+  //   gender: '',
+  //   cnic: '',
+  //   address: '',
+  //   qualification: '',
+  //   subject: '',
+  //   completionYear: '',
+  //   universityCollege: '',
+  //   course: '',
+  //   email: '',
+  // });
 
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [courseInfo, setCourseInfo] = useState(null);
-  const [whatsappLink, setWhatsappLink] = useState('');
+  // const [loading, setLoading] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
+  // const [courseInfo, setCourseInfo] = useState(null);
+  // const [whatsappLink, setWhatsappLink] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    // Regular expression for email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(formData.email)) {
-      toast.error('Please enter a valid email address.');
-      return;
-    }
+  //   if (!emailRegex.test(formData.email)) {
+  //     toast.error('Please enter a valid email address.');
+  //     return;
+  //   }
 
-    // Check if the email already exists in previous submissions
-    const duplicateEmail = applications.some(
-      (app) => app.email === formData.email
-    );
+  //   const duplicateEmail = applications.some(
+  //     (app) => app.email === formData.email
+  //   );
 
-    if (duplicateEmail) {
-      toast.error('Email already used. Please use a different email.');
-      return;
-    }
+  //   if (duplicateEmail) {
+  //     toast.error('Email already used. Please use a different email.');
+  //     return;
+  //   }
 
-    setLoading(true);
-    await AppliedForaCourse(formData);
-    setLoading(false);
-  };
+  //   setLoading(true);
+  //   await AppliedForaCourse(formData);
+  //   setLoading(false);
+  // };
 
-  useEffect(() => {
-    if (applications.length > 0) {
-      toast.success('Successfully applied for the course!');
-      setShowModal(true);
-      setCourseInfo({ courseName: formData.course });
-      setWhatsappLink(whatsappLinks[formData.course]);
-      setFormData({
-        name: '',
-        fatherName: '',
-        whatsappNumber: '',
-        dateOfBirth: '',
-        gender: '',
-        cnic: '',
-        address: '',
-        qualification: '',
-        subject: '',
-        completionYear: '',
-        universityCollege: '',
-        course: '',
-        email: '',
-      });
-    }
+  // useEffect(() => {
+  //   if (applications.length > 0) {
+  //     toast.success('Successfully applied for the course!');
+  //     setShowModal(true);
+  //     setCourseInfo({ courseName: formData.course });
+  //     setWhatsappLink(whatsappLinks[formData.course]);
+  //     setFormData({
+  //       name: '',
+  //       fatherName: '',
+  //       whatsappNumber: '',
+  //       dateOfBirth: '',
+  //       gender: '',
+  //       cnic: '',
+  //       address: '',
+  //       qualification: '',
+  //       subject: '',
+  //       completionYear: '',
+  //       universityCollege: '',
+  //       course: '',
+  //       email: '',
+  //     });
+  //   }
 
-    if (error) {
-      toast.error(
-        'Form submission failed. Please try again or contact us for assistance.'
-      );
-    }
+  //   if (error) {
+  //     toast.error(
+  //       'Form submission failed. Please try again or contact us for assistance.'
+  //     );
+  //   }
 
-    // Clean up function to reset state when component unmounts
-    return () => {
-      setShowModal(false);
-      setCourseInfo(null);
-      setWhatsappLink('');
-    };
-  }, [applications, error]);
+  //   return () => {
+  //     setShowModal(false);
+  //     setCourseInfo(null);
+  //     setWhatsappLink('');
+  //   };
+  // }, [applications, error]);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setCourseInfo(null);
-    setWhatsappLink('');
-  };
+  // const handleCloseModal = () => {
+  //   setShowModal(false);
+  //   setCourseInfo(null);
+  //   setWhatsappLink('');
+  // };
 
-  const isFormValid =
-    Object.values(formData).every((value) => value !== '') &&
-    !Object.values(formData).includes(null);
+  // const isFormValid =
+  //   Object.values(formData).every((value) => value !== '') &&
+  //   !Object.values(formData).includes(null);
 
   return (
     <>
       <header className="App-header">
         <Topbar />
       </header>
-      <main className="App-main-all container">
-        <ThemeProvider theme={defaultTheme}>
+      <div className="registration-closed">
+      <h1>
+        Registrations are Closed for Freelance Workshop. Follow us on Social Media for any Future Update & Announcements
+      </h1>
+      <div className="social-icons">
+        <a href="https://www.facebook.com/KarachiInstituteOfTechnology" target="_blank" rel="noopener noreferrer">
+          <FaFacebook className="icon" />
+        </a>
+        <a href="https://www.instagram.com/karachiinstituteoftechnology" target="_blank" rel="noopener noreferrer">
+          <FaInstagram className="icon" />
+        </a>
+        <a href="https://www.linkedin.com/in/karachiinstituteoftechnology" target="_blank" rel="noopener noreferrer">
+          <FaLinkedin className="icon" />
+        </a>
+      </div>
+    </div>        
+    {/* <ThemeProvider theme={defaultTheme}>
           <CssBaseline />
           <Container component="main" maxWidth="xs">
             <Box
@@ -194,7 +207,7 @@ const ApplyCourseForm = () => {
                 sx={{ mt: 3 }}
               >
                 <Grid container spacing={2}>
-                  {/* <Grid item xs={12}>
+                  <Grid item xs={12}>
                     <FormControl variant="filled" required fullWidth>
                       <InputLabel id="branch-label">Branch</InputLabel>
                       <Select
@@ -210,7 +223,7 @@ const ApplyCourseForm = () => {
                         ))}
                       </Select>
                     </FormControl>
-                  </Grid> */}
+                  </Grid>
                   <Grid item xs={12}>
                     <TextField
                       variant="filled"
@@ -408,11 +421,11 @@ const ApplyCourseForm = () => {
                   {loading ? <CircularProgress size={24} /> : 'Apply'}
                 </Button>
                 <Grid container justifyContent="space-between">
-                  {/* <Grid item>
+                  <Grid item>
                     <Link href="/login" variant="body2">
                       Already have an account? Login
                     </Link>
-                  </Grid> */}
+                  </Grid>
                   <Grid item>
                     <Link href="mailto:learningmanagmentsystem.kit@gmail.com" variant="body2">
                       Facing Issue
@@ -437,9 +450,8 @@ const ApplyCourseForm = () => {
               </Typography>
             </Box>
           </Container>
-        </ThemeProvider>
-      </main>
-      <Dialog open={showModal} onClose={handleCloseModal}>
+        </ThemeProvider> */}
+      {/* <Dialog open={showModal} onClose={handleCloseModal}>
         <DialogTitle>Course Information</DialogTitle>
         <DialogContent>
           <Typography variant="body1">
@@ -460,8 +472,8 @@ const ApplyCourseForm = () => {
             Close
           </Button>
         </DialogActions>
-      </Dialog>
-      <Toaster />
+      </Dialog> */}
+      {/* <Toaster /> */}
     </>
   );
 };
