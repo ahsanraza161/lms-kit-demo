@@ -172,7 +172,8 @@ const ApplyCourseForm = () => {
       </header>
       <div className="registration-closed">
       <h1>
-        Registrations are Closed for Freelance Workshop. Follow us on Social Media for any Future Update & Announcements
+      Required number of registrations are completed on first come first served basis.
+      Follow us on social media for any future update and announcement.
       </h1>
       <div className="social-icons">
         <a href="https://www.facebook.com/KarachiInstituteOfTechnology" target="_blank" rel="noopener noreferrer">
