@@ -92,11 +92,11 @@ router.post('/forgotpassword', async (req, res) => {
     const resetLink = `https://kit-lms.vercel.app/resetpassword/${resetToken}`;
 
     try {
-      await sendMail(
-        'Reset Password',
-        forgotPasswordEmail(user.name, resetLink),
-        email
-      );
+      await sendMail({
+        subject: 'Reset Password',
+        text: forgotPasswordEmail(user.name, resetLink),
+        to: email,
+      });
     } catch (err) {
       user.passwordResetToken = undefined;
       user.passwordResetTokenExpiry = undefined;
